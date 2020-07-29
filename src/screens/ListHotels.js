@@ -1,9 +1,11 @@
 import React,{ useState } from 'react';
-import {Screen,NavigationBar,ListView, View,ScrollView} from 'react-native';
+import {Screen,NavigationBar,ListView, View,ScrollView, Button} from 'react-native';
+import {SearchBar,ListItem} from 'react-native-elements';
 import tailwind from "tailwind-rn";
 import {RestaurantItem} from '../components';
 export default function ListHotels(){
     const [state, setState] = useState({
+        search:'',
         restaurants:[
             {
               "name": "Gaspar Brasserie",
@@ -43,19 +45,45 @@ export default function ListHotels(){
             }
           ],
     });
+    function filterResults(property, srch) {
+      return state.restaurants.filter(
+          (restaurants) =>
+              restaurants[property].toLowerCase().indexOf(srch.toLowerCase()) !== -1
+      );
+  }
+    const handleSearch=()=>{
+      const currentSearch = state.search;
+        let currentMatches = [];
+        currentMatches = currentMatches.concat(
+            filterResults("name", currentSearch)
+        );
+        console.log(currentMatches)
+    }
     
-      
     console.log(state.restaurants);
     
       return (
+        
         <View>
-          
-                  {state
-                    .restaurants
-                    .map((restaurant) => (
-                      <RestaurantItem restaurant={restaurant} key={restaurant.id}  />
-                    ))}
-                
+          <SearchBar
+        placeholder="Type Here..."
+        onChangeText={(search)=>setState({...state,search})}
+        value={state.search}
+      />
+      <Button title={"Apply"} onPress={handleSearch}></Button>
+      <ScrollView>
+      {
+    state.restaurants.map((l, i) => (
+      <ListItem
+        key={i}
+        leftAvatar={{ source: { uri: l.image.url } }}
+        title={l.name}
+        subtitle={l.address}
+        bottomDivider
+      />
+    ))
+  }
+                </ScrollView>
         </View>
       );
     }
