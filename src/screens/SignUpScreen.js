@@ -9,6 +9,11 @@ export default function SignUp({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  const handleSuccess = () => {
+    setSuccess(true);
+  };
   return (
     <View>
       <Input
@@ -44,10 +49,11 @@ export default function SignUp({ navigation }) {
       {state.errorMessage ? (
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
+      {success ? navigation.navigate("Home") : null}
       <Button
         title={"SignUP"}
         onPress={() => {
-          signup({ name, email, password });
+          signup({ name, email, password, handleSuccess });
         }}
       />
       <TouchableOpacity onPress={() => navigation.navigate("Signin")}>

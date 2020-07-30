@@ -11,6 +11,7 @@ import { Provider as AuthProvider } from "./src/context/AuthContext";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const ref = React.createRef();
 
 function Home() {
   return (

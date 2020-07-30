@@ -1,3 +1,4 @@
+import { AsyncStorage } from "react-native";
 import createDataContext from "./createDataContext";
 import DeliveryApi from "./../api/deliveryapp";
 
@@ -5,27 +6,34 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case "add_error":
       return { ...state, errorMessage: action.payload };
+    case "signup":
+      return { errorMessage: "", token: action.payload };
     default:
       return state;
   }
 };
 
-const signup = (dispatch) => {
-  return async ({ name, email, password }) => {
-    try {
-      const response = await DeliveryApi.post("/signup", {
-        name,
-        email,
-        password,
-      });
-      console.log(response.data);
-    } catch (err) {
-      dispatch({
-        type: "add_error",
-        payload: "Somwthing went wrong with signup!!",
-      });
-    }
-  };
+const signup = (dispatch) => async ({
+  name,
+  email,
+  password,
+  handleSuccess,
+}) => {
+  try {
+    const response = await DeliveryApi.post("/signup", {
+      name,
+      email,
+      password,
+    });
+    await AsyncStorage.setItem("token", response.data.token);
+    dispatch({ type: "signup", payload: response.data.token });
+    handleSuccess();
+  } catch (err) {
+    dispatch({
+      type: "add_error",
+      payload: "Somwthing went wrong with signup!!",
+    });
+  }
 };
 
 const signin = (dispatch) => {
@@ -45,5 +53,5 @@ const signout = (dispatch) => {
 export const { Provider, Context } = createDataContext(
   authReducer,
   { signup, signin, signout },
-  { isSignedIn: false, errorMessage: "" }
+  { token: null, errorMessage: "" }
 );
