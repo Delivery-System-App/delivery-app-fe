@@ -7,6 +7,8 @@ import LoginScreen from "./src/screens/LoginScreen";
 import SignUp from "./src/screens/SignUpScreen";
 import ForgotPassword from "./src/screens/ForgotPassword";
 import ListHotels from "./src/screens/ListHotels";
+import { Provider as AuthProvider } from "./src/context/AuthContext";
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -34,4 +36,12 @@ function MyStack() {
     </NavigationContainer>
   );
 }
-export default MyStack;
+const App = MyStack;
+
+export default () => {
+  return (
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  );
+};
