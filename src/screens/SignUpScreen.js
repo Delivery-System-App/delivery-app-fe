@@ -1,101 +1,57 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Button, Text } from "react-native";
-import tailwind from "tailwind-rn";
+import React, { useState, useContext } from "react";
+import { View, StyleSheet, Button, Text } from "react-native";
+import { Input } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
-export default function SignUp({ onLoginStatus, navigation }) {
-  const [state, setState] = useState({
-    userId: "",
-    password: "",
-    confirmpass: "",
-    name: "",
-    address: "",
-    mobileNumber: "",
-    email: "",
-  });
-  const onSignUp = () => {
-    const {
-      userId,
-      password,
-      confirmpass,
-      name,
-      address,
-      mobileNumber,
-      email,
-    } = state;
-  };
+import { Context as AuthContext } from "./../context/AuthContext";
 
+export default function SignUp({ navigation }) {
+  const { state, signup } = useContext(AuthContext);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
-    <View
-      style={tailwind(
-        "bg-blue-200 flex flex-col flex ml-auto mr-auto items-center w-full lg:w-2/3 md:w-3/5"
-      )}
-    >
-      <Text>Name</Text>
-      <TextInput
-        value={state.name}
-        onChange={(name) => setState({ ...state, name })}
-        placeholder={"Name"}
+    <View>
+      <Input
+        label="Enter your name"
+        value={name}
+        onChangeText={setName}
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholder={"name"}
         style={styles.input}
       />
-      <Text>Username</Text>
-      <TextInput
-        value={state.userId}
-        onChangeText={(userId) => setState({ ...state, userId })}
-        placeholder={"UserId"}
-        style={styles.input}
-      />
-      <Text>Password</Text>
-      <TextInput
-        value={state.password}
-        onChangeText={(password) => setState({ ...state, password })}
-        placeholder={"Password"}
-        secureTextEntry={true}
-        style={styles.input}
-      />
-      <Text>Confirm Password</Text>
-      <TextInput
-        value={state.confirmpass}
-        onChangeText={(confirmpass) => setState({ ...state, confirmpass })}
-        placeholder={"Confirm Password"}
-        secureTextEntry={true}
-        style={styles.input}
-      />
-      <Text>Address</Text>
-      <TextInput
-        value={state.address}
-        onChangeText={(address) => setState({ ...state, address })}
-        placeholder={"Address"}
-        style={styles.input}
-      />
-      <Text>Mobile</Text>
-      <TextInput
-        value={state.mobileNumber}
-        onChangeText={(mobileNumber) => setState({ ...state, mobileNumber })}
-        placeholder={"Mobile Number"}
-        style={styles.input}
-      />
-      <Text>Email</Text>
-      <TextInput
-        value={state.email}
-        onChangeText={(email) => setState({ ...state, email })}
+
+      <Input
+        label="Enter your email address"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
         placeholder={"Email"}
         style={styles.input}
       />
+
+      <Input
+        label="Enter your password"
+        value={password}
+        onChangeText={setPassword}
+        placeholder={"Password"}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry={true}
+        style={styles.input}
+      />
+      {state.errorMessage ? (
+        <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+      ) : null}
       <Button
         title={"SignUP"}
-        style={tailwind(
-          "bg-blue-400 py-4 text-center px-17 md:px-12 md:py-4 text-white rounded leading-tight text-xl md:text-base font-sans mt-4 mb-20"
-        )}
-        onPress={onSignUp}
+        onPress={() => {
+          signup({ name, email, password });
+        }}
       />
       <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
-        <Text
-          style={tailwind(
-            "text-base text-white text-right font-roboto leading-normal hover:underline mb-6"
-          )}
-        >
-          Already Have An Account,SignIn?
-        </Text>
+        <Text>Already Have An Account,SignIn?</Text>
       </TouchableOpacity>
     </View>
   );
@@ -116,6 +72,10 @@ const styles = StyleSheet.create({
     borderColor: "black",
     marginBottom: 10,
   },
+  errorMessage: {
+    fontSize: 16,
+    color: "red",
+    marginVertical: 10,
+    marginTop: 15,
+  },
 });
-
-//export default LoginScreen;
