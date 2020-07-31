@@ -9,6 +9,8 @@ export default function SignUp({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [type, setType] = useState("");
   const [success, setSuccess] = useState(false);
 
   const handleSuccess = () => {
@@ -46,6 +48,25 @@ export default function SignUp({ navigation }) {
         secureTextEntry={true}
         style={styles.input}
       />
+      <Input
+        label="Confirm your password"
+        value={confirm}
+        onChangeText={setConfirm}
+        placeholder={"Confirm Password"}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry={true}
+        style={styles.input}
+      />
+      <Input
+        label="type"
+        value={type}
+        onChangeText={setType}
+        placeholder={"customer/owner"}
+        autoCapitalize="none"
+        autoCorrect={false}
+        style={styles.input}
+      />
       {state.errorMessage ? (
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
@@ -53,7 +74,8 @@ export default function SignUp({ navigation }) {
       <Button
         title={"SignUP"}
         onPress={() => {
-          signup({ name, email, password, handleSuccess });
+          console.log(name, email, password, confirm, type);
+          signup({ name, email, password, confirm, type, handleSuccess });
         }}
       />
       <TouchableOpacity onPress={() => navigation.navigate("Signin")}>

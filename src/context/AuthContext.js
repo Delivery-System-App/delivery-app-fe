@@ -17,21 +17,34 @@ const signup = (dispatch) => async ({
   name,
   email,
   password,
+  confirm,
+  type,
   handleSuccess,
 }) => {
   try {
-    const response = await DeliveryApi.post("/signup", {
+    const response = await DeliveryApi.post("/register", {
       name,
       email,
       password,
+      confirm,
+      type,
     });
-    await AsyncStorage.setItem("token", response.data.token);
-    dispatch({ type: "signup", payload: response.data.token });
-    handleSuccess();
+    const token = response.data.data.access_token;
+    await AsyncStorage.setItem("token", token);
+    dispatch({ type: "signup", payload: token });
+    if (token) {
+      handleSuccess();
+    } else {
+      dispatch({
+        type: "add_error",
+        //need to display a valid error message
+        payload: "Can't register!!",
+      });
+    }
   } catch (err) {
     dispatch({
       type: "add_error",
-      payload: "Somwthing went wrong with signup!!",
+      payload: "Somwthing went wrong with signup!!" + err,
     });
   }
 };
