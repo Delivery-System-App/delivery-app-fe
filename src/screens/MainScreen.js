@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Text, StyleSheet, View, Button } from "react-native";
-import tailwind from "tailwind-rn";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Context as AuthContext } from "./../context/AuthContext";
 
 const MainScreen = ({ navigation }) => {
+  const { tryLocalSignIn } = useContext(AuthContext);
+  useEffect(() => {
+    tryLocalSignIn(navigation);
+  }, []);
   return (
     <View>
       <Text style={styles.welcomeMsg}>Welcome To Geomata</Text>

@@ -1,35 +1,56 @@
-import React, { useState } from "react";
-import { View, StyleSheet, TextInput, Button, Text } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, StyleSheet, Button, Text } from "react-native";
+import { Input } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
-export default function Login({ onLoginStatus, navigation }) {
-  const [state, setState] = useState({
-    userId: "",
-    password: "",
-  });
-  const onLogin = () => {
-    const { userId, password } = state;
+import { Context as AuthContext } from "./../context/AuthContext";
+
+export default function Login({ navigation }) {
+  const { state, signin, clearErrorMessages } = useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [signedIn, setSignedIn] = useState(false);
+
+  const handleSignin = () => {
     setSignedIn(true);
   };
-  const [signedIn, setSignedIn] = useState(false);
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      clearErrorMessages();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
   return (
     <View>
-      <Text>Username</Text>
-      <TextInput
-        value={state.userId}
-        onChangeText={(userId) => setState({ ...state, userId })}
-        placeholder={"UserId"}
+      <Input
+        label="Enter your email address"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholder={"Email"}
         style={styles.input}
       />
-      <Text>Password</Text>
-      <TextInput
-        value={state.password}
-        onChangeText={(password) => setState({ ...state, password })}
+
+      <Input
+        label="Enter your password"
+        value={password}
+        onChangeText={setPassword}
         placeholder={"Password"}
+        autoCapitalize="none"
+        autoCorrect={false}
         secureTextEntry={true}
         style={styles.input}
       />
 
-      <Button title={"Login"} onPress={onLogin} />
+      {state.errorMessage ? (
+        <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+      ) : null}
+
+      <Button
+        title={"Login"}
+        onPress={() => signin({ email, password, handleSignin })}
+      />
       <TouchableOpacity
         onPress={() => {
           navigation.navigate("ForgotPasswd");
@@ -64,5 +85,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "black",
     marginBottom: 10,
+  },
+  errorMessage: {
+    fontSize: 16,
+    color: "red",
+    marginVertical: 10,
+    marginTop: 15,
   },
 });

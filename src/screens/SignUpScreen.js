@@ -5,13 +5,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 
 export default function SignUp({ navigation }) {
-  const { state, signup } = useContext(AuthContext);
+  const { state, signup, clearErrorMessages } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [type, setType] = useState("");
   const [success, setSuccess] = useState(false);
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      clearErrorMessages();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const handleSuccess = () => {
     setSuccess(true);
@@ -48,6 +55,7 @@ export default function SignUp({ navigation }) {
         secureTextEntry={true}
         style={styles.input}
       />
+
       <Input
         label="Confirm your password"
         value={confirm}
@@ -58,6 +66,7 @@ export default function SignUp({ navigation }) {
         secureTextEntry={true}
         style={styles.input}
       />
+
       <Input
         label="type"
         value={type}
@@ -67,17 +76,20 @@ export default function SignUp({ navigation }) {
         autoCorrect={false}
         style={styles.input}
       />
+
       {state.errorMessage ? (
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
+
       {success ? navigation.navigate("Home") : null}
+
       <Button
         title={"SignUP"}
         onPress={() => {
-          console.log(name, email, password, confirm, type);
           signup({ name, email, password, confirm, type, handleSuccess });
         }}
       />
+
       <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
         <Text>Already Have An Account,SignIn?</Text>
       </TouchableOpacity>

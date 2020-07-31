@@ -11,7 +11,6 @@ import { Provider as AuthProvider } from "./src/context/AuthContext";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const ref = React.createRef();
 
 function Home() {
   return (
@@ -26,7 +25,7 @@ function Home() {
 function MyStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="MainScreen">
         <Stack.Screen name="Food Delivery App" component={MainScreen} />
         <Stack.Screen name="Signup" component={SignUp} />
         <Stack.Screen name="Signin" component={LoginScreen} />

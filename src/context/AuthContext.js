@@ -6,11 +6,28 @@ const authReducer = (state, action) => {
   switch (action.type) {
     case "add_error":
       return { ...state, errorMessage: action.payload };
-    case "signup":
+    case "clear_error_message":
+      return { ...state, errorMessage: "" };
+    case "signin":
       return { errorMessage: "", token: action.payload };
     default:
       return state;
   }
+};
+
+const tryLocalSignIn = (dispatch) => async (navigation) => {
+  console.log(navigation);
+  const token = await AsyncStorage.getItem("token");
+  if (token) {
+    dispatch({ type: "signin", payload: token });
+    navigation.navigate("Hotels");
+  } else {
+    navigation.navigate("Signin");
+  }
+};
+
+const clearErrorMessages = (dispatch) => () => {
+  dispatch({ type: "clear_error_message" });
 };
 
 const signup = (dispatch) => async ({
@@ -30,9 +47,9 @@ const signup = (dispatch) => async ({
       type,
     });
     const token = response.data.data.access_token;
-    await AsyncStorage.setItem("token", token);
-    dispatch({ type: "signup", payload: token });
     if (token) {
+      await AsyncStorage.setItem("token", token);
+      dispatch({ type: "signin", payload: token });
       handleSuccess();
     } else {
       dispatch({
@@ -44,17 +61,35 @@ const signup = (dispatch) => async ({
   } catch (err) {
     dispatch({
       type: "add_error",
-      payload: "Somwthing went wrong with signup!!" + err,
+      payload: "Something went wrong with signup!!" + err,
     });
   }
 };
 
-const signin = (dispatch) => {
-  return ({ email, password }) => {
-    //try to sign in
-    //handle success by updating states
-    //handle failue by showing error messages
-  };
+const signin = (dispatch) => async ({ email, password, handleSignin }) => {
+  try {
+    const response = await DeliveryApi.post("login", {
+      email,
+      password,
+    });
+    const token = response.data.access_token;
+    if (token) {
+      await AsyncStorage.setItem("token", token);
+      dispatch({ type: "signin", payload: token });
+      handleSignin();
+    } else {
+      dispatch({
+        type: "add_error",
+        //need to display a valid error message
+        payload: "Can't sign you in!!",
+      });
+    }
+  } catch (err) {
+    dispatch({
+      type: "add_error",
+      payload: "Something went wrong with signin!!" + err,
+    });
+  }
 };
 
 const signout = (dispatch) => {
@@ -65,6 +100,6 @@ const signout = (dispatch) => {
 
 export const { Provider, Context } = createDataContext(
   authReducer,
-  { signup, signin, signout },
+  { signup, signin, signout, clearErrorMessages, tryLocalSignIn },
   { token: null, errorMessage: "" }
 );
