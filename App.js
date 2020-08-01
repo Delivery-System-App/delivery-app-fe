@@ -9,6 +9,7 @@ import ForgotPassword from "./src/screens/ForgotPassword";
 import ListHotels from "./src/screens/ListHotels";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
+import ProfileScreen from "./src/screens/ProfileScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -18,7 +19,7 @@ function Home() {
     <Tab.Navigator>
       <Tab.Screen name="Hotels" component={ListHotels} />
       {/* needs to add profile screen when done */}
-      <Tab.Screen name="My Profile" component={MainScreen} />
+      <Tab.Screen name="My Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
