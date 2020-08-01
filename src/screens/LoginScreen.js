@@ -8,11 +8,7 @@ export default function Login({ navigation }) {
   const { state, signin, clearErrorMessages } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [signedIn, setSignedIn] = useState(false);
 
-  const handleSignin = () => {
-    setSignedIn(true);
-  };
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       clearErrorMessages();
@@ -49,7 +45,7 @@ export default function Login({ navigation }) {
 
       <Button
         title={"Login"}
-        onPress={() => signin({ email, password, handleSignin })}
+        onPress={() => signin({ email, password, navigation })}
       />
       <TouchableOpacity
         onPress={() => {
@@ -66,7 +62,6 @@ export default function Login({ navigation }) {
       >
         <Text>Don't have an account?</Text>
       </TouchableOpacity>
-      {signedIn ? navigation.navigate("Home") : null}
     </View>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, Button, Text } from "react-native";
 import { Input } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -11,8 +11,7 @@ export default function SignUp({ navigation }) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [type, setType] = useState("");
-  const [success, setSuccess] = useState(false);
-  React.useEffect(() => {
+  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       clearErrorMessages();
     });
@@ -20,9 +19,6 @@ export default function SignUp({ navigation }) {
     return unsubscribe;
   }, [navigation]);
 
-  const handleSuccess = () => {
-    setSuccess(true);
-  };
   return (
     <View>
       <Input
@@ -81,12 +77,10 @@ export default function SignUp({ navigation }) {
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
 
-      {success ? navigation.navigate("Home") : null}
-
       <Button
         title={"SignUP"}
         onPress={() => {
-          signup({ name, email, password, confirm, type, handleSuccess });
+          signup({ name, email, password, confirm, type, navigation });
         }}
       />
 

@@ -21,7 +21,7 @@ const tryLocalSignIn = (dispatch) => async (navigation) => {
   const token = await AsyncStorage.getItem("token");
   if (token) {
     dispatch({ type: "signin", payload: token });
-    navigation.navigate("Hotels");
+    navigation.navigate("Home");
   } else {
     navigation.navigate("Signin");
   }
@@ -37,7 +37,7 @@ const signup = (dispatch) => async ({
   password,
   confirm,
   type,
-  handleSuccess,
+  navigation,
 }) => {
   try {
     const response = await DeliveryApi.post("/register", {
@@ -51,7 +51,7 @@ const signup = (dispatch) => async ({
     if (token) {
       await AsyncStorage.setItem("token", token);
       dispatch({ type: "signin", payload: token });
-      handleSuccess();
+      navigation.navigate("Home");
     } else {
       dispatch({
         type: "add_error",
@@ -67,7 +67,7 @@ const signup = (dispatch) => async ({
   }
 };
 
-const signin = (dispatch) => async ({ email, password, handleSignin }) => {
+const signin = (dispatch) => async ({ email, password, navigation }) => {
   try {
     const response = await DeliveryApi.post("login", {
       email,
@@ -77,7 +77,7 @@ const signin = (dispatch) => async ({ email, password, handleSignin }) => {
     if (token) {
       await AsyncStorage.setItem("token", token);
       dispatch({ type: "signin", payload: token });
-      handleSignin();
+      navigation.navigate("Home");
     } else {
       dispatch({
         type: "add_error",
