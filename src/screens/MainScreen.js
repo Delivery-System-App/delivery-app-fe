@@ -1,12 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Text, StyleSheet, View, Button } from "react-native";
-import { Context as AuthContext } from "./../context/AuthContext";
 
 const MainScreen = ({ navigation }) => {
-  const { tryLocalSignIn } = useContext(AuthContext);
-  useEffect(() => {
-    tryLocalSignIn(navigation);
-  }, []);
   return (
     <View>
       <Text style={styles.welcomeMsg}>Welcome To Geomata</Text>

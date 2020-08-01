@@ -8,6 +8,7 @@ import SignUp from "./src/screens/SignUpScreen";
 import ForgotPassword from "./src/screens/ForgotPassword";
 import ListHotels from "./src/screens/ListHotels";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -25,7 +26,8 @@ function Home() {
 function MyStack() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="MainScreen">
+      <Stack.Navigator initialRouteName="Loading">
+        <Stack.Screen name="Loading" component={ResolveAuthScreen} />
         <Stack.Screen name="Food Delivery App" component={MainScreen} />
         <Stack.Screen name="Signup" component={SignUp} />
         <Stack.Screen name="Signin" component={LoginScreen} />
