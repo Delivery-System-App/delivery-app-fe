@@ -10,8 +10,10 @@ import ListHotels from "./src/screens/ListHotels";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import ResultsShowScreen from "./src/screens/ResultsShowScreen";
 
 const Stack = createStackNavigator();
+const Stack2 = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function Home() {
@@ -35,6 +37,7 @@ function MyStack() {
         <Stack.Screen name="ForgotPasswd" component={ForgotPassword} />
         <Stack.Screen name="Hotels" component={ListHotels} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

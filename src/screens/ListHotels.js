@@ -1,42 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import SearchBar from "../components/RestaurantItem/SearchBar";
 import restaurantApi from "../api/restaurantApi";
+import useResults from "../hooks/useResults";
+import ResultList from "../components/RestaurantItem/ResultsList";
 
-const ListHotels = () => {
+const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
-  const [results, setResults] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [searchApi, results, errorMessage] = useResults("");
 
-  useEffect(() => {
-    searchApi("pasta");
-  }, []);
-
-  const searchApi = async (searchTerm) => {
-    try {
-      const response = await restaurantApi.get("/search", {
-        params: {
-          count: 50,
-          entity_id: 4,
-          entity_type: "city",
-          q: searchTerm,
-        },
-      });
-      setResults(response.data.restaurants);
-    } catch (err) {
-      setErrorMessage(err.message);
-    }
+  const filterResultsByPrice = (price) => {
+    return results.filter((result) => {
+      return result.restaurant.price_range === price;
+    });
   };
   return (
-    <View>
+    <>
       <SearchBar
         term={term}
         onTermChange={setTerm}
         onTermSubmit={() => searchApi(term)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
-      <Text>we have found: {results.length} restaurants</Text>
-    </View>
+      <ScrollView>
+        <ResultList
+          navigation={navigation}
+          results={filterResultsByPrice(2)}
+          title="Cost Effective"
+        />
+        <ResultList
+          navigation={navigation}
+          results={filterResultsByPrice(3)}
+          title="Bit Spender"
+        />
+        <ResultList
+          navigation={navigation}
+          results={filterResultsByPrice(4)}
+          title="Bit Pricer"
+        />
+      </ScrollView>
+    </>
   );
 };
 
