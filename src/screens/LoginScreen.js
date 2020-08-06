@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, Button, Text } from "react-native";
-import { Input } from "react-native-elements";
+import { View, StyleSheet, Button, Text, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 
@@ -17,19 +16,18 @@ export default function Login({ navigation }) {
     return unsubscribe;
   }, [navigation]);
   return (
-    <View>
-      <Input
-        label="Enter your email address"
+    <View style={styles.container}>
+      <Text style={styles.instruction}>Login </Text>
+      <TextInput
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         autoCorrect={false}
-        placeholder={"Email"}
+        placeholder={"Email-ID"}
         style={styles.input}
       />
 
-      <Input
-        label="Enter your password"
+      <TextInput
         value={password}
         onChangeText={setPassword}
         placeholder={"Password"}
@@ -43,25 +41,33 @@ export default function Login({ navigation }) {
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
 
-      <Button
-        title={"Login"}
-        onPress={() => signin({ email, password, navigation })}
-      />
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("ForgotPasswd");
-        }}
-      >
-        <Text>Forgot Password?</Text>
-      </TouchableOpacity>
+      <View style={styles.innerContainer1}>
+        <TouchableOpacity style={styles.link}
+          onPress={() => {
+            navigation.navigate("ForgotPasswd");
+          }}
+        >
+          <Text style={styles.btnTxt}>Forgot Password?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginButton}
 
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("Signup");
-        }}
-      >
-        <Text>Don't have an account?</Text>
-      </TouchableOpacity>
+          onPress={() => signin({ email, password, navigation })}
+        >
+          <Text style={styles.btnTxt}>Login</Text>
+        </TouchableOpacity>
+
+
+      </View>
+      <View style={styles.innerContainer2}>
+        <TouchableOpacity style={styles.link}
+          onPress={() => {
+            navigation.navigate("Signup");
+          }}
+        >
+          <Text style={styles.BtnTxt}>New here? Signup Instead</Text>
+        </TouchableOpacity>
+      </View>
+
     </View>
   );
 }
@@ -71,20 +77,58 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#008080",
   },
   input: {
-    width: 200,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "black",
+    width: "90%",
+    padding: 15,
+    backgroundColor: "#fff",
     marginBottom: 10,
   },
   errorMessage: {
-    fontSize: 16,
+    fontSize: 10,
     color: "red",
     marginVertical: 10,
     marginTop: 15,
+  },
+  instruction: {
+    fontSize: 25,
+    textAlign: 'center',
+    fontFamily: "DancingScript-Bold",
+    margin: 20,
+    color: "#fff",
+  },
+  loginButton: {
+    width: "100%",
+    backgroundColor: "#fff",
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: "15%",
+  },
+  innerContainer1: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+    marginBottom: 250,
+  },
+  innerContainer2: {
+    width: "90%",
+    height: "10%",
+    alignItems: "center",
+    marginBottom: 0,
+  },
+  btnTxt: {
+    fontSize: 18,
+    textAlign: "center",
+  },
+  linkTxt: {
+    fontSize: 18,
+    textAlign: "center",
+    fontFamily: "bold",
+  },
+  link: {
+    width: "100%",
+    padding: 15,
+    marginBottom: 10,
   },
 });
