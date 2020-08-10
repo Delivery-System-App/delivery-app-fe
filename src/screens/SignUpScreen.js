@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { View, StyleSheet, Button, Text } from "react-native";
+import { View, StyleSheet, Button, Text, TextInput } from "react-native";
 import { Input } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
@@ -20,8 +20,9 @@ export default function SignUp({ navigation }) {
   }, [navigation]);
 
   return (
-    <View>
-      <Input
+    <View style={styles.container}>
+      <Text style={styles.instruction}>Signup</Text>
+      <TextInput
         label="Enter your name"
         value={name}
         onChangeText={setName}
@@ -31,7 +32,7 @@ export default function SignUp({ navigation }) {
         style={styles.input}
       />
 
-      <Input
+      <TextInput
         label="Enter your email address"
         value={email}
         onChangeText={setEmail}
@@ -41,7 +42,7 @@ export default function SignUp({ navigation }) {
         style={styles.input}
       />
 
-      <Input
+      <TextInput
         label="Enter your password"
         value={password}
         onChangeText={setPassword}
@@ -52,7 +53,7 @@ export default function SignUp({ navigation }) {
         style={styles.input}
       />
 
-      <Input
+      <TextInput
         label="Confirm your password"
         value={confirm}
         onChangeText={setConfirm}
@@ -63,7 +64,7 @@ export default function SignUp({ navigation }) {
         style={styles.input}
       />
 
-      <Input
+      <TextInput
         label="type"
         value={type}
         onChangeText={setType}
@@ -77,16 +78,24 @@ export default function SignUp({ navigation }) {
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
 
-      <Button
-        title={"SignUP"}
-        onPress={() => {
-          signup({ name, email, password, confirm, type, navigation });
-        }}
-      />
-
-      <TouchableOpacity onPress={() => navigation.navigate("Signin")}>
-        <Text>Already Have An Account,SignIn?</Text>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity
+          style={styles.signupButton}
+          onPress={() => {
+            signup({ name, email, password, confirm, type, navigation });
+          }}
+        >
+          <Text style={styles.btnTxt}>Signup</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.innerContainer2}>
+        <TouchableOpacity
+          style={styles.link}
+          onPress={() => navigation.navigate("Signin")}
+        >
+          <Text style={styles.BtnTxt}>Already Have An Account,SignIn?</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -96,20 +105,58 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#008080",
   },
   input: {
-    width: 200,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "black",
+    width: "90%",
+    padding: 15,
+    backgroundColor: "#fff",
     marginBottom: 10,
   },
   errorMessage: {
-    fontSize: 16,
+    fontSize: 10,
     color: "red",
     marginVertical: 10,
     marginTop: 15,
+  },
+  instruction: {
+    fontSize: 25,
+    textAlign: "center",
+    fontFamily: "DancingScript-Bold",
+    margin: 20,
+    color: "#fff",
+  },
+  signupButton: {
+    width: "100%",
+    backgroundColor: "#fff",
+    padding: 15,
+    marginBottom: 10,
+    borderRadius: "15%",
+  },
+  innerContainer1: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "90%",
+    marginBottom: 250,
+  },
+  innerContainer2: {
+    width: "90%",
+    height: "10%",
+    alignItems: "center",
+    marginBottom: 0,
+  },
+  btnTxt: {
+    fontSize: 18,
+    textAlign: "center",
+  },
+  linkTxt: {
+    fontSize: 18,
+    textAlign: "center",
+    fontFamily: "bold",
+  },
+  link: {
+    width: "100%",
+    padding: 15,
+    marginBottom: 10,
   },
 });
