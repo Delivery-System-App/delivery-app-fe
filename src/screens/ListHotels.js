@@ -4,6 +4,7 @@ import SearchBar from "../components/RestaurantItem/SearchBar";
 import restaurantApi from "../api/restaurantApi";
 import useResults from "../hooks/useResults";
 import ResultList from "../components/RestaurantItem/ResultsList";
+import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 
 const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
@@ -22,7 +23,9 @@ const ListHotels = ({ navigation }) => {
         onTermSubmit={() => searchApi(term)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
-      <ScrollView>
+      <ScrollView style={{ marginTop: 10 }}>
+        <MainScreenBanner />
+
         <ResultList
           navigation={navigation}
           results={filterResultsByPrice(2)}
