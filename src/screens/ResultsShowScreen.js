@@ -4,9 +4,13 @@ import restaurantApi from "../api/restaurantApi";
 import { ScrollView } from "react-native-gesture-handler";
 import {FAB,Badge,Drawer} from "react-native-paper";
 import { ListItem } from "react-native-elements";
+import {
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 
-
-const ResultsShowScreen = ({ route }) => {
+const ResultsShowScreen = ({ route, navigation }) => {
   const [result, setResult] = useState([]);
   const [cuisines,setCusines] = useState([]);
   const [currency,setCurrency] = useState("");
@@ -79,6 +83,12 @@ const ResultsShowScreen = ({ route }) => {
                  );
             }}
           />
+          <TouchableOpacity
+            style={{ backgroundColor: "#33c37d" }}
+            onPress={() => navigation.navigate("FoodItems")}
+          >
+            <Text>MENU</Text>
+          </TouchableOpacity>
         </ScrollView>
         <FAB
         style={styles.fab}

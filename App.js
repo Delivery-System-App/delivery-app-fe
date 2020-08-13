@@ -11,6 +11,7 @@ import { Provider as AuthProvider } from "./src/context/AuthContext";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import ResultsShowScreen from "./src/screens/ResultsShowScreen";
+import FoodItems from "./src/screens/FoodItems";
 
 const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
@@ -43,6 +44,7 @@ function MyStack() {
 
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
+        <Stack.Screen name="FoodItems" component={FoodItems} />
       </Stack.Navigator>
     </NavigationContainer>
   );
