@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import restaurantApi from "../api/restaurantApi";
-import { ScrollView, FlatList } from "react-native-gesture-handler";
+import {
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 
-const ResultsShowScreen = ({ route }) => {
+const ResultsShowScreen = ({ route, navigation }) => {
   const [result, setResult] = useState([]);
   const getResult = async (id) => {
     const response = await restaurantApi.get(`/restaurant?res_id=${id}`);
@@ -39,6 +43,12 @@ const ResultsShowScreen = ({ route }) => {
               return <Text>{item}</Text>;
             }}
           />
+          <TouchableOpacity
+            style={{ backgroundColor: "#33c37d" }}
+            onPress={() => navigation.navigate("FoodItems")}
+          >
+            <Text>MENU</Text>
+          </TouchableOpacity>
         </ScrollView>
       </View>
     </>
