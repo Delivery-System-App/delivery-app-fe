@@ -29,16 +29,14 @@ function Home() {
 function MyStack() {
   return (
     <NavigationContainer>
-      
-        <Stack.Navigator initialRouteName="Hotels">
-          
+      <Stack.Navigator initialRouteName="Hotels">
         <Stack.Screen name="Hotels" component={ListHotels} />
         <Stack.Screen name="Loading" component={ResolveAuthScreen} />
         <Stack.Screen name="Food Delivery App" component={MainScreen} />
         <Stack.Screen name="Signup" component={SignUp} />
         <Stack.Screen name="Signin" component={LoginScreen} />
         <Stack.Screen name="ForgotPasswd" component={ForgotPassword} />
-        
+
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
       </Stack.Navigator>
@@ -49,10 +47,8 @@ const App = MyStack;
 
 export default () => {
   return (
-    
     <AuthProvider>
       <App />
     </AuthProvider>
-    
   );
 };
