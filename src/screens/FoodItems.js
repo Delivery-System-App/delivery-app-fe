@@ -8,6 +8,8 @@ import {
   Image,
 } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
+import { AsyncStorage } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 
 var { height, width } = Dimensions.get("window");
 
@@ -42,6 +44,31 @@ const FoodItems = () => {
       categorie: "BreakFast",
     },
   ];
+  const onClickAddCart = (data) => {
+    const itemcart = {
+      food: data,
+      quantity: 1,
+      price: data.price,
+    };
+
+    AsyncStorage.getItem("cart")
+      .then((datacart) => {
+        if (datacart !== null) {
+          // We have data!!
+          const cart = JSON.parse(datacart);
+          cart.push(itemcart);
+          AsyncStorage.setItem("cart", JSON.stringify(cart));
+        } else {
+          const cart = [];
+          cart.push(itemcart);
+          AsyncStorage.setItem("cart", JSON.stringify(cart));
+        }
+        alert("Add Cart");
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
   const _renderItemFood = (item) => {
     let catg = 0;
     if (catg == 0 || catg == item.categorie) {
@@ -66,6 +93,24 @@ const FoodItems = () => {
           </Text>
           <Text>Descp Food and Details</Text>
           <Text style={{ fontSize: 20, color: "green" }}>Rs.{item.price}</Text>
+          <TouchableOpacity
+            onPress={() => onClickAddCart(item)}
+            style={{
+              width: width / 2 - 40,
+              backgroundColor: "#33c37d",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 5,
+              padding: 4,
+            }}
+          >
+            <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
+              Add Cart
+            </Text>
+            <View style={{ width: 10 }} />
+            <Icon name="ios-add-circle" size={30} color={"white"} />
+          </TouchableOpacity>
         </TouchableOpacity>
       );
     }

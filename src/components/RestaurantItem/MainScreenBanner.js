@@ -18,9 +18,10 @@ const MainScreenBanner = () => {
           autoplay={true}
           autoplayTimeout={5}
         >
-          {dataBanner.map((itembann) => {
+          {dataBanner.map((itembann, i) => {
             return (
               <Image
+                key={i}
                 style={styles.imageBanner}
                 resizeMode="contain"
                 source={{ uri: itembann }}

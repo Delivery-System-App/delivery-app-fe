@@ -15,7 +15,6 @@ export default function SignUp({ navigation }) {
     const unsubscribe = navigation.addListener("focus", () => {
       clearErrorMessages();
     });
-
     return unsubscribe;
   }, [navigation]);
 

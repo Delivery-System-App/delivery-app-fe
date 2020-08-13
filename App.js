@@ -12,6 +12,7 @@ import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import ResultsShowScreen from "./src/screens/ResultsShowScreen";
 import FoodItems from "./src/screens/FoodItems";
+import Cart from "./src/screens/cart";
 
 const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
@@ -23,10 +24,11 @@ function Home() {
       <Tab.Screen
         name="Hotels"
         component={ListHotels}
-        options={{ title: "Restaurants" }}
+        options={{ title: "Hotel" }}
       />
+      <Tab.Screen name="Cart" component={Cart} />
       {/* needs to add profile screen when done */}
-      <Tab.Screen name="My Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }
