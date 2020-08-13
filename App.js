@@ -11,7 +11,6 @@ import { Provider as AuthProvider } from "./src/context/AuthContext";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import ResultsShowScreen from "./src/screens/ResultsShowScreen";
-import { Provider as PaperProvider } from 'react-native-paper';
 
 const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
@@ -31,7 +30,7 @@ function MyStack() {
   return (
     <NavigationContainer>
       
-        <Stack.Navigator initialRouteName="Loadings">
+        <Stack.Navigator initialRouteName="Hotels">
           
         <Stack.Screen name="Hotels" component={ListHotels} />
         <Stack.Screen name="Loading" component={ResolveAuthScreen} />
@@ -50,10 +49,10 @@ const App = MyStack;
 
 export default () => {
   return (
-    <PaperProvider>
+    
     <AuthProvider>
       <App />
     </AuthProvider>
-    </PaperProvider>
+    
   );
 };
