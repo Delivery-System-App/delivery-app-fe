@@ -19,7 +19,11 @@ const Tab = createBottomTabNavigator();
 function Home() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Hotels" component={ListHotels} />
+      <Tab.Screen
+        name="Hotels"
+        component={ListHotels}
+        options={{ title: "Restaurants" }}
+      />
       {/* needs to add profile screen when done */}
       <Tab.Screen name="My Profile" component={ProfileScreen} />
     </Tab.Navigator>
