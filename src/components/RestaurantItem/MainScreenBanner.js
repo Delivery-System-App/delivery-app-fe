@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Dimensions, View } from "react-native";
 var { height, width } = Dimensions.get("window");
-import Swiper from "react-native-swiper";
+import Swiper from "react-native-swiper/src";
 
 const MainScreenBanner = () => {
   const dataBanner = [
