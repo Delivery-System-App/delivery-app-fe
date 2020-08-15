@@ -37,13 +37,13 @@ function MyStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Loading">
-        <Stack.Screen name="Loading" component={ResolveAuthScreen} />
-        <Stack.Screen name="Food Delivery App" component={MainScreen} />
-        <Stack.Screen name="Signup" component={SignUp} />
-        <Stack.Screen name="Signin" component={LoginScreen} />
+        <Stack.Screen options={ {headerLeft:null}} name="Loading" component={ResolveAuthScreen} />
+        <Stack.Screen options={ {headerLeft:null}} name="Food Delivery App" component={MainScreen} />
+        <Stack.Screen options={ {headerLeft:null}} name="Signup" component={SignUp} />
+        <Stack.Screen options={ {headerLeft:null}} name="Signin" component={LoginScreen} />
         <Stack.Screen name="ForgotPasswd" component={ForgotPassword} />
         <Stack.Screen name="Hotels" component={ListHotels} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen options={ {headerLeft:null}} name="Home" component={Home} />
         <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
         <Stack.Screen name="FoodItems" component={FoodItems} />
       </Stack.Navigator>
