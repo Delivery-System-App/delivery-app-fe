@@ -26,11 +26,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  emailContainer: {
-    backgroundColor: "#FFF",
-    flex: 1,
-    paddingTop: 30,
-  },
   headerBackgroundImage: {
     paddingBottom: 20,
     paddingTop: 35,
@@ -47,11 +42,7 @@ const styles = StyleSheet.create({
   scroll: {
     backgroundColor: "#FFF",
   },
-  telContainer: {
-    backgroundColor: "#FFF",
-    flex: 1,
-    paddingTop: 30,
-  },
+
   userAddressRow: {
     alignItems: "center",
     flexDirection: "row",
