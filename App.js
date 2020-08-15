@@ -10,6 +10,7 @@ import ListHotels from "./src/screens/ListHotels";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import ProfileScreen from "./src/screens/ProfileScreen";
+import ProfileScreen2 from "./src/screens/Profile1/index";
 import ResultsShowScreen from "./src/screens/ResultsShowScreen";
 import FoodItems from "./src/screens/FoodItems";
 import Cart from "./src/screens/cart";
@@ -29,6 +30,7 @@ function Home() {
       <Tab.Screen name="Cart" component={Cart} />
       {/* needs to add profile screen when done */}
       <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="UserProfile" component={ProfileScreen2} />
     </Tab.Navigator>
   );
 }
@@ -37,13 +39,33 @@ function MyStack() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Loading">
-        <Stack.Screen options={ {headerLeft:null}} name="Loading" component={ResolveAuthScreen} />
-        <Stack.Screen options={ {headerLeft:null}} name="Food Delivery App" component={MainScreen} />
-        <Stack.Screen options={ {headerLeft:null}} name="Signup" component={SignUp} />
-        <Stack.Screen options={ {headerLeft:null}} name="Signin" component={LoginScreen} />
+        <Stack.Screen
+          options={{ headerLeft: null }}
+          name="Loading"
+          component={ResolveAuthScreen}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null }}
+          name="Food Delivery App"
+          component={MainScreen}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null }}
+          name="Signup"
+          component={SignUp}
+        />
+        <Stack.Screen
+          options={{ headerLeft: null }}
+          name="Signin"
+          component={LoginScreen}
+        />
         <Stack.Screen name="ForgotPasswd" component={ForgotPassword} />
         <Stack.Screen name="Hotels" component={ListHotels} />
-        <Stack.Screen options={ {headerLeft:null}} name="Home" component={Home} />
+        <Stack.Screen
+          options={{ headerLeft: null }}
+          name="Home"
+          component={Home}
+        />
         <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
         <Stack.Screen name="FoodItems" component={FoodItems} />
       </Stack.Navigator>
