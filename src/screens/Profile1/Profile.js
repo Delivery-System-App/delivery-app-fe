@@ -98,6 +98,7 @@ const Contact = (props) => {
       avatar,
       avatarBackground,
       name,
+      email,
       address: { city, country },
     } = props;
 
@@ -118,6 +119,18 @@ const Contact = (props) => {
               }}
             />
             <Text style={styles.userNameText}>{name}</Text>
+            <View style={styles.userAddressRow}>
+              <View>
+                <Icon
+                  name="email"
+                  underlayColor="transparent"
+                  iconStyle={styles.placeIcon}
+                />
+              </View>
+              <View style={styles.userCityRow}>
+                <Text style={styles.userCityText}> {email}</Text>
+              </View>
+            </View>
             <View style={styles.userAddressRow}>
               <View>
                 <Icon
