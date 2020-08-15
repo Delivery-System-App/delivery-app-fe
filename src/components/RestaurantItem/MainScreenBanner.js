@@ -16,7 +16,7 @@ const MainScreenBanner = () => {
           style={styles.container}
           showsButtons={false}
           autoplay={true}
-          autoplayTimeout={5}
+          autoplayTimeout={2}
         >
           {dataBanner.map((itembann, i) => {
             return (
