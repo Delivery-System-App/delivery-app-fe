@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   fab: {
     resizeMode: "contain",
-    position: "absolute",
+    position: "fixed",
     margin: 16,
     right: 0,
     bottom: 0,
