@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Card, Icon } from "react-native-elements";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import {
   Image,
   ImageBackground,
@@ -14,6 +16,7 @@ import {
 import PropTypes from "prop-types";
 
 import mainColor from "./constants";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -70,6 +73,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingBottom: 8,
     textAlign: "center",
+  },
+  tabText: {
+    fontSize: 20,
+  },
+  tabIcons: {
+    // paddingLeft: 8,
+    // width: 100,
+    // flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
 });
 
@@ -142,10 +156,80 @@ const Contact = (props) => {
     );
   };
 
+  const renderTab = () => {
+    return (
+      <View
+        style={{
+          height: 100,
+          // alignItems: "center",
+          // justifyContent: "center",
+        }}
+      >
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            paddingVertical: 10,
+          }}
+        >
+          <View style={styles.tabIcons}>
+            <TouchableOpacity onPress={() => {}}>
+              <MaterialCommunityIcons
+                style={{ padding: 5 }}
+                name="cash"
+                size={40}
+                color="black"
+              />
+              <Text>Payments</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.tabIcons}>
+            <TouchableOpacity onPress={() => {}}>
+              <MaterialCommunityIcons
+                style={{ padding: 5 }}
+                name="settings"
+                size={40}
+                color="black"
+              />
+              <Text>Settings</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.tabIcons}>
+            <TouchableOpacity onPress={() => {}}>
+              <MaterialCommunityIcons
+                style={{ padding: 5 }}
+                name="bell"
+                size={40}
+                color="black"
+              />
+            </TouchableOpacity>
+            <Text>Notifications</Text>
+          </View>
+          <View style={styles.tabIcons}>
+            <TouchableOpacity onPress={() => {}}>
+              <MaterialCommunityIcons
+                style={{ padding: 5 }}
+                name="bookmark"
+                size={40}
+                color="black"
+              />
+              <Text>Bookmarks</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
   return (
     <ScrollView style={styles.scroll}>
       <View style={styles.container}>
         <Card containerStyle={styles.cardContainer}>{renderHeader()}</Card>
+      </View>
+      <View style={styles.container}>
+        <Card containerStyle={styles.cardContainer}>{renderTab()}</Card>
       </View>
     </ScrollView>
   );
