@@ -4,7 +4,7 @@ import { Input } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 
-export default function SignUp({ navigation }) {
+const SignUp = ({ navigation }) => {
   const { state, signup, clearErrorMessages } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -97,7 +97,9 @@ export default function SignUp({ navigation }) {
       </View>
     </View>
   );
-}
+};
+
+export default SignUp;
 
 const styles = StyleSheet.create({
   container: {

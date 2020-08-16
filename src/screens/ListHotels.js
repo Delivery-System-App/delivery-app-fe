@@ -15,7 +15,7 @@ import FoodCategories from "../components/RestaurantItem/FoodCategories";
 
 const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
-
+  localStorage.setItem("ssss", "Hotel");
   const [searchApi, results, errorMessage] = useResults("");
 
   const filterResultsByPrice = (price) => {
