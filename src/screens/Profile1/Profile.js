@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { Card, Icon } from "react-native-elements";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 import {
   Image,
   ImageBackground,
-  Linking,
-  ListView,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -17,6 +15,7 @@ import PropTypes from "prop-types";
 
 import mainColor from "./constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import ProfileScreen from "../ProfileScreen";
 
 const styles = StyleSheet.create({
   cardContainer: {
@@ -78,9 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   tabIcons: {
-    // paddingLeft: 8,
-    // width: 100,
-    // flex: 1,
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -88,6 +84,7 @@ const styles = StyleSheet.create({
 });
 
 const Contact = (props) => {
+  const navigation = useNavigation();
   const propTypes = {
     avatar: PropTypes.string.isRequired,
     avatarBackground: PropTypes.string.isRequired,
@@ -161,8 +158,6 @@ const Contact = (props) => {
       <View
         style={{
           height: 100,
-          // alignItems: "center",
-          // justifyContent: "center",
         }}
       >
         <View
@@ -185,7 +180,9 @@ const Contact = (props) => {
           </View>
 
           <View style={styles.tabIcons}>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Food Delivery App")}
+            >
               <MaterialCommunityIcons
                 style={{ padding: 5 }}
                 name="settings"
@@ -211,11 +208,11 @@ const Contact = (props) => {
             <TouchableOpacity onPress={() => {}}>
               <MaterialCommunityIcons
                 style={{ padding: 5 }}
-                name="bookmark"
+                name="shopping"
                 size={40}
                 color="black"
               />
-              <Text>Bookmarks</Text>
+              <Text>My Orders</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -230,6 +227,9 @@ const Contact = (props) => {
       </View>
       <View style={styles.container}>
         <Card containerStyle={styles.cardContainer}>{renderTab()}</Card>
+      </View>
+      <View style={{ marginTop: 20 }}>
+        <ProfileScreen navigation={navigation} />
       </View>
     </ScrollView>
   );
