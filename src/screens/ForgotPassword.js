@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet, TextInput, Button, Text } from "react-native";
 import tailwind from "tailwind-rn";
-export default function ForgotPassword({ onLoginStatus }) {
+const ForgotPassword = ({ onLoginStatus }) => {
   const [state, setState] = useState({
     userId: "",
     password: "",
@@ -46,7 +46,7 @@ export default function ForgotPassword({ onLoginStatus }) {
       />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-//export default LoginScreen;
+export default ForgotPassword;
