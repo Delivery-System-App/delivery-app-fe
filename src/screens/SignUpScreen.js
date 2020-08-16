@@ -1,33 +1,48 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, StyleSheet, Button, Text, TextInput } from "react-native";
+import { Input } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 
-const Login = ({ navigation }) => {
-  const { state, signin, clearErrorMessages } = useContext(AuthContext);
+const SignUp = ({ navigation }) => {
+  const { state, signup, clearErrorMessages } = useContext(AuthContext);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  React.useEffect(() => {
+  const [confirm, setConfirm] = useState("");
+  const [type, setType] = useState("");
+  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       clearErrorMessages();
     });
-
     return unsubscribe;
   }, [navigation]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.instruction}>Login </Text>
+      <Text style={styles.instruction}>Signup</Text>
       <TextInput
-        value={email}
-        onChangeText={setEmail}
+        label="Enter your name"
+        value={name}
+        onChangeText={setName}
         autoCapitalize="none"
         autoCorrect={false}
-        placeholder={"Email-ID"}
+        placeholder={"name"}
         style={styles.input}
       />
 
       <TextInput
+        label="Enter your email address"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholder={"Email"}
+        style={styles.input}
+      />
+
+      <TextInput
+        label="Enter your password"
         value={password}
         onChangeText={setPassword}
         placeholder={"Password"}
@@ -37,39 +52,54 @@ const Login = ({ navigation }) => {
         style={styles.input}
       />
 
+      <TextInput
+        label="Confirm your password"
+        value={confirm}
+        onChangeText={setConfirm}
+        placeholder={"Confirm Password"}
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry={true}
+        style={styles.input}
+      />
+
+      <TextInput
+        label="type"
+        value={type}
+        onChangeText={setType}
+        placeholder={"customer/owner"}
+        autoCapitalize="none"
+        autoCorrect={false}
+        style={styles.input}
+      />
+
       {state.errorMessage ? (
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
 
-      <View style={styles.innerContainer1}>
+      <View>
         <TouchableOpacity
-          style={styles.link}
+          style={styles.signupButton}
           onPress={() => {
-            navigation.navigate("ForgotPasswd");
+            signup({ name, email, password, confirm, type, navigation });
           }}
         >
-          <Text style={styles.btnTxt}>Forgot Password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => signin({ email, password, navigation })}
-        >
-          <Text style={styles.btnTxt}>Login</Text>
+          <Text style={styles.btnTxt}>Signup</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.innerContainer2}>
         <TouchableOpacity
           style={styles.link}
-          onPress={() => {
-            navigation.navigate("Signup");
-          }}
+          onPress={() => navigation.navigate("Signin")}
         >
-          <Text style={styles.BtnTxt}>New here? Signup Instead</Text>
+          <Text style={styles.BtnTxt}>Already Have An Account,SignIn?</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
@@ -97,7 +127,7 @@ const styles = StyleSheet.create({
     margin: 20,
     color: "#fff",
   },
-  loginButton: {
+  signupButton: {
     width: "100%",
     backgroundColor: "#fff",
     padding: 15,
@@ -131,5 +161,3 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
-
-export default Login;
