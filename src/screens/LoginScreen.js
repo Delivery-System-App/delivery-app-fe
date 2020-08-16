@@ -3,7 +3,7 @@ import { View, StyleSheet, Button, Text, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 
-export default function Login({ navigation }) {
+const Login = ({ navigation }) => {
   const { state, signin, clearErrorMessages } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -42,24 +42,24 @@ export default function Login({ navigation }) {
       ) : null}
 
       <View style={styles.innerContainer1}>
-        <TouchableOpacity style={styles.link}
+        <TouchableOpacity
+          style={styles.link}
           onPress={() => {
             navigation.navigate("ForgotPasswd");
           }}
         >
           <Text style={styles.btnTxt}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButton}
-
+        <TouchableOpacity
+          style={styles.loginButton}
           onPress={() => signin({ email, password, navigation })}
         >
           <Text style={styles.btnTxt}>Login</Text>
         </TouchableOpacity>
-
-
       </View>
       <View style={styles.innerContainer2}>
-        <TouchableOpacity style={styles.link}
+        <TouchableOpacity
+          style={styles.link}
           onPress={() => {
             navigation.navigate("Signup");
           }}
@@ -67,10 +67,9 @@ export default function Login({ navigation }) {
           <Text style={styles.BtnTxt}>New here? Signup Instead</Text>
         </TouchableOpacity>
       </View>
-
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -93,7 +92,7 @@ const styles = StyleSheet.create({
   },
   instruction: {
     fontSize: 25,
-    textAlign: 'center',
+    textAlign: "center",
     fontFamily: "DancingScript-Bold",
     margin: 20,
     color: "#fff",
@@ -132,3 +131,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export default Login;

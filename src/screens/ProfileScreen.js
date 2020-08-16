@@ -7,7 +7,6 @@ const ProfileScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
   return (
     <View style={styles.container}>
-      <Text>Profile Screen</Text>
       <Button title="Sign Out" onPress={() => signout(navigation)} />
     </View>
   );
