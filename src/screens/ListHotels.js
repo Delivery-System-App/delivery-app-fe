@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -12,12 +12,18 @@ import useResults from "../hooks/useResults";
 import ResultList from "../components/RestaurantItem/ResultsList";
 import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 import FoodCategories from "../components/RestaurantItem/FoodCategories";
+import { useIsFocused } from "@react-navigation/native";
 
 const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
   localStorage.setItem("ssss", "Hotel");
   const [searchApi, results, errorMessage] = useResults("");
-
+  const isfocused = useIsFocused();
+  useEffect(() => {
+    if (isfocused) {
+      navigation.navigate("Home", { name: "Hotels" });
+    }
+  });
   const filterResultsByPrice = (price) => {
     return results.filter((result) => {
       return result.restaurant.price_range === price;

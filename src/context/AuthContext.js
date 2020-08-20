@@ -21,7 +21,7 @@ const tryLocalSignIn = (dispatch) => async (navigation) => {
   const token = await AsyncStorage.getItem("token");
   if (token) {
     dispatch({ type: "signin", payload: token });
-    navigation.navigate("Home");
+    navigation.navigate("Home", { name: "Home" });
   } else {
     navigation.navigate("Signin");
   }

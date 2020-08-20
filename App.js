@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Home() {
+const Home = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -79,9 +79,9 @@ function Home() {
       />
     </Tab.Navigator>
   );
-}
+};
 
-function MyStack() {
+const MyStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Loading">
@@ -108,7 +108,10 @@ function MyStack() {
         <Stack.Screen name="ForgotPasswd" component={ForgotPassword} />
         <Stack.Screen name="Hotels" component={ListHotels} />
         <Stack.Screen
-          options={{ headerLeft: null }}
+          options={({ route }) => ({
+            title: route.params.name,
+            headerLeft: null,
+          })}
           name="Home"
           component={Home}
         />
@@ -117,7 +120,7 @@ function MyStack() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 const App = MyStack;
 
 export default () => {
