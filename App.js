@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function Home() {
+const Home = () => {
   return (
     <Tab.Navigator>
       <Tab.Screen
@@ -79,9 +79,9 @@ function Home() {
       />
     </Tab.Navigator>
   );
-}
+};
 
-function MyStack() {
+const MyStack = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Loading">
@@ -120,7 +120,7 @@ function MyStack() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-}
+};
 const App = MyStack;
 
 export default () => {
