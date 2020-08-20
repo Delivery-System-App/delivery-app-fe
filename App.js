@@ -108,7 +108,10 @@ function MyStack() {
         <Stack.Screen name="ForgotPasswd" component={ForgotPassword} />
         <Stack.Screen name="Hotels" component={ListHotels} />
         <Stack.Screen
-          options={{ headerLeft: null }}
+          options={({ route }) => ({
+            title: route.params.name,
+            headerLeft: null,
+          })}
           name="Home"
           component={Home}
         />

@@ -8,12 +8,16 @@ import { ScrollView } from "react-native-gesture-handler";
 
 const Cart = ({ navigation }) => {
   const [dataCart, setDataCart] = useState([]);
+  const isfocused = useIsFocused();
   useEffect(() => {
+    if (isfocused) {
+      navigation.navigate("Home", { name: "Cart" });
+    }
     const unsubscribe = navigation.addListener("focus", () => {
       getInitialData();
     });
     return unsubscribe;
-  });
+  }, []);
 
   const getInitialData = async () => {
     AsyncStorage.getItem("cart")
