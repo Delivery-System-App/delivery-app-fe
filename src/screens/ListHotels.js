@@ -26,7 +26,7 @@ const ListHotels = ({ navigation }) => {
   });
   const filterResultsByPrice = (price) => {
     return results.filter((result) => {
-      return result.restaurant.price_range === price;
+      return result.rating === price;
     });
   };
   console.log(results);

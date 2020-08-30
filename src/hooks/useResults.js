@@ -11,15 +11,15 @@ export default () => {
 
   const searchApi = async (searchTerm) => {
     try {
-      const response = await restaurantApi.get("/search", {
+      const response = await restaurantApi.get("/filter/filter", {
         params: {
-          count: 50,
-          entity_id: 4,
-          entity_type: "city",
-          q: searchTerm,
+          // count: 50,
+          // entity_id: 4,
+          // entity_type: "city",
+          dish: searchTerm,
         },
       });
-      setResults(response.data.restaurants);
+      setResults(response.data);
     } catch (err) {
       setErrorMessage(err.message);
     }

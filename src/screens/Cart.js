@@ -112,7 +112,7 @@ const Cart = ({ navigation }) => {
                         fontSize: 20,
                       }}
                     >
-                      ${item.price * item.quantity}
+                      Rs.{item.price * item.quantity}
                     </Text>
                     <View
                       style={{ flexDirection: "row", alignItems: "center" }}

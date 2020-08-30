@@ -11,14 +11,14 @@ const ResultList = ({ title, results, navigation }) => {
         horizontal
         showsVerticalScrollIndicator={false}
         data={results}
-        keyExtractor={(result) => result.restaurant.id}
+        keyExtractor={(result) => result.id}
         renderItem={({ item }) => {
-          const id = item.restaurant.id;
+          const id = item.id;
           return (
             <TouchableOpacity
               onPress={() => navigation.navigate("ShowResult", { id })}
             >
-              <ResultsDetail result={item.restaurant} />
+              <ResultsDetail result={item} />
             </TouchableOpacity>
           );
         }}

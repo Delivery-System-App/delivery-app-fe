@@ -109,7 +109,7 @@ const MyStack = () => {
         <Stack.Screen name="Hotels" component={ListHotels} />
         <Stack.Screen
           options={({ route }) => ({
-            title: route.params.name,
+            // title: route.params.name,
             headerLeft: null,
           })}
           name="Home"
