@@ -21,3 +21,6 @@ export const menuList = (id) => {
 export const menuDishes = (id) => {
   return fireRequest("menuDishes", [id]);
 };
+export const bookDishes = (body) => {
+  return fireRequest("bookDishes", [], body);
+};

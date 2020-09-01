@@ -6,19 +6,22 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import bookingApi from "./../api/bookingApi";
+import { useDispatch } from "react-redux";
+import { bookDishes } from "../redux/actions";
 
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
+  const dispatch = useDispatch();
   const isfocused = useIsFocused();
-  try {
-    const item = AsyncStorage.getItem("token");
-    const item2 = JSON.stringify(item);
-    console.log(item2);
-    const token1 = JSON.parse(item2);
-    console.log("token", token1);
-  } catch (err) {
-    console.log("error", err);
-  }
+  // try {
+  //   const item = AsyncStorage.getItem("token");
+  //   const item2 = JSON.stringify(item);
+  //   console.log(item2);
+  //   const token1 = JSON.parse(item2);
+  //   console.log("token", token1);
+  // } catch (err) {
+  //   console.log("error", err);
+  // }
 
   if (isfocused) {
     navigation.navigate("Home", { name: "Cart" });
@@ -67,21 +70,12 @@ const Cart = ({ navigation, route }) => {
     }
   };
 
-  const bookDishes = async (dishes) => {
-    // try {
-    //   const response = await bookingApi.post(
-    //     "/CreateBooking",
-    //     {
-    //       "Content-Type": "application/json",
-    //       Authorization: "Bearer " + ,
-    //     },
-    //     dishes
-    //   );
-    //   console.log(response);
-    // } catch (err) {
-    //   setErrorMessage(err.message);
-    // }
-  };
+  // const bookDishes = (dishes) => {
+  //   console.log(dishes);
+  //   dispatch(bookDishes(dishes)).then((res) => {
+  //     console.log(res);
+  //   });
+  // };
 
   const checkout = () => {
     if (Array.isArray(dataCart) && dataCart.length) {
@@ -96,8 +90,18 @@ const Cart = ({ navigation, route }) => {
             booking.qty.push(item.quantity)
           : null;
       });
-      console.log(booking);
-      bookDishes(booking);
+      // bookDishes(booking);
+      dispatch(bookDishes(booking)).then((res) => {
+        console.log(res);
+        if (res.data) {
+          localStorage.removeItem("cart");
+          getInitialData();
+          alert("bookin successfull");
+        }
+        if (res.error) {
+          console.log(error.message);
+        }
+      });
     }
   };
 

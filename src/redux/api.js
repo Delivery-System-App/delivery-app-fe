@@ -27,4 +27,9 @@ export default {
     method: "GET",
     noAuth: true,
   },
+  bookDishes: {
+    path: "/api/v1/booking/CreateBooking",
+    method: "POST",
+    noAuth: false,
+  },
 };
