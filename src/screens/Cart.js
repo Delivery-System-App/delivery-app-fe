@@ -95,7 +95,7 @@ const Cart = ({ navigation, route }) => {
         console.log(res);
         if (res.data) {
           localStorage.removeItem("cart");
-          getInitialData();
+          setDataCart([]);
           alert("bookin successfull");
         }
         if (res.error) {
