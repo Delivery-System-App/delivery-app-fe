@@ -14,13 +14,12 @@ import { useEffect } from "react";
 
 var { height, width } = Dimensions.get("window");
 
-const FoodItems = ({ route }) => {
+const FoodItems = ({ route, navigation }) => {
   const [menu, setMenu] = useState([]);
   //we get the restaurant id
   const id = route.params.id;
   const getMenuList = async (id) => {
     const response = await menuApi.get(`/menu/${id}`);
-    console.log("resp:", response);
     setMenu(response.data.data);
   };
   const foodImage = require("./../../assets/foods.jpg");
@@ -28,32 +27,8 @@ const FoodItems = ({ route }) => {
     getMenuList(id);
   }, []);
 
-  const onClickAddCart = (data) => {
-    const itemcart = {
-      food: data,
-      quantity: 1,
-      price: data.price,
-    };
-
-    AsyncStorage.getItem("cart")
-      .then((datacart) => {
-        if (datacart !== null) {
-          // We have data!!
-          const cart = JSON.parse(datacart);
-          cart.push(itemcart);
-          AsyncStorage.setItem("cart", JSON.stringify(cart));
-        } else {
-          const cart = [];
-          cart.push(itemcart);
-          AsyncStorage.setItem("cart", JSON.stringify(cart));
-        }
-        alert("Add Cart");
-      })
-      .catch((err) => {
-        alert(err);
-      });
-  };
   const _renderItemFood = (item) => {
+    const menuId = item.id;
     return (
       <TouchableOpacity style={styles.divFood}>
         <Image
@@ -72,7 +47,7 @@ const FoodItems = ({ route }) => {
           {item.name}
         </Text>
         <TouchableOpacity
-          onPress={() => console.log("navigate to display the menu items")}
+          onPress={() => navigation.navigate("ShowDishes", { id, menuId })}
           style={{
             width: width / 2 - 40,
             backgroundColor: "#33c37d",

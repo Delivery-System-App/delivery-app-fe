@@ -20,6 +20,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./src/redux/actions";
+import ShowDishes from "./src/screens/ShowDishes";
 
 const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
@@ -126,6 +127,7 @@ const MyStack = () => {
         />
         <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
         <Stack.Screen name="FoodItems" component={FoodItems} />
+        <Stack.Screen name="ShowDishes" component={ShowDishes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

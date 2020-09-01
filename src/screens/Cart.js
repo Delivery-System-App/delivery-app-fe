@@ -5,10 +5,21 @@ var { width } = Dimensions.get("window");
 import Icon from "react-native-vector-icons/Ionicons";
 import { AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import bookingApi from "./../api/bookingApi";
 
-const Cart = ({ navigation }) => {
+const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const isfocused = useIsFocused();
+  try {
+    const item = AsyncStorage.getItem("token");
+    const item2 = JSON.stringify(item);
+    console.log(item2);
+    const token1 = JSON.parse(item2);
+    console.log("token", token1);
+  } catch (err) {
+    console.log("error", err);
+  }
+
   if (isfocused) {
     navigation.navigate("Home", { name: "Cart" });
   }
@@ -53,6 +64,40 @@ const Cart = ({ navigation }) => {
       setDataCart(dataCar);
       await AsyncStorage.setItem("cart", JSON.stringify(dataCart));
       getInitialData();
+    }
+  };
+
+  const bookDishes = async (dishes) => {
+    // try {
+    //   const response = await bookingApi.post(
+    //     "/CreateBooking",
+    //     {
+    //       "Content-Type": "application/json",
+    //       Authorization: "Bearer " + ,
+    //     },
+    //     dishes
+    //   );
+    //   console.log(response);
+    // } catch (err) {
+    //   setErrorMessage(err.message);
+    // }
+  };
+
+  const checkout = () => {
+    if (Array.isArray(dataCart) && dataCart.length) {
+      const booking = {
+        restaurantId: dataCart[0].restaurantId,
+        dishIds: [],
+        qty: [],
+      };
+      dataCart.map((item) => {
+        !booking.dishIds.includes(item.food.dishId)
+          ? booking.dishIds.push(item.food.dishId) &&
+            booking.qty.push(item.quantity)
+          : null;
+      });
+      console.log(booking);
+      bookDishes(booking);
     }
   };
 
@@ -150,6 +195,7 @@ const Cart = ({ navigation }) => {
           <View style={{ height: 20 }} />
 
           <TouchableOpacity
+            onPress={() => checkout()}
             style={{
               backgroundColor: "#33c37d",
               width: width - 40,
