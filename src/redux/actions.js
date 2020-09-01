@@ -15,3 +15,6 @@ export const register = (body) => {
 export const filter = (dish) => {
   return fireRequest("filter", [], { dish: dish });
 };
+export const menuList = (id) => {
+  return fireRequest("menuList", [id]);
+};

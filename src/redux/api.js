@@ -17,4 +17,9 @@ export default {
     method: "GET",
     noAuth: true,
   },
+  menuList: {
+    path: "/api/v1/menu/menu",
+    method: "GET",
+    noAuth: true,
+  },
 };

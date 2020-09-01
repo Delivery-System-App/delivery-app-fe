@@ -15,7 +15,6 @@ export default () => {
   const searchApi = async (searchTerm) => {
     try {
       dispatch(filter([searchTerm])).then((res) => {
-        console.log(res);
         if (res.data) {
           setResults(res.data);
         }

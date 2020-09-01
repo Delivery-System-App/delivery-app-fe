@@ -49,7 +49,6 @@ export const fireRequest = (
   urlParam = "",
   multipart = false
 ) => {
-  console.log("params", params);
   return (dispatch) => {
     dispatch(fetchDataRequest(key));
     return APIRequest(key, path, params, urlParam, multipart)

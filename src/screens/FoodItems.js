@@ -11,16 +11,22 @@ import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { AsyncStorage } from "react-native";
 import menuApi from "../api/menuApi";
 import { useEffect } from "react";
+import { menuList } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 var { height, width } = Dimensions.get("window");
 
 const FoodItems = ({ route, navigation }) => {
   const [menu, setMenu] = useState([]);
+  const dispatch = useDispatch();
   //we get the restaurant id
   const id = route.params.id;
   const getMenuList = async (id) => {
-    const response = await menuApi.get(`/menu/${id}`);
-    setMenu(response.data.data);
+    dispatch(menuList([id])).then((res) => {
+      if (res.data) {
+        setMenu(res.data.data);
+      }
+    });
   };
   const foodImage = require("./../../assets/foods.jpg");
   useEffect(() => {
