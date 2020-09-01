@@ -12,3 +12,6 @@ export const register = (body) => {
   console.log(body);
   return fireRequest("register", [], body);
 };
+export const filter = (dish) => {
+  return fireRequest("filter", [], { dish: dish });
+};

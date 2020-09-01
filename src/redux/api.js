@@ -12,4 +12,9 @@ export default {
     method: "POST",
     noAuth: true,
   },
+  filter: {
+    path: "/api/v1/restaurant/filter/filter",
+    method: "GET",
+    noAuth: true,
+  },
 };
