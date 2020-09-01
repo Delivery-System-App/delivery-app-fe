@@ -94,7 +94,7 @@ const signin = (dispatch) => async ({ email, password, navigation }) => {
 };
 
 const signout = (dispatch) => async (navigation) => {
-  await AsyncStorage.removeItem("token");
+  localStorage.removeItem("access_token");
   dispatch({ type: "signout" });
   navigation.navigate("Food Delivery App");
 };

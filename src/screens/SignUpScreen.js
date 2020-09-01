@@ -3,8 +3,11 @@ import { View, StyleSheet, Button, Text, TextInput } from "react-native";
 import { Input } from "react-native-elements";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
+import { register } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 const SignUp = ({ navigation }) => {
+  const dispatch = useDispatch();
   const { state, signup, clearErrorMessages } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -17,6 +20,14 @@ const SignUp = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  const handleSubmit = () => {
+    dispatch(
+      register({ name, email, password, confirm, type: "customer" })
+    ).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -78,12 +89,7 @@ const SignUp = ({ navigation }) => {
       ) : null}
 
       <View>
-        <TouchableOpacity
-          style={styles.signupButton}
-          onPress={() => {
-            signup({ name, email, password, confirm, type, navigation });
-          }}
-        >
+        <TouchableOpacity style={styles.signupButton} onPress={handleSubmit}>
           <Text style={styles.btnTxt}>Signup</Text>
         </TouchableOpacity>
       </View>

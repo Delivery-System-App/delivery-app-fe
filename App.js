@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -9,11 +9,17 @@ import ForgotPassword from "./src/screens/ForgotPassword";
 import ListHotels from "./src/screens/ListHotels";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
+import { Provider } from "react-redux";
 import ProfileScreen from "./src/screens/ProfileScreen";
 import ProfileScreen2 from "./src/screens/Profile1/index";
 import ResultsShowScreen from "./src/screens/ResultsShowScreen";
 import FoodItems from "./src/screens/FoodItems";
 import Cart from "./src/screens/cart";
+import reducer from "./src/redux/reducer";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "./src/redux/actions";
 
 const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
@@ -82,6 +88,9 @@ const Home = () => {
 };
 
 const MyStack = () => {
+  const [user, setUser] = useState(false);
+  const dispatch = useDispatch();
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Loading">
@@ -124,9 +133,13 @@ const MyStack = () => {
 const App = MyStack;
 
 export default () => {
+  const store = createStore(reducer, applyMiddleware(thunk));
+
   return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </Provider>
   );
 };

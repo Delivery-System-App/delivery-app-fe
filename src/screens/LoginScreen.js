@@ -2,8 +2,11 @@ import React, { useState, useContext } from "react";
 import { View, StyleSheet, Button, Text, TextInput } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
+import { useDispatch } from "react-redux";
+import { login } from "../redux/actions";
 
 const Login = ({ navigation }) => {
+  const dispatch = useDispatch();
   const { state, signin, clearErrorMessages } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +18,16 @@ const Login = ({ navigation }) => {
 
     return unsubscribe;
   }, [navigation]);
+
+  const handleSubmit = () => {
+    dispatch(login({ email, password })).then((res) => {
+      console.log(res);
+      if (res.data) {
+        localStorage.setItem("access_token", res.data.access_token);
+        navigation.navigate("Home");
+      }
+    });
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.instruction}>Login </Text>
@@ -50,10 +63,7 @@ const Login = ({ navigation }) => {
         >
           <Text style={styles.btnTxt}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => signin({ email, password, navigation })}
-        >
+        <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
           <Text style={styles.btnTxt}>Login</Text>
         </TouchableOpacity>
       </View>
