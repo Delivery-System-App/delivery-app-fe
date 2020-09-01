@@ -13,6 +13,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { useState } from "react";
 import { useEffect } from "react";
 import menuApi from "./../api/menuApi";
+import { menuDishes } from "../redux/actions";
+import { useDispatch } from "react-redux";
 
 var { height, width } = Dimensions.get("window");
 
@@ -21,52 +23,20 @@ const ShowDishes = ({ route, navigation }) => {
   const menuId = route.params.menuId;
   const resId = route.params.id;
   const [dishes, setDishes] = useState([]);
+  const dispatch = useDispatch();
+
   const foodImage = require("./../../assets/foods.jpg");
 
   const getMenuDishes = async (id) => {
-    const response = await menuApi.get(`/dishes/${id}`);
-    console.log("resp:", response);
-    setDishes(response.data.data);
+    dispatch(menuDishes([id])).then((res) => {
+      if (res.data) {
+        setDishes(res.data.data);
+      }
+    });
   };
   useEffect(() => {
     getMenuDishes(menuId);
   }, []);
-
-  //   const onClickAddCart = (data) => {
-  //     console.log(data);
-  //     // const itemcart = {
-  //     //   dishIds: [],
-  //     //   qty: [],
-  //     //   restaurantId: resId,
-  //     // };
-  //     // itemcart.dishIds.push("hellooo");
-  //     // console.log(itemcart);
-  //     AsyncStorage.getItem("cart")
-  //       .then((datacart) => {
-  //         if (datacart !== null) {
-  //           // We have data!!
-  //           const cart = JSON.parse(datacart);
-  //           //   cart.push(itemcart);
-  //           !cart.dishIds.includes(data.dishId)
-  //             ? cart.dishIds.push(data.dishId) && cart.qty.push(1)
-  //             : null;
-
-  //           console.log(cart);
-  //           AsyncStorage.setItem("cart", JSON.stringify(cart));
-  //         } else {
-  //           const cart = { restaurantId: resId, dishIds: [], qty: [] };
-  //           //   cart.push(itemcart);
-  //           cart.dishIds.push(data.dishId);
-  //           cart.qty.push(1);
-  //           console.log(cart);
-  //           AsyncStorage.setItem("cart", JSON.stringify(cart));
-  //         }
-  //         alert("Add Cart");
-  //       })
-  //       .catch((err) => {
-  //         alert(err);
-  //       });
-  //     };
 
   const onClickAddCart = (data) => {
     const itemcart = {

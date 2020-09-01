@@ -18,3 +18,6 @@ export const filter = (dish) => {
 export const menuList = (id) => {
   return fireRequest("menuList", [id]);
 };
+export const menuDishes = (id) => {
+  return fireRequest("menuDishes", [id]);
+};

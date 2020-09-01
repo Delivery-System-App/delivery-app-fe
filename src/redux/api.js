@@ -22,4 +22,9 @@ export default {
     method: "GET",
     noAuth: true,
   },
+  menuDishes: {
+    path: "/api/v1/menu/dishes",
+    method: "GET",
+    noAuth: true,
+  },
 };
