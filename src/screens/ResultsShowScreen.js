@@ -11,10 +11,9 @@ const ResultsShowScreen = ({ route, navigation }) => {
   const [currency, setCurrency] = useState("");
   const getResult = async (id) => {
     const response = await restaurantApi.get(`/${id}`);
-    console.log(response.data.timings);
-    setCusines(["Veg","Non-Veg"]);//to be done
+    setCusines(["Veg", "Non-Veg"]); //to be done
     setCurrency(
-      "₹" + " " + response.data.totaldishprice/response.data.noofdishes
+      "₹" + " " + response.data.totaldishprice / response.data.noofdishes
     );
     setResult(response.data);
   };
@@ -48,7 +47,8 @@ const ResultsShowScreen = ({ route, navigation }) => {
           ></FlatList>
 
           <Text style={styles.name}>Timings</Text>
-          <Drawer.Item icon="star" label={"9am - 12am"} />{/*tobedone*/}
+          <Drawer.Item icon="star" label={"9am - 12am"} />
+          {/*tobedone*/}
 
           {/*<Text style={styles.name}>Highlights -</Text>
           <FlatList
@@ -82,7 +82,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
           small
           icon="plus"
           label="Menu"
-          onPress={() => navigation.navigate("FoodItems")}
+          onPress={() => navigation.navigate("FoodItems", { id })}
         />
       </View>
     </>
