@@ -10,11 +10,10 @@ const ResultsShowScreen = ({ route, navigation }) => {
   const [cuisines, setCusines] = useState([]);
   const [currency, setCurrency] = useState("");
   const getResult = async (id) => {
-    const response = await restaurantApi.get(`/restaurant?res_id=${id}`);
-    console.log(response.data.timings);
-    setCusines(response.data.cuisines.split(", "));
+    const response = await restaurantApi.get(`/${id}`);
+    setCusines(["Veg", "Non-Veg"]); //to be done
     setCurrency(
-      response.data.currency + " " + response.data.average_cost_for_two
+      "₹" + " " + response.data.totaldishprice / response.data.noofdishes
     );
     setResult(response.data);
   };
@@ -30,7 +29,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
     <>
       <View style={styles.container}>
         <ScrollView>
-          <Image style={styles.image} source={{ uri: result.thumb }} />
+          <Image style={styles.image} source={{ uri: result.photos }} />
           <Text style={styles.title}>{result.name}</Text>
           <Text style={styles.name}>Average Cost For Two </Text>
           <Image source={require("../common/multiuser.png")} />
@@ -48,9 +47,10 @@ const ResultsShowScreen = ({ route, navigation }) => {
           ></FlatList>
 
           <Text style={styles.name}>Timings</Text>
-          <Drawer.Item icon="star" label={result.timings} />
+          <Drawer.Item icon="star" label={"9am - 12am"} />
+          {/*tobedone*/}
 
-          <Text style={styles.name}>Highlights -</Text>
+          {/*<Text style={styles.name}>Highlights -</Text>
           <FlatList
             style={styles.HiglightsFlatList}
             data={result.highlights}
@@ -69,7 +69,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
                 />
               );
             }}
-          />
+          />*/}
           {/* <TouchableOpacity
             style={{ backgroundColor: "#33c37d" }}
             onPress={() => navigation.navigate("FoodItems")}
@@ -82,7 +82,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
           small
           icon="plus"
           label="Menu"
-          onPress={() => navigation.navigate("FoodItems")}
+          onPress={() => navigation.navigate("FoodItems", { id })}
         />
       </View>
     </>

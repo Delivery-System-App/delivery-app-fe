@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,41 +9,25 @@ import {
 } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { AsyncStorage } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import menuApi from "../api/menuApi";
+import { useEffect } from "react";
 
 var { height, width } = Dimensions.get("window");
 
-const FoodItems = () => {
-  const dataFood = [
-    {
-      id: 1,
-      name: "American",
-      image: "http://tutofox.com/foodapp//categories/american.png",
-      price: 750,
-      categorie: "BreakFast",
-    },
-    {
-      id: 2,
-      name: "Burger",
-      image: "http://tutofox.com/foodapp//categories/burger.png",
-      price: 10,
-      categorie: "BreakFast",
-    },
-    {
-      id: 3,
-      name: "Pizza",
-      image: "http://tutofox.com/foodapp//categories/pizza.png",
-      price: 200,
-      categorie: "BreakFast",
-    },
-    {
-      id: 4,
-      name: "Drink",
-      image: "http://tutofox.com/foodapp//categories/drink.png",
-      price: 100,
-      categorie: "BreakFast",
-    },
-  ];
+const FoodItems = ({ route }) => {
+  const [menu, setMenu] = useState([]);
+  //we get the restaurant id
+  const id = route.params.id;
+  const getMenuList = async (id) => {
+    const response = await menuApi.get(`/menu/${id}`);
+    console.log("resp:", response);
+    setMenu(response.data.data);
+  };
+  const foodImage = require("./../../assets/foods.jpg");
+  useEffect(() => {
+    getMenuList(id);
+  }, []);
+
   const onClickAddCart = (data) => {
     const itemcart = {
       food: data,
@@ -70,50 +54,50 @@ const FoodItems = () => {
       });
   };
   const _renderItemFood = (item) => {
-    let catg = 0;
-    if (catg == 0 || catg == item.categorie) {
-      return (
-        <TouchableOpacity style={styles.divFood}>
-          <Image
-            style={styles.imageFood}
-            resizeMode="contain"
-            source={{ uri: item.image }}
-          />
-          <View
-            style={{
-              height: width / 2 - 20 - 90,
-              backgroundColor: "transparent",
-              width: width / 2 - 20 - 10,
-            }}
-          />
+    return (
+      <TouchableOpacity style={styles.divFood}>
+        <Image
+          style={styles.imageFood}
+          resizeMode="contain"
+          source={foodImage}
+        />
+        <View
+          style={{
+            height: width / 2 - 20 - 90,
+            backgroundColor: "transparent",
+            width: width / 2 - 20 - 10,
+          }}
+        />
+        <Text style={{ marginTop: 10, fontWeight: "bold", fontSize: 15 }}>
+          {item.name}
+        </Text>
+        <TouchableOpacity
+          onPress={() => console.log("navigate to display the menu items")}
+          style={{
+            width: width / 2 - 40,
+            backgroundColor: "#33c37d",
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 5,
+            padding: 4,
+          }}
+        >
           <Text
-            style={{ fontWeight: "bold", fontSize: 22, textAlign: "center" }}
-          >
-            {item.name}
-          </Text>
-          <Text>Descp Food and Details</Text>
-          <Text style={{ fontSize: 20, color: "green" }}>Rs.{item.price}</Text>
-          <TouchableOpacity
-            onPress={() => onClickAddCart(item)}
             style={{
-              width: width / 2 - 40,
-              backgroundColor: "#33c37d",
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 5,
-              padding: 4,
+              marginBottom: 10,
+              fontSize: 18,
+              color: "white",
+              fontWeight: "bold",
             }}
           >
-            <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
-              Add Cart
-            </Text>
-            <View style={{ width: 10 }} />
-            <Icon name="ios-add-circle" size={30} color={"white"} />
-          </TouchableOpacity>
+            View Menu
+          </Text>
+          <View style={{ width: 10 }} />
         </TouchableOpacity>
-      );
-    }
+      </TouchableOpacity>
+    );
+    // }
   };
   return (
     <ScrollView>
@@ -126,12 +110,12 @@ const FoodItems = () => {
             backgroundColor: "white",
           }}
         >
-          <Text style={styles.titleCatg}>Food Items</Text>
+          <Text style={styles.titleCatg}>MENU LIST</Text>
           <FlatList
-            data={dataFood}
+            data={menu}
             numColumns={2}
             renderItem={({ item }) => _renderItemFood(item)}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.id}
           />
           <View style={{ height: 20 }} />
         </View>
