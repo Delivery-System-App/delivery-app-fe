@@ -100,7 +100,7 @@ export const APIRequest = (
 
   // set authorization header in the request header
   const config = {
-    baseURL: "http://localhost:4000",
+    baseURL: "https://skosh-be.herokuapp.com",
     //baseURL: process.env.REACT_APP_BASE_URL,
     headers: {},
   };

@@ -84,53 +84,39 @@ const styles = StyleSheet.create({
 });
 
 const Contact = (props) => {
+  console.log(props);
   const navigation = useNavigation();
   const propTypes = {
-    avatar: PropTypes.string.isRequired,
-    avatarBackground: PropTypes.string.isRequired,
+    // avatar: PropTypes.string.isRequired,
+    // avatarBackground: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    address: PropTypes.shape({
-      city: PropTypes.string.isRequired,
-      country: PropTypes.string.isRequired,
-    }).isRequired,
+    // address: PropTypes.shape({
+    // city: PropTypes.string.isRequired,
+    // country: PropTypes.string.isRequired,
+    //}).isRequired,
   };
 
   const renderHeader = () => {
-    const {
-      avatar,
-      avatarBackground,
-      name,
-      email,
-      address: { city, country },
-    } = props;
-
     return (
       <View style={styles.headerContainer}>
-        <ImageBackground
-          style={styles.headerBackgroundImage}
-          blurRadius={10}
-          source={{
-            uri: avatarBackground,
-          }}
-        >
+        <ImageBackground style={styles.headerBackgroundImage} blurRadius={10}>
           <View style={styles.headerColumn}>
-            <Image
-              style={styles.userImage}
-              source={{
-                uri: avatar,
-              }}
-            />
-            <Text style={styles.userNameText}>{name}</Text>
-            <View style={styles.userAddressRow}>
-              <View>
-                <Icon
-                  name="email"
-                  underlayColor="transparent"
-                  iconStyle={styles.placeIcon}
-                />
+            <Image style={styles.userImage} source={{}} />
+            <View style={{ marginTop: "10px" }}>
+              <View style={styles.userNameText}>
+                <Text style={styles.userCityText}>{props.name}</Text>
               </View>
-              <View style={styles.userCityRow}>
-                <Text style={styles.userCityText}> {email}</Text>
+              <View style={styles.userAddressRow}>
+                <View>
+                  <Icon
+                    name="email"
+                    underlayColor="transparent"
+                    iconStyle={styles.placeIcon}
+                  />
+                </View>
+                <View style={styles.userCityRow}>
+                  <Text style={styles.userCityText}>{props.email}</Text>
+                </View>
               </View>
             </View>
             <View style={styles.userAddressRow}>
@@ -141,11 +127,11 @@ const Contact = (props) => {
                   iconStyle={styles.placeIcon}
                 />
               </View>
-              <View style={styles.userCityRow}>
+              {/*     <View style={styles.userCityRow}>
                 <Text style={styles.userCityText}>
                   {city}, {country}
                 </Text>
-              </View>
+              </View>*/}
             </View>
           </View>
         </ImageBackground>
