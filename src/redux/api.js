@@ -12,6 +12,11 @@ export default {
     method: "POST",
     noAuth: true,
   },
+  resDetail: {
+    path: "/api/v1/restaurant",
+    method: "GET",
+    noAuth: true,
+  },
   filter: {
     path: "/api/v1/restaurant/filter/filter",
     method: "GET",

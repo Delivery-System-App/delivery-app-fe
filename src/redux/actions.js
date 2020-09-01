@@ -12,6 +12,9 @@ export const register = (body) => {
   console.log(body);
   return fireRequest("register", [], body);
 };
+export const resDetail = (id) => {
+  return fireRequest("resDetail", [id]);
+};
 export const filter = (dish) => {
   return fireRequest("filter", [], { dish: dish });
 };

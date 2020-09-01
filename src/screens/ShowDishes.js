@@ -19,7 +19,6 @@ import { useDispatch } from "react-redux";
 var { height, width } = Dimensions.get("window");
 
 const ShowDishes = ({ route, navigation }) => {
-  console.log(route);
   const menuId = route.params.menuId;
   const resId = route.params.id;
   const [dishes, setDishes] = useState([]);

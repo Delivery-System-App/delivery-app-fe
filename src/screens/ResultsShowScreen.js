@@ -4,18 +4,25 @@ import restaurantApi from "../api/restaurantApi";
 import { FAB, Badge, Drawer } from "react-native-paper";
 import { ListItem } from "react-native-elements";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch } from "react-redux";
+import { resDetail } from "../redux/actions";
 
 const ResultsShowScreen = ({ route, navigation }) => {
+  const dispatch = useDispatch();
   const [result, setResult] = useState([]);
   const [cuisines, setCusines] = useState([]);
   const [currency, setCurrency] = useState("");
   const getResult = async (id) => {
-    const response = await restaurantApi.get(`/${id}`);
-    setCusines(["Veg", "Non-Veg"]); //to be done
-    setCurrency(
-      "₹" + " " + response.data.totaldishprice / response.data.noofdishes
-    );
-    setResult(response.data);
+    // const response = await restaurantApi.get(`/${id}`);
+    dispatch(resDetail([id])).then((res) => {
+      if (res.data) {
+        setResult(res.data);
+        setCusines(["Veg", "Non-Veg"]); //to be done
+        setCurrency("₹" + " " + res.data.totaldishprice / res.data.noofdishes);
+      }
+    });
+
+    // setResult(response.data);
   };
 
   useEffect(() => {

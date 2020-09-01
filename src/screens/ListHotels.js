@@ -16,7 +16,6 @@ import { useIsFocused } from "@react-navigation/native";
 
 const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
-  localStorage.setItem("ssss", "Hotel");
   const [searchApi, results, errorMessage] = useResults("");
   const isfocused = useIsFocused();
   useEffect(() => {
@@ -29,7 +28,6 @@ const ListHotels = ({ navigation }) => {
       return result.rating === price;
     });
   };
-  console.log(results);
   return (
     <>
       <SearchBar

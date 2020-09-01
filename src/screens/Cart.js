@@ -13,15 +13,6 @@ const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const dispatch = useDispatch();
   const isfocused = useIsFocused();
-  // try {
-  //   const item = AsyncStorage.getItem("token");
-  //   const item2 = JSON.stringify(item);
-  //   console.log(item2);
-  //   const token1 = JSON.parse(item2);
-  //   console.log("token", token1);
-  // } catch (err) {
-  //   console.log("error", err);
-  // }
 
   if (isfocused) {
     navigation.navigate("Home", { name: "Cart" });
@@ -70,13 +61,6 @@ const Cart = ({ navigation, route }) => {
     }
   };
 
-  // const bookDishes = (dishes) => {
-  //   console.log(dishes);
-  //   dispatch(bookDishes(dishes)).then((res) => {
-  //     console.log(res);
-  //   });
-  // };
-
   const checkout = () => {
     if (Array.isArray(dataCart) && dataCart.length) {
       const booking = {
@@ -90,7 +74,6 @@ const Cart = ({ navigation, route }) => {
             booking.qty.push(item.quantity)
           : null;
       });
-      // bookDishes(booking);
       dispatch(bookDishes(booking)).then((res) => {
         console.log(res);
         if (res.data) {
