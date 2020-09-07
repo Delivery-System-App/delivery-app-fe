@@ -17,6 +17,8 @@ import mainColor from "./constants";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ProfileScreen from "../ProfileScreen";
 
+const img = require("../../../assets/profile.png");
+
 const styles = StyleSheet.create({
   cardContainer: {
     backgroundColor: "#FFF",
@@ -87,8 +89,8 @@ const Contact = (props) => {
   console.log(props);
   const navigation = useNavigation();
   const propTypes = {
-    // avatar: PropTypes.string.isRequired,
-    // avatarBackground: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+    avatarBackground: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     // address: PropTypes.shape({
     // city: PropTypes.string.isRequired,
@@ -101,7 +103,7 @@ const Contact = (props) => {
       <View style={styles.headerContainer}>
         <ImageBackground style={styles.headerBackgroundImage} blurRadius={10}>
           <View style={styles.headerColumn}>
-            <Image style={styles.userImage} source={{}} />
+            <Image style={styles.userImage} source={img} />
             <View style={{ marginTop: "10px" }}>
               <View style={styles.userNameText}>
                 <Text style={styles.userCityText}>{props.name}</Text>
