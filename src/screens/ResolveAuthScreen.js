@@ -17,7 +17,7 @@ const ResolveAuthScreen = ({ navigation }) => {
         if (res.data) {
           console.log(res);
           navigation.navigate("Home");
-        } else navigation.navigate("signin");
+        } else navigation.navigate("Signin");
       } else {
         navigation.navigate("Signin");
       }
