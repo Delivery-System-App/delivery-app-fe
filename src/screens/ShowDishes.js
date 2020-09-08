@@ -69,7 +69,7 @@ const ShowDishes = ({ route, navigation }) => {
         <Image
           style={styles.imageFood}
           resizeMode="contain"
-          source={item.photos ? { uri: item.photos } : foodImage}
+          source={item.photos ? { uri: item.photos[0] } : foodImage}
         />
         <View
           style={{
@@ -154,6 +154,9 @@ const styles = StyleSheet.create({
   imageFood: {
     width: width / 2 - 20 - 10,
     height: width / 2 - 20 - 30,
+    // width: 150,
+    // height: 150,
+    // borderRadius: (width / (2 - 20 - 10))/2,
     backgroundColor: "transparent",
     position: "absolute",
     top: -45,
