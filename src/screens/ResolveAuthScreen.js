@@ -4,6 +4,7 @@ import { getUser } from "../redux/actions";
 import useAbort, { useAbortableEffect } from "./useAbort";
 import { useDispatch } from "react-redux";
 import { cos } from "react-native-reanimated";
+import { AsyncStorage } from "react-native";
 
 const ResolveAuthScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -11,7 +12,8 @@ const ResolveAuthScreen = ({ navigation }) => {
 
   useAbortableEffect(
     async (status) => {
-      const access = localStorage.getItem("access_token");
+      const access = await AsyncStorage.getItem("access_token");
+      console.log("im caellld", access);
       if (access) {
         const res = await dispatch(getUser());
         if (res.data) {

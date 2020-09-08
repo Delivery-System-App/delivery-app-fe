@@ -1,5 +1,12 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, Button, Text, TextInput } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Button,
+  Text,
+  TextInput,
+  AsyncStorage,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch } from "react-redux";
@@ -23,7 +30,7 @@ const Login = ({ navigation }) => {
     dispatch(login({ email, password })).then((res) => {
       console.log(res);
       if (res.data) {
-        localStorage.setItem("access_token", res.data.access_token);
+        AsyncStorage.setItem("access_token", res.data.access_token);
         navigation.navigate("Home");
       }
     });
@@ -103,7 +110,6 @@ const styles = StyleSheet.create({
   instruction: {
     fontSize: 25,
     textAlign: "center",
-    fontFamily: "DancingScript-Bold",
     margin: 20,
     color: "#fff",
   },
@@ -112,7 +118,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     marginBottom: 10,
-    borderRadius: "15%",
+    borderRadius: 15,
   },
   innerContainer1: {
     flexDirection: "row",

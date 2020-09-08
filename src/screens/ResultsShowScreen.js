@@ -136,22 +136,22 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     backgroundColor: "red",
     color: "white",
-    fontSize: "14px",
+    fontSize: 14,
     height: "20px",
     width: "auto",
   },
   PeopleImage: {
-    borderRadius: "50%",
+    borderRadius: 50,
   },
   HiglightsFlatList: {
-    backgroundColor: "none",
+    backgroundColor: "white",
   },
   HighlightsListItem: {
-    backgroundColor: "none",
+    backgroundColor: "white",
   },
   fab: {
     resizeMode: "contain",
-    position: "fixed",
+    position: "relative",
     margin: 16,
     right: 0,
     bottom: 0,

@@ -74,10 +74,10 @@ const Cart = ({ navigation, route }) => {
             booking.qty.push(item.quantity)
           : null;
       });
-      dispatch(bookDishes(booking)).then((res) => {
+      dispatch(bookDishes(booking)).then(async (res) => {
         console.log(res);
         if (res.data) {
-          localStorage.removeItem("cart");
+          await AsyncStorage.removeItem("cart");
           setDataCart([]);
           alert("bookin successfull");
         }

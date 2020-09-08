@@ -1,5 +1,6 @@
 import axios from "axios";
 import api from "./api";
+import { AsyncStorage } from "react-native";
 //import * as Notficiation from "../util/Notifications";
 
 export const actions = {
@@ -62,7 +63,7 @@ export const fireRequest = (
   };
 };
 
-export const APIRequest = (
+export const APIRequest = async (
   key,
   path = [],
   params = {},
@@ -104,9 +105,9 @@ export const APIRequest = (
     //baseURL: process.env.REACT_APP_BASE_URL,
     headers: {},
   };
-  if (!request.noAuth && localStorage.getItem("access_token")) {
+  if (!request.noAuth && (await AsyncStorage.getItem("access_token"))) {
     config.headers["Authorization"] =
-      "Bearer " + localStorage.getItem("access_token");
+      "Bearer " + (await AsyncStorage.getItem("access_token"));
   }
 
   if (multipart) {
@@ -132,8 +133,8 @@ export const APIRequest = (
         // currentUser is ignored because on the first page load
         // 403 error is displayed for invalid credential.
         if (error.response.status !== 200 && key === "currentUser") {
-          if (localStorage.getItem("access_token")) {
-            localStorage.removeItem("access_token");
+          if (AsyncStorage.getItem("access_token")) {
+            AsyncStorage.removeItem("access_token");
           }
           //     Notficiation.Error({
           ///     msg: "Token invalid, please login again",

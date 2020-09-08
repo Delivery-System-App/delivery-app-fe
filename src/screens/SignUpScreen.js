@@ -129,7 +129,6 @@ const styles = StyleSheet.create({
   instruction: {
     fontSize: 25,
     textAlign: "center",
-    fontFamily: "DancingScript-Bold",
     margin: 20,
     color: "#fff",
   },
@@ -138,7 +137,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 15,
     marginBottom: 10,
-    borderRadius: "15%",
+    borderRadius: 15,
   },
   innerContainer1: {
     flexDirection: "row",
