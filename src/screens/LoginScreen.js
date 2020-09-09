@@ -1,13 +1,5 @@
 import React, { useState, useContext, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  Button,
-  Text,
-  TextInput,
-  AsyncStorage,
-  ActivityIndicator,
-} from "react-native";
+import { View, StyleSheet, Text, TextInput, AsyncStorage } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch } from "react-redux";
@@ -66,18 +58,13 @@ const Login = ({ navigation }) => {
       <Text style={{ fontSize: 16, color: "gray", marginTop: 20 }}>
         Sign in to continue
       </Text>
-      <Animatable.View
-        style={{ margin: "0px auto", alignItems: "center" }}
-        ref={validateInput}
-      >
+      <Animatable.View ref={validateInput}>
         <TextInput
           style={{
             marginTop: 40,
             borderBottomColor: "#ddd",
             borderBottomWidth: 1,
             paddingBottom: 20,
-            width: "100%",
-            maxWidth: "400px",
           }}
           value={email}
           onChangeText={setEmail}
@@ -92,8 +79,6 @@ const Login = ({ navigation }) => {
             borderBottomColor: "#ddd",
             borderBottomWidth: 1,
             paddingBottom: 20,
-            width: "100%",
-            maxWidth: "400px",
           }}
           placeholder="Password"
           value={password}
@@ -193,10 +178,9 @@ const Login = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "white",
-    textAlign: "center",
+    flex: 1,
+    backgroundColor: "#FFF",
     padding: 20,
-    margin: "0px auto",
   },
 });
 
