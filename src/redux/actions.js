@@ -5,7 +5,6 @@ export const getUser = () => {
 };
 
 export const login = (body) => {
-  console.log(body);
   return fireRequest("login", [], body);
 };
 export const register = (body) => {

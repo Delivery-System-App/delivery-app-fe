@@ -1,7 +1,8 @@
 import { Image, Button } from "react-native";
 import React from "react";
 
-import Onboarding from "react-native-onboarding-swiper"; // 0.4.0
+// import Onboarding from "react-native-onboarding-swiper"; // 0.4.0
+import Onboarding from "react-native-onboarding-swiper";
 
 const OnBoardingScreen = ({ navigation }) => (
   <Onboarding

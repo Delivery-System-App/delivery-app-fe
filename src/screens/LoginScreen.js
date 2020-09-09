@@ -11,6 +11,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/actions";
+import { validateEmailAddress } from "../../utils/validation";
+import { notify } from "../../utils/notify";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -27,14 +29,25 @@ const Login = ({ navigation }) => {
   }, [navigation]);
 
   const handleSubmit = () => {
-    dispatch(login({ email, password })).then((res) => {
-      console.log(res);
-      if (res.data) {
-        AsyncStorage.setItem("access_token", res.data.access_token);
-        navigation.navigate("Home");
-      }
-    });
+    if (validateEmailAddress(email)) {
+      dispatch(login({ email, password })).then((resp) => {
+        if (resp) {
+          const { data: res } = resp;
+          const { status: statusCode } = resp;
+          if (resp.data === undefined) {
+            notify("invalid credentials");
+          }
+          if (resp.data && statusCode === 201) {
+            AsyncStorage.setItem("access_token", res.access_token);
+            navigation.navigate("Home");
+          }
+        }
+      });
+    } else {
+      notify("invalid email");
+    }
   };
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 25, marginTop: 20 }}>Welcome back!</Text>
@@ -71,7 +84,9 @@ const Login = ({ navigation }) => {
         secureTextEntry={true}
       />
       {state.errorMessage ? (
-        <Text style={styles.errorMessage}>{state.errorMessage}</Text>
+        <Text style={{ color: "red", textAlign: "center", marginTop: 10 }}>
+          {state.errorMessage}
+        </Text>
       ) : null}
       <View
         style={{
