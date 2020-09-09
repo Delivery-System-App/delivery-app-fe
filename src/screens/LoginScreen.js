@@ -66,13 +66,18 @@ const Login = ({ navigation }) => {
       <Text style={{ fontSize: 16, color: "gray", marginTop: 20 }}>
         Sign in to continue
       </Text>
-      <Animatable.View ref={validateInput}>
+      <Animatable.View
+        style={{ margin: "0px auto", alignItems: "center" }}
+        ref={validateInput}
+      >
         <TextInput
           style={{
             marginTop: 40,
             borderBottomColor: "#ddd",
             borderBottomWidth: 1,
             paddingBottom: 20,
+            width: "100%",
+            maxWidth: "400px",
           }}
           value={email}
           onChangeText={setEmail}
@@ -87,6 +92,8 @@ const Login = ({ navigation }) => {
             borderBottomColor: "#ddd",
             borderBottomWidth: 1,
             paddingBottom: 20,
+            width: "100%",
+            maxWidth: "400px",
           }}
           placeholder="Password"
           value={password}
@@ -186,9 +193,10 @@ const Login = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#FFF",
+    backgroundColor: "white",
+    textAlign: "center",
     padding: 20,
+    margin: "0px auto",
   },
 });
 
