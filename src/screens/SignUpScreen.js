@@ -37,7 +37,7 @@ const SignUp = ({ navigation }) => {
   };
 
   return (
-    <ScrollView>
+    <ScrollView style={{ flex: 1, backgroundColor: "#FFF" }}>
       <View style={styles.container}>
         <Text style={{ fontSize: 25, marginTop: 20 }}>Welcome back!</Text>
         <Text style={{ fontSize: 16, color: "gray", marginTop: 20 }}>
