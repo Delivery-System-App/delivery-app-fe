@@ -1,9 +1,9 @@
 import React from "react";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import ListHotels from "../../screens/ListHotels";
-import Cart from "../../screens/Cart";
-import ProfileScreen from "../../screens/ProfileScreen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ListHotels from "../../../screens/ListHotels";
+import Cart from "../../../screens/Cart";
+import ProfileScreen from "../../../screens/ProfileScreen";
 
 const Tab = createBottomTabNavigator();
 
