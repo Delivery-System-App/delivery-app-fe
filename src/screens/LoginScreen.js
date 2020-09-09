@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -15,6 +15,7 @@ import { login } from "../redux/actions";
 import { validateEmailAddress } from "../../utils/validation";
 import { notify } from "../../utils/notify";
 import Loader from "../../utils/loader";
+import * as Animatable from "react-native-animatable";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const validateInput = useRef(null);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -40,6 +43,7 @@ const Login = ({ navigation }) => {
           const { status: statusCode } = resp;
           if (resp.data === undefined) {
             setLoading(false);
+            validateInput.current.shake(800);
             notify("invalid credentials");
           }
           if (resp.data && statusCode === 201) {
@@ -51,6 +55,7 @@ const Login = ({ navigation }) => {
       });
     } else {
       setLoading(false);
+      validateInput.current.shake(800);
       notify("invalid email");
     }
   };
@@ -61,40 +66,41 @@ const Login = ({ navigation }) => {
       <Text style={{ fontSize: 16, color: "gray", marginTop: 20 }}>
         Sign in to continue
       </Text>
+      <Animatable.View ref={validateInput}>
+        <TextInput
+          style={{
+            marginTop: 40,
+            borderBottomColor: "#ddd",
+            borderBottomWidth: 1,
+            paddingBottom: 20,
+          }}
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          placeholder="Email"
+          autoCorrect={false}
+        />
 
-      <TextInput
-        style={{
-          marginTop: 40,
-          borderBottomColor: "#ddd",
-          borderBottomWidth: 1,
-          paddingBottom: 20,
-        }}
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        placeholder="Email"
-        autoCorrect={false}
-      />
-
-      <TextInput
-        style={{
-          marginTop: 40,
-          borderBottomColor: "#ddd",
-          borderBottomWidth: 1,
-          paddingBottom: 20,
-        }}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry={true}
-      />
-      {state.errorMessage ? (
-        <Text style={{ color: "red", textAlign: "center", marginTop: 10 }}>
-          {state.errorMessage}
-        </Text>
-      ) : null}
+        <TextInput
+          style={{
+            marginTop: 40,
+            borderBottomColor: "#ddd",
+            borderBottomWidth: 1,
+            paddingBottom: 20,
+          }}
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry={true}
+        />
+        {state.errorMessage ? (
+          <Text style={{ color: "red", textAlign: "center", marginTop: 10 }}>
+            {state.errorMessage}
+          </Text>
+        ) : null}
+      </Animatable.View>
       <View
         style={{
           alignItems: "center",
