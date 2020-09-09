@@ -6,6 +6,7 @@ import {
   Text,
   TextInput,
   AsyncStorage,
+  ActivityIndicator,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Context as AuthContext } from "./../context/AuthContext";
@@ -13,12 +14,14 @@ import { useDispatch } from "react-redux";
 import { login } from "../redux/actions";
 import { validateEmailAddress } from "../../utils/validation";
 import { notify } from "../../utils/notify";
+import Loader from "../../utils/loader";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
   const { state, signin, clearErrorMessages } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -30,20 +33,24 @@ const Login = ({ navigation }) => {
 
   const handleSubmit = () => {
     if (validateEmailAddress(email)) {
+      setLoading(true);
       dispatch(login({ email, password })).then((resp) => {
         if (resp) {
           const { data: res } = resp;
           const { status: statusCode } = resp;
           if (resp.data === undefined) {
+            setLoading(false);
             notify("invalid credentials");
           }
           if (resp.data && statusCode === 201) {
+            setLoading(false);
             AsyncStorage.setItem("access_token", res.access_token);
             navigation.navigate("Home");
           }
         }
       });
     } else {
+      setLoading(false);
       notify("invalid email");
     }
   };
@@ -107,9 +114,13 @@ const Login = ({ navigation }) => {
           }}
           onPress={handleSubmit}
         >
-          <Text style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}>
-            Login Now
-          </Text>
+          {loading ? (
+            <Loader />
+          ) : (
+            <Text style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}>
+              Login Now
+            </Text>
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity
