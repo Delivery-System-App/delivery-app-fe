@@ -37,52 +37,116 @@ const Login = ({ navigation }) => {
   };
   return (
     <View style={styles.container}>
-      <Text style={styles.instruction}>Login </Text>
+      <Text style={{ fontSize: 25, marginTop: 20 }}>Welcome back!</Text>
+      <Text style={{ fontSize: 16, color: "gray", marginTop: 20 }}>
+        Sign in to continue
+      </Text>
+
       <TextInput
+        style={{
+          marginTop: 40,
+          borderBottomColor: "#ddd",
+          borderBottomWidth: 1,
+          paddingBottom: 20,
+        }}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
+        placeholder="Email"
         autoCorrect={false}
-        placeholder={"Email-ID"}
-        style={styles.input}
       />
 
       <TextInput
+        style={{
+          marginTop: 40,
+          borderBottomColor: "#ddd",
+          borderBottomWidth: 1,
+          paddingBottom: 20,
+        }}
+        placeholder="Password"
         value={password}
         onChangeText={setPassword}
-        placeholder={"Password"}
         autoCapitalize="none"
         autoCorrect={false}
         secureTextEntry={true}
-        style={styles.input}
       />
-
       {state.errorMessage ? (
         <Text style={styles.errorMessage}>{state.errorMessage}</Text>
       ) : null}
-
-      <View style={styles.innerContainer1}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 40,
+        }}
+      >
         <TouchableOpacity
-          style={styles.link}
+          style={{
+            width: 200,
+            backgroundColor: "#0d47a1",
+            padding: 10,
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: 40,
+            marginTop: 30,
+          }}
+          onPress={handleSubmit}
+        >
+          <Text style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}>
+            Login Now
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
           onPress={() => {
             navigation.navigate("ForgotPasswd");
           }}
         >
-          <Text style={styles.btnTxt}>Forgot Password?</Text>
+          <Text style={{ marginTop: 20 }}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButton} onPress={handleSubmit}>
-          <Text style={styles.btnTxt}>Login</Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.innerContainer2}>
-        <TouchableOpacity
-          style={styles.link}
-          onPress={() => {
-            navigation.navigate("Signup");
-          }}
-        >
-          <Text style={styles.BtnTxt}>New here? Signup Instead</Text>
-        </TouchableOpacity>
+
+        <View style={{ flexDirection: "row", marginTop: 60 }}>
+          <View
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 40 / 2,
+              backgroundColor: "#3f51b5",
+              alignItems: "center",
+              justifyContent: "center",
+              marginHorizontal: 10,
+            }}
+          >
+            <Text style={{ fontSize: 25, fontWeight: "bold", color: "#FFF" }}>
+              f
+            </Text>
+          </View>
+          <View
+            style={{
+              height: 40,
+              width: 40,
+              borderRadius: 40 / 2,
+              backgroundColor: "#f44336",
+              alignItems: "center",
+              justifyContent: "center",
+              marginHorizontal: 10,
+            }}
+          >
+            <Text style={{ fontSize: 25, fontWeight: "bold", color: "#FFF" }}>
+              G
+            </Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", marginTop: 40 }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Signup");
+            }}
+          >
+            <Text style={{ color: "gray" }}>Don't have an account?</Text>
+            <Text style={{ fontWeight: "bold" }}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -91,60 +155,8 @@ const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#008080",
-  },
-  input: {
-    width: "90%",
-    padding: 15,
-    backgroundColor: "#fff",
-    marginBottom: 10,
-  },
-  errorMessage: {
-    fontSize: 10,
-    color: "red",
-    marginVertical: 10,
-    marginTop: 15,
-  },
-  instruction: {
-    fontSize: 25,
-    textAlign: "center",
-    margin: 20,
-    color: "#fff",
-  },
-  loginButton: {
-    width: "100%",
-    backgroundColor: "#fff",
-    padding: 15,
-    marginBottom: 10,
-    borderRadius: 15,
-  },
-  innerContainer1: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "90%",
-    marginBottom: 250,
-  },
-  innerContainer2: {
-    width: "90%",
-    height: "10%",
-    alignItems: "center",
-    marginBottom: 0,
-  },
-  btnTxt: {
-    fontSize: 18,
-    textAlign: "center",
-  },
-  linkTxt: {
-    fontSize: 18,
-    textAlign: "center",
-    fontFamily: "bold",
-  },
-  link: {
-    width: "100%",
-    padding: 15,
-    marginBottom: 10,
+    backgroundColor: "#FFF",
+    padding: 20,
   },
 });
 
