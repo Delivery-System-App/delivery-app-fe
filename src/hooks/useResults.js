@@ -15,9 +15,11 @@ export default () => {
   const searchApi = async (searchTerm) => {
     try {
       dispatch(filter([searchTerm])).then((res) => {
-        if (res.data) {
-          setResults(res.data);
-          console.log(res.data);
+        if (res !== undefined) {
+          if (res.data) {
+            setResults(res.data);
+            console.log(res.data);
+          }
         }
       });
     } catch (err) {
