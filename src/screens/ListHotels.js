@@ -47,17 +47,17 @@ const ListHotels = ({ navigation }) => {
           <FoodCategories />
           <ResultList
             navigation={navigation}
-            results={filterResultsByPrice(2)}
+            results={filterResultsByPrice(1)}
             title="Cost Effective"
           />
           <ResultList
             navigation={navigation}
-            results={filterResultsByPrice(3)}
+            results={filterResultsByPrice(2)}
             title="Bit Spender"
           />
           <ResultList
             navigation={navigation}
-            results={filterResultsByPrice(4)}
+            results={filterResultsByPrice(3)}
             title="Bit Pricer"
           />
         </ScrollView>
