@@ -102,6 +102,7 @@ const FoodItems = ({ route, navigation }) => {
 };
 const styles = StyleSheet.create({
   titleCatg: {
+    color: "#33c37d",
     fontSize: 30,
     fontWeight: "bold",
     textAlign: "center",

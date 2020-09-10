@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -10,11 +10,9 @@ import {
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { AsyncStorage } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
-import { useState } from "react";
-import { useEffect } from "react";
-import menuApi from "./../api/menuApi";
 import { menuDishes } from "../redux/actions";
 import { useDispatch } from "react-redux";
+import { SafeAreaView } from "react-navigation";
 
 var { height, width } = Dimensions.get("window");
 
@@ -66,10 +64,17 @@ const ShowDishes = ({ route, navigation }) => {
   const _renderItemFood = (item) => {
     return (
       <TouchableOpacity style={styles.divFood}>
+        <View
+          style={{
+            height: width / 2 - 20 - 90,
+            backgroundColor: "transparent",
+            width: width / 2 - 20 - 10,
+          }}
+        />
         <Image
           style={styles.imageFood}
-          resizeMode="contain"
-          source={item.photos ? { uri: item.photos[0] } : foodImage}
+          // resizeMode="contain"
+          source={item.photos !== "" ? { uri: item.photos[0] } : foodImage}
         />
         <View
           style={{
@@ -104,44 +109,57 @@ const ShowDishes = ({ route, navigation }) => {
     );
   };
   return (
-    <ScrollView>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
         <View
           style={{
+            flex: 1,
+            marginTop: 40,
             width: width,
             borderRadius: 20,
             paddingVertical: 20,
-            backgroundColor: "white",
+            backgroundColor: "pink",
           }}
         >
           <Text style={styles.titleCatg}>Menu Dishes</Text>
+
           <FlatList
             data={dishes}
             numColumns={2}
             renderItem={({ item }) => _renderItemFood(item)}
             keyExtractor={(item) => item.dishId}
           />
-          <View style={{ height: 20 }} />
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Cart", { resId })}
+
+          <View
             style={{
-              width: width / 2 - 40,
-              backgroundColor: "#33c37d",
-              flexDirection: "row",
+              // flex: 1,
+              marginTop: 10,
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: 5,
-              padding: 4,
             }}
           >
-            <Text style={{ fontSize: 18, color: "white", fontWeight: "bold" }}>
-              Go To Cart
-            </Text>
-            <View style={{ width: 10 }} />
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Cart", { resId })}
+              style={{
+                width: width / 2 - 40,
+                backgroundColor: "#33c37d",
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 5,
+                padding: 4,
+              }}
+            >
+              <Text
+                style={{ fontSize: 18, color: "white", fontWeight: "bold" }}
+              >
+                Go To Cart
+              </Text>
+              <View style={{ width: 10 }} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
@@ -150,22 +168,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     marginBottom: 10,
+    color: "#33c37d",
   },
   imageFood: {
-    width: width / 2 - 20 - 10,
+    marginTop: 10,
+    width: width / 2 - 20 - 30,
     height: width / 2 - 20 - 30,
-    // width: 150,
-    // height: 150,
-    // borderRadius: (width / (2 - 20 - 10))/2,
+    borderRadius: width,
     backgroundColor: "transparent",
     position: "absolute",
-    top: -45,
+    // top: -45,
   },
   divFood: {
     width: width / 2 - 20,
     padding: 10,
     borderRadius: 10,
-    marginTop: 55,
+    marginTop: 15,
     marginBottom: 5,
     marginLeft: 10,
     alignItems: "center",
