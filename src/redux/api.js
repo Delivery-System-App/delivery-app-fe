@@ -7,6 +7,11 @@ export default {
     method: "POST",
     noAuth: true,
   },
+  updateProfile: {
+    path: "/api/v1/auth/updateuser",
+    method: "POST",
+    noAuth: false,
+  },
   login: {
     path: "/api/v1/auth/login",
     method: "POST",

@@ -11,6 +11,9 @@ export const register = (body) => {
   console.log(body);
   return fireRequest("register", [], body);
 };
+export const updateProfile = (body) => {
+  return fireRequest("updateProfile", [], body);
+};
 export const resDetail = (id) => {
   return fireRequest("resDetail", [id]);
 };

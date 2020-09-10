@@ -14,6 +14,7 @@ import ShowDishes from "../../../screens/ShowDishes";
 import OnBoardingScreen from "../../../screens/OnBoardingScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import ResultsShowScreen from "../../../screens/ResultsShowScreen";
+import EditProfile from "../../../screens/UpdateProfile";
 const Stack = createStackNavigator();
 const Stack2 = createStackNavigator();
 
@@ -78,6 +79,12 @@ const MyStack = () => {
             name="Home"
             component={BottomTabNavigator}
           />
+          <Stack.Screen
+            options={{ headerLeft: null }}
+            name="updateProfile"
+            component={EditProfile}
+          />
+
           <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
           <Stack.Screen name="FoodItems" component={FoodItems} />
           <Stack.Screen name="ShowDishes" component={ShowDishes} />
@@ -107,6 +114,11 @@ const MyStack = () => {
             options={{ headerLeft: null }}
             name="Signup"
             component={SignUp}
+          />
+          <Stack.Screen
+            options={{ headerLeft: null }}
+            name="updateProfile"
+            component={EditProfile}
           />
           <Stack.Screen
             options={{ headerLeft: null }}
