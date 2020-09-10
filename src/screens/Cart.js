@@ -90,7 +90,7 @@ const Cart = ({ navigation, route }) => {
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <View style={{ height: 20 }} />
+      <View style={{ height: 40 }} />
       <Text style={{ fontSize: 32, fontWeight: "bold", color: "#33c37d" }}>
         Cart food
       </Text>
@@ -113,8 +113,11 @@ const Cart = ({ navigation, route }) => {
                 }}
               >
                 <Image
-                  resizeMode={"contain"}
-                  style={{ width: width / 3, height: width / 3 }}
+                  style={{
+                    width: width / 3,
+                    height: width / 3,
+                    borderRadius: width / 3,
+                  }}
                   source={{ uri: item.food.photos[0] }}
                 />
                 <View
