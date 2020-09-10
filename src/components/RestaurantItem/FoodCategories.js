@@ -8,21 +8,22 @@ const FoodCategories = () => {
   const dataCategories = [
     {
       id: 1,
-      name: "American",
+      name: "Food",
       color: "#fbc831",
       image: "http://tutofox.com/foodapp//categories/american.png",
     },
     {
       id: 2,
-      name: "Burger",
+      name: "Grocery",
       color: "#9fd236",
-      image: "http://tutofox.com/foodapp//categories/burger.png",
+      image:
+        "http://www.pngall.com/wp-content/uploads/4/Grocery-Transparent-Background.png",
     },
     {
       id: 3,
-      name: "Pizza",
+      name: "Bakery",
       color: "orange",
-      image: "http://tutofox.com/foodapp//categories/pizza.png",
+      image: "http://pngimg.com/uploads/cake/cake_PNG13140.png",
     },
     {
       id: 4,
