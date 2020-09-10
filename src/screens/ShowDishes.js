@@ -118,7 +118,6 @@ const ShowDishes = ({ route, navigation }) => {
             width: width,
             borderRadius: 20,
             paddingVertical: 20,
-            backgroundColor: "pink",
           }}
         >
           <Text style={styles.titleCatg}>Menu Dishes</Text>

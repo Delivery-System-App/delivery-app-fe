@@ -46,7 +46,7 @@ const FoodItems = ({ route, navigation }) => {
         <TouchableOpacity
           onPress={() => navigation.navigate("ShowDishes", { id, menuId })}
           style={{
-            width: width - 40,
+            width: width / 2 - 40,
             backgroundColor: "#33c37d",
             flexDirection: "row",
             alignItems: "center",
