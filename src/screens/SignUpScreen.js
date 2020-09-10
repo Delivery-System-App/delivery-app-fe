@@ -5,6 +5,13 @@ import { Context as AuthContext } from "./../context/AuthContext";
 import { register } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import * as Animatable from "react-native-animatable";
+import {
+  validateEmailAddress,
+  validatePassword,
+  phonePreg,
+} from "../../utils/validation";
+import { notify } from "../../utils/notify";
+import Loader from "../../utils/loader";
 
 const SignUp = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -14,6 +21,15 @@ const SignUp = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [type, setType] = useState("customer");
+  const [loading, setloading] = useState(false);
+
+  const initError = {
+    name: "",
+    email: "",
+    password: "",
+    confirm: "",
+  };
+  const [error, setError] = useState(initError);
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       clearErrorMessages();
@@ -21,19 +37,54 @@ const SignUp = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+  function validInputs() {
+    let formValid = true;
+    let err = Object.assign({}, initError);
+    if (name === "") {
+      err["name"] = "Enter your name";
+      formValid = false;
+    }
+    if (password !== confirm) {
+      err["confirm"] = "Passwords do not match";
+      formValid = false;
+    }
+    if (!validateEmailAddress(email) || email == "") {
+      err["email"] = "Enter a valid email";
+      formValid = false;
+    }
+    if (password.length < 8) {
+      err["password"] = "Must be atleast 8 characters";
+      formValid = false;
+    } else if (password.length > 49) {
+      err["password"] = "Maximum 49 characters";
+      formValid = false;
+    } else if (!validatePassword(password)) {
+      err["password"] = "Needed one upper one lower and one digit";
+      formValid = false;
+    }
+
+    setError(err);
+    return formValid;
+  }
+
   const handleSubmit = () => {
-    dispatch(
-      register({ name, email, password, confirm, type: "customer" })
-    ).then((res) => {
-      if (res && res.data) {
-        if (res.data.success) {
-          setEmail("");
-          setName("");
-          setConfirm("");
-          setPassword("");
+    if (validInputs()) {
+      setloading(true);
+      dispatch(
+        register({ name, email, password, confirm, type: "customer" })
+      ).then((res) => {
+        if (res && res.data) {
+          if (res.data.success) {
+            setEmail("");
+            setName("");
+            setConfirm("");
+            setPassword("");
+            notify("Registration success");
+          }
         }
-      }
-    });
+        setloading(false);
+      });
+    }
   };
 
   return (
@@ -52,11 +103,17 @@ const SignUp = ({ navigation }) => {
               paddingBottom: 20,
             }}
             value={name}
+            name="name"
             onChangeText={setName}
             autoCapitalize="none"
             placeholder="Name"
             autoCorrect={false}
           />
+          {error && error["name"] ? (
+            <Text style={{ textAlign: "left", color: "red", fontSize: 12 }}>
+              {error["name"]}
+            </Text>
+          ) : null}
 
           <TextInput
             style={{
@@ -67,11 +124,17 @@ const SignUp = ({ navigation }) => {
             }}
             placeholder="Email"
             value={email}
+            name="email"
             type="email"
             onChangeText={setEmail}
             autoCapitalize="none"
             autoCorrect={false}
           />
+          {error && error["email"] ? (
+            <Text style={{ textAlign: "left", color: "red", fontSize: 12 }}>
+              {error["email"]}
+            </Text>
+          ) : null}
           <TextInput
             style={{
               marginTop: 40,
@@ -81,12 +144,18 @@ const SignUp = ({ navigation }) => {
             }}
             placeholder="password"
             value={password}
+            name="password"
             type="password"
             onChangeText={setPassword}
             autoCapitalize="none"
             autoCorrect={false}
             secureTextEntry={true}
           />
+          {error && error["password"] ? (
+            <Text style={{ textAlign: "left", color: "red", fontSize: 12 }}>
+              {error["password"]}
+            </Text>
+          ) : null}
           <TextInput
             style={{
               marginTop: 40,
@@ -97,11 +166,17 @@ const SignUp = ({ navigation }) => {
             placeholder="confirm password"
             value={confirm}
             type="password"
+            name="confirm"
             onChangeText={setConfirm}
             autoCapitalize="none"
             autoCorrect={false}
             secureTextEntry={true}
           />
+          {error && error["confirm"] ? (
+            <Text style={{ textAlign: "left", color: "red", fontSize: 12 }}>
+              {error["confirm"]}
+            </Text>
+          ) : null}
 
           {state.errorMessage ? (
             <Text style={{ color: "red", textAlign: "center", marginTop: 10 }}>
@@ -128,7 +203,7 @@ const SignUp = ({ navigation }) => {
             }}
             onPress={handleSubmit}
           >
-            {false ? (
+            {loading ? (
               <Loader />
             ) : (
               <Text
