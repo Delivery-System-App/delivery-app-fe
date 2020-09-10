@@ -129,38 +129,6 @@ const Login = ({ navigation }) => {
           <Text style={{ marginTop: 20 }}>Forgot Password?</Text>
         </TouchableOpacity>
 
-        <View style={{ flexDirection: "row", marginTop: 60 }}>
-          <View
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: 40 / 2,
-              backgroundColor: "#3f51b5",
-              alignItems: "center",
-              justifyContent: "center",
-              marginHorizontal: 10,
-            }}
-          >
-            <Text style={{ fontSize: 25, fontWeight: "bold", color: "#FFF" }}>
-              f
-            </Text>
-          </View>
-          <View
-            style={{
-              height: 40,
-              width: 40,
-              borderRadius: 40 / 2,
-              backgroundColor: "#f44336",
-              alignItems: "center",
-              justifyContent: "center",
-              marginHorizontal: 10,
-            }}
-          >
-            <Text style={{ fontSize: 25, fontWeight: "bold", color: "#FFF" }}>
-              G
-            </Text>
-          </View>
-        </View>
         <View style={{ flexDirection: "row", marginTop: 40 }}>
           <TouchableOpacity
             onPress={() => {
