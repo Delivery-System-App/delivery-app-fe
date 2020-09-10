@@ -115,7 +115,7 @@ const Cart = ({ navigation, route }) => {
                 <Image
                   resizeMode={"contain"}
                   style={{ width: width / 3, height: width / 3 }}
-                  source={{ uri: item.food.image }}
+                  source={{ uri: item.food.photos[0] }}
                 />
                 <View
                   style={{
