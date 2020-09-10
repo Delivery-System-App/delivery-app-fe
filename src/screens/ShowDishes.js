@@ -45,16 +45,20 @@ const ShowDishes = ({ route, navigation }) => {
 
     AsyncStorage.getItem("cart")
       .then((datacart) => {
-        let duplicate = false;
+        let error = { duplicate: false, restaurant: false };
         if (datacart !== null) {
           const cart = JSON.parse(datacart);
           for (let i = 0; i < cart.length; i++) {
+            if (cart[i].restaurantId !== resId) {
+              error.restaurant = true;
+              break;
+            }
             if (cart[i].food.dishId === data.dishId) {
-              duplicate = true;
+              error.duplicate = true;
               break;
             }
           }
-          if (!duplicate) {
+          if (!error.duplicate && !error.restaurant) {
             cart.push(itemcart);
             AsyncStorage.setItem("cart", JSON.stringify(cart));
           }
@@ -63,8 +67,12 @@ const ShowDishes = ({ route, navigation }) => {
           cart.push(itemcart);
           AsyncStorage.setItem("cart", JSON.stringify(cart));
         }
-        if (!duplicate) alert("Add Cart");
-        else alert("Already there");
+        if (!error.duplicate && !error.restaurant) alert("Added to Cart");
+        else if (error.duplicate) {
+          alert("Item already added");
+        } else if (error.restaurant) {
+          alert("Please checkout cart");
+        }
       })
       .catch((err) => {
         alert(err);
