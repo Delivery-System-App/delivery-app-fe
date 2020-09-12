@@ -42,4 +42,9 @@ export default {
     method: "POST",
     noAuth: false,
   },
+  getBookingDetailOfUser: {
+    path: "/api/v1/booking/GetBookingDetailOfUser",
+    method: "GET",
+    noAuth: false,
+  },
 };

@@ -29,3 +29,7 @@ export const menuDishes = (id) => {
 export const bookDishes = (body) => {
   return fireRequest("bookDishes", [], body);
 };
+
+export const getBookingDetailOfUser = () => {
+  return fireRequest("getBookingDetailOfUser");
+};
