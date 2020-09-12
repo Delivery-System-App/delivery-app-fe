@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { getBookingDetailOfUser } from "../../redux/actions";
 import { Card } from "react-native-paper";
 import Loader from "../../../utils/loader";
+import moment from "moment";
 
 const OrdersScreen = ({ navigation }) => {
   const [show, setShow] = useState("");
@@ -72,20 +73,49 @@ const OrdersScreen = ({ navigation }) => {
         return dish;
       });
       return (
-        <Card key={index} style={{ marginVertical: 10 }}>
-          <CardItem header>
-            <Text>{booking.restaurantName.toUpperCase()}</Text>
+        <Card key={index} style={{ marginVertical: 10, borderRadius: 8 }}>
+          <CardItem
+            bordered
+            header
+            style={{
+              flex: 1,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              borderTopLeftRadius: 8,
+              borderTopRightRadius: 8,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 15,
+                textShadowRadius: 10,
+                textShadowColor: "#667EEA",
+              }}
+            >
+              {booking.restaurantName.toUpperCase()}
+            </Text>
+            <Text style={{ fontSize: 12 }}>
+              {moment(booking.createdAt).format("MMM Do YY")}
+            </Text>
           </CardItem>
           {dishes.map((dish) => {
             return (
-              <CardItem key={dish.dishId}>
-                <Text>
+              <CardItem key={dish.dishId} bordered>
+                <Text style={{ fontSize: 11 }}>
                   {dish.name} x {dish.quantity} = {dish.quantity * dish.price}
                 </Text>
               </CardItem>
             );
           })}
-          <CardItem header>
+
+          <CardItem
+            header
+            bordered
+            style={{
+              borderBottomLeftRadius: 8,
+              borderBottomRightRadius: 8,
+            }}
+          >
             <Text>Total Amount:{booking.totalAmount}</Text>
           </CardItem>
         </Card>
