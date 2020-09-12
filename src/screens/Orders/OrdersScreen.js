@@ -15,36 +15,39 @@ import {
   CardItem,
 } from "native-base";
 import { useDispatch } from "react-redux";
-import { filter, getBookingDetailOfUser } from "../../redux/actions";
-import { View } from "react-native-animatable";
+import { getBookingDetailOfUser } from "../../redux/actions";
 import { Card } from "react-native-paper";
+import Loader from "../../../utils/loader";
 
 const OrdersScreen = ({ navigation }) => {
-  const [show, setShow] = useState("active");
+  const [show, setShow] = useState("");
   const [orders, setOrders] = useState([]);
   const [filteredValue, setFilteredValue] = useState([]);
+  const [loading, setLoading] = useState(false);
   let bookingList = useState();
   const dispatch = useDispatch();
   const getOrders = async () => {
     try {
-      console.log("im calleddd2");
-
-      await dispatch(getBookingDetailOfUser()).then((res) => {
+      setLoading(true);
+      dispatch(getBookingDetailOfUser()).then((res) => {
         if (res.status == 200) {
           if (res.data) {
             setOrders(res.data.data);
             console.log(res.data.data);
           }
         }
+        setLoading(false);
       });
     } catch (err) {
       console.log("err", err);
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      setShow("active");
       getOrders();
+      setShow("active");
       applyFilter("deliveryStatus", "Pending");
     });
     return unsubscribe;
@@ -58,13 +61,18 @@ const OrdersScreen = ({ navigation }) => {
     );
   };
 
+  useEffect(() => {
+    setShow("active");
+    applyFilter("deliveryStatus", "Pending");
+  }, [orders]);
+
   if (filteredValue.length > 0) {
-    bookingList = filteredValue.map((booking) => {
+    bookingList = filteredValue.map((booking, index) => {
       let dishes = booking.dish.map((dish) => {
         return dish;
       });
       return (
-        <Card key={booking.boodId} style={{ marginVertical: 10 }}>
+        <Card key={index} style={{ marginVertical: 10 }}>
           <CardItem header>
             <Text>{booking.restaurantName.toUpperCase()}</Text>
           </CardItem>
@@ -85,7 +93,9 @@ const OrdersScreen = ({ navigation }) => {
     });
   }
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Container>
       <Header hasSegment>
         <Body style={{ alignItems: "center" }}>
