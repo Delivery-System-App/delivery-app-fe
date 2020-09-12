@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ListHotels from "../../../screens/ListHotels";
 import Cart from "../../../screens/Cart";
 import ProfileScreen from "../../../screens/ProfileScreen";
+import OrderScreen from "../../../screens/Orders/OrdersScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -31,6 +32,16 @@ const BottomTabNavigator = () => {
           tabBarLabel: "Cart",
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="cart" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Orders"
+        component={OrderScreen}
+        options={{
+          tabBarLabel: "Orders",
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="food" color={color} size={size} />
           ),
         }}
       />
