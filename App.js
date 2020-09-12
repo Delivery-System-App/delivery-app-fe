@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 
 import MyStack from "./src/components/RestaurantItem/Navigation/MyStack";
+import FontLoader from "./utils/FontLoader";
 
 const App = MyStack;
 
@@ -14,6 +15,7 @@ export default () => {
 
   return (
     <Provider store={store}>
+      <FontLoader />
       <AuthProvider>
         <App />
       </AuthProvider>
