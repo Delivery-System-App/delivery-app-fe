@@ -7,7 +7,6 @@ import {
   ActivityIndicator,
 } from "react-native";
 import SearchBar from "../components/RestaurantItem/SearchBar";
-import restaurantApi from "../api/restaurantApi";
 import useResults from "../hooks/useResults";
 import ResultList from "../components/RestaurantItem/ResultsList";
 import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
@@ -19,11 +18,11 @@ const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
   const [searchApi, results, errorMessage] = useResults("");
   const isfocused = useIsFocused();
-  useEffect(() => {
-    if (isfocused) {
-      navigation.navigate("Home", { name: "Hotels" });
-    }
-  });
+  // useEffect(() => {
+  //   if (isfocused) {
+  //     navigation.navigate("Home", { name: "Hotels" });
+  //   }
+  // });
   const filterResultsByPrice = (price) => {
     return results.filter((result) => {
       return result.rating === price;
