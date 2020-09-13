@@ -7,12 +7,14 @@ import {
   Dimensions,
   Image,
 } from "react-native";
+import { Toast } from "native-base";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { AsyncStorage } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { menuDishes } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { SafeAreaView } from "react-navigation";
+import { notify } from "../../utils/notify";
 
 var { height, width } = Dimensions.get("window");
 
@@ -67,11 +69,11 @@ const ShowDishes = ({ route, navigation }) => {
           cart.push(itemcart);
           AsyncStorage.setItem("cart", JSON.stringify(cart));
         }
-        if (!error.duplicate && !error.restaurant) alert("Added to Cart");
+        if (!error.duplicate && !error.restaurant) notify("Added to Cart");
         else if (error.duplicate) {
-          alert("Item already added");
+          notify("Item alread added");
         } else if (error.restaurant) {
-          alert("Please checkout cart");
+          notify("Please checkout cart");
         }
       })
       .catch((err) => {

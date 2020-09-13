@@ -5,14 +5,16 @@ var { width } = Dimensions.get("window");
 import Icon from "react-native-vector-icons/Ionicons";
 import { AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import bookingApi from "./../api/bookingApi";
 import { useDispatch } from "react-redux";
 import { bookDishes } from "../redux/actions";
+import { notify } from "../../utils/notify";
+import { ActivityIndicator } from "react-native-paper";
 
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const dispatch = useDispatch();
   const isfocused = useIsFocused();
+  const [loading, setLoading] = useState(false);
 
   if (isfocused) {
     navigation.navigate("Home", { name: "Cart" });
@@ -74,15 +76,18 @@ const Cart = ({ navigation, route }) => {
             booking.qty.push(item.quantity)
           : null;
       });
+      setLoading(true);
       dispatch(bookDishes(booking)).then(async (res) => {
         console.log(res);
         if (res.data) {
           await AsyncStorage.removeItem("cart");
           setDataCart([]);
-          alert("bookin successfull");
+          notify("bookin successfull");
+          setLoading(false);
         }
         if (res.error) {
           console.log(error.message);
+          setLoading(false);
         }
       });
     }
@@ -195,15 +200,19 @@ const Cart = ({ navigation, route }) => {
               margin: 20,
             }}
           >
-            <Text
-              style={{
-                fontSize: 24,
-                fontWeight: "bold",
-                color: "white",
-              }}
-            >
-              CHECKOUT
-            </Text>
+            {loading ? (
+              <ActivityIndicator size="small" color="#00ff00" />
+            ) : (
+              <Text
+                style={{
+                  fontSize: 24,
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                CHECKOUT
+              </Text>
+            )}
           </TouchableOpacity>
 
           <View style={{ height: 20 }} />
