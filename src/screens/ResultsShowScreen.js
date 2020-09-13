@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  ImageBackground,
+} from "react-native";
 import restaurantApi from "../api/restaurantApi";
 // import { FAB, Badge, Drawer } from "react-native-paper";
 import { ListItem } from "react-native-elements";
@@ -7,7 +14,16 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { resDetail } from "../redux/actions";
 import Loader from "../../utils/loader";
-import { Container, Content, Fab, Icon, Button } from "native-base";
+import {
+  Container,
+  Content,
+  Fab,
+  Icon,
+  Button,
+  CardItem,
+  Badge,
+  Accordion,
+} from "native-base";
 import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -112,11 +128,43 @@ const ResultsShowScreen = ({ route, navigation }) => {
           onPress={() => navigation.navigate("FoodItems", { id })}
         /> */}
       {/* </View> */}
-      <Container>
-        {/* <Content padder> */}
+      <Container style={{ backgroundColor: "#F7FAFC" }}>
         <Content padder>
           <MainScreenBanner photos={photos} />
+          <Text
+            style={{
+              marginVertical: 10,
+              flex: 1,
+              fontSize: 25,
+              textAlign: "center",
+              color: "#6B46C1",
+              borderRadius: 10,
+              textShadowRadius: 8,
+              fontWeight: "bold",
+              backgroundColor: "white",
+            }}
+          >
+            {result.name}
+          </Text>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+            }}
+          >
+            <Badge success>
+              <Text style={{ padding: 4 }}>{result.status}</Text>
+            </Badge>
+            <Badge info>
+              <Text style={{ padding: 4 }}>{result.contact}</Text>
+            </Badge>
+            <Badge>
+              <Text style={{ padding: 4 }}>{result.location}</Text>
+            </Badge>
+          </View>
         </Content>
+
         <View style={{ flex: 1 }}>
           <Fab
             active={active}
@@ -145,7 +193,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           </Fab>
         </View>
-        {/* </Content> */}
       </Container>
     </>
   );
