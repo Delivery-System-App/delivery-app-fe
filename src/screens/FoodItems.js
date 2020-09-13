@@ -9,21 +9,31 @@ import { useEffect } from "react";
 import { menuList } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { SafeAreaView } from "react-navigation";
+import { set } from "react-native-reanimated";
+import Loader from "../../utils/loader";
 
 var { height, width } = Dimensions.get("window");
 
 const FoodItems = ({ route, navigation }) => {
   const [menu, setMenu] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   //we get the restaurant id
   const id = route.params.id;
 
   const getMenuList = async (id) => {
-    dispatch(menuList([id])).then((res) => {
-      if (res.data) {
-        setMenu(res.data.data);
-      }
-    });
+    try {
+      setLoading(true);
+      dispatch(menuList([id])).then((res) => {
+        if (res.data) {
+          setMenu(res.data.data);
+        }
+        setLoading(false);
+      });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
   useEffect(() => {
     getMenuList(id);
@@ -70,7 +80,9 @@ const FoodItems = ({ route, navigation }) => {
       </TouchableOpacity>
     );
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <SafeAreaView style={{ flex: 1 }}>
       <View
         style={{

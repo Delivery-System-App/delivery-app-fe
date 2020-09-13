@@ -8,7 +8,8 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { bookDishes } from "../redux/actions";
 import { notify } from "../../utils/notify";
-import { ActivityIndicator } from "react-native-paper";
+import { ActivityIndicator, Title } from "react-native-paper";
+import { Body, Container, Header } from "native-base";
 
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
