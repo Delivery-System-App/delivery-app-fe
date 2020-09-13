@@ -8,6 +8,7 @@ import { validateEmailAddress } from "../../utils/validation";
 import { notify } from "../../utils/notify";
 import Loader from "../../utils/loader";
 import * as Animatable from "react-native-animatable";
+const splitterString = "%=%@~!lorem^ipsum^split~@%//+%";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -29,7 +30,8 @@ const Login = ({ navigation }) => {
   const handleSubmit = () => {
     if (validateEmailAddress(email)) {
       setLoading(true);
-      dispatch(login({ email, password })).then((resp) => {
+      const userMail = "EMAIL_AUTH" + splitterString + email;
+      dispatch(login({ email: userMail, password })).then((resp) => {
         if (resp) {
           const { data: res } = resp;
           const { status: statusCode } = resp;
