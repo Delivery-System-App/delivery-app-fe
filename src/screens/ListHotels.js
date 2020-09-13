@@ -17,7 +17,7 @@ import Loader from "../../utils/loader";
 
 const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
-  const [searchApi, results, errorMessage] = useResults("");
+  const [searchApi, results, errorMessage, loading] = useResults("");
   const isfocused = useIsFocused();
   // useEffect(() => {
   //   if (isfocused) {
@@ -40,7 +40,7 @@ const ListHotels = ({ navigation }) => {
         onTermSubmit={() => searchApi(term)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
-      {results.length == 0 ? (
+      {loading ? (
         <View style={[styles.container, styles.horizontal]}>
           <ActivityIndicator />
         </View>
