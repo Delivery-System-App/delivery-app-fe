@@ -9,7 +9,6 @@ import { useEffect } from "react";
 import { menuList } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { SafeAreaView } from "react-navigation";
-import { Container, Header } from "native-base";
 
 var { height, width } = Dimensions.get("window");
 
@@ -72,21 +71,15 @@ const FoodItems = ({ route, navigation }) => {
     );
   };
   return (
-    // <Container>
-    //   <Header style={{ backgroundColor: "red" }}></Header>
-    // </Container>
     <SafeAreaView style={{ flex: 1 }}>
       <View
         style={{
           flex: 1,
-          // marginTop: 40,
           marginBottom: 5,
           width: width,
           borderRadius: 20,
-          // paddingVertical: 20,
         }}
       >
-        {/* <Text style={styles.titleCatg}>MENU</Text> */}
         <SafeAreaView
           style={{
             flex: 1,

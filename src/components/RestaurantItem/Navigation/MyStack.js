@@ -15,13 +15,11 @@ import OnBoardingScreen from "../../../screens/OnBoardingScreen";
 import BottomTabNavigator from "./BottomTabNavigator";
 import ResultsShowScreen from "../../../screens/ResultsShowScreen";
 import EditProfile from "../../../screens/UpdateProfile";
+import CartButton from "./CartButton";
 const Stack = createStackNavigator();
-const Stack2 = createStackNavigator();
 
 const MyStack = () => {
-  const [user, setUser] = useState(false);
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     AsyncStorage.getItem("alreadyLaunched").then((value) => {
@@ -143,12 +141,17 @@ const MyStack = () => {
               headerShown: true,
               title: "Menu",
               headerTintColor: "#000",
-              headerTitleStyle: {
-                fontWeight: "bold",
-              },
             }}
           />
-          <Stack.Screen name="ShowDishes" component={ShowDishes} />
+          <Stack.Screen
+            name="ShowDishes"
+            component={ShowDishes}
+            options={({ route }) => ({
+              headerShown: true,
+              title: "Menu Items",
+              headerRight: () => <CartButton resid={route.params.id} />,
+            })}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );

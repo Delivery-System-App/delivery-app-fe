@@ -133,13 +133,12 @@ const ShowDishes = ({ route, navigation }) => {
         <View
           style={{
             flex: 1,
-            marginTop: 40,
             width: width,
             borderRadius: 20,
-            paddingVertical: 20,
+            paddingVertical: 2,
           }}
         >
-          <Text style={styles.titleCatg}>Menu Dishes</Text>
+          {/* <Text style={styles.titleCatg}>Menu Dishes</Text> */}
 
           <FlatList
             data={dishes}
@@ -155,26 +154,7 @@ const ShowDishes = ({ route, navigation }) => {
               alignItems: "center",
               justifyContent: "center",
             }}
-          >
-            <TouchableOpacity
-              onPress={() => navigation.navigate("Cart", { resId })}
-              style={{
-                width: width / 2 - 40,
-                backgroundColor: "#33c37d",
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 5,
-                padding: 4,
-              }}
-            >
-              <Text
-                style={{ fontSize: 18, color: "white", fontWeight: "bold" }}
-              >
-                Go To Cart
-              </Text>
-              <View style={{ width: 10 }} />
-            </TouchableOpacity>
-          </View>
+          ></View>
         </View>
       </View>
     </SafeAreaView>
