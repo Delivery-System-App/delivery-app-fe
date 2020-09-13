@@ -13,6 +13,7 @@ import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 import FoodCategories from "../components/RestaurantItem/FoodCategories";
 import { useIsFocused } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Loader from "../../utils/loader";
 
 const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
@@ -23,6 +24,9 @@ const ListHotels = ({ navigation }) => {
   //     navigation.navigate("Home", { name: "Hotels" });
   //   }
   // });
+  if (!results) {
+    return <Loader />;
+  }
   const filterResultsByPrice = (price) => {
     return results.filter((result) => {
       return result.rating === price;

@@ -82,7 +82,15 @@ const MyStack = () => {
             name="updateProfile"
             component={EditProfile}
           />
-          <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
+          <Stack.Screen
+            name="ShowResult"
+            component={ResultsShowScreen}
+            options={{
+              headerShown: true,
+              title: "Restaurant Details",
+              headerTintColor: "#000",
+            }}
+          />
           <Stack.Screen
             name="FoodItems"
             component={FoodItems}
@@ -148,7 +156,15 @@ const MyStack = () => {
             name="Home"
             component={BottomTabNavigator}
           />
-          <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
+          <Stack.Screen
+            name="ShowResult"
+            component={ResultsShowScreen}
+            options={{
+              headerShown: true,
+              title: "Restaurant Details",
+              headerTintColor: "#000",
+            }}
+          />
           <Stack.Screen
             name="FoodItems"
             component={FoodItems}

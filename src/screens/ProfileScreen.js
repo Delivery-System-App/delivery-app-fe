@@ -11,7 +11,6 @@ const ProfileScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
   const state = useSelector((reduxState) => reduxState);
   const User = state.getUser.data.data;
-  console.log(User);
   return (
     <View style={styles.container}>
       <View>

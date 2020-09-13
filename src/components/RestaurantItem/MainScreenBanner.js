@@ -3,12 +3,17 @@ import { Image, StyleSheet, Dimensions, View } from "react-native";
 var { height, width } = Dimensions.get("window");
 import Swiper from "react-native-swiper/src";
 
-const MainScreenBanner = () => {
-  const dataBanner = [
-    "http://tutofox.com/foodapp//banner/banner-1.jpg",
-    "http://tutofox.com/foodapp//banner/banner-2.jpg",
-    "http://tutofox.com/foodapp//banner/banner-3.png",
-  ];
+const MainScreenBanner = ({ photos }) => {
+  let dataBanner;
+  if (photos !== undefined && photos.length > 0) {
+    dataBanner = photos;
+  } else {
+    dataBanner = [
+      "http://tutofox.com/foodapp//banner/banner-1.jpg",
+      "http://tutofox.com/foodapp//banner/banner-2.jpg",
+      "http://tutofox.com/foodapp//banner/banner-3.png",
+    ];
+  }
   return (
     <>
       <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
@@ -23,7 +28,7 @@ const MainScreenBanner = () => {
               <Image
                 key={i}
                 style={styles.imageBanner}
-                resizeMode="contain"
+                // resizeMode="contain"
                 source={{ uri: itembann }}
               />
             );

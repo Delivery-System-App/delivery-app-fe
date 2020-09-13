@@ -6,36 +6,54 @@ import { ListItem } from "react-native-elements";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { resDetail } from "../redux/actions";
+import Loader from "../../utils/loader";
+import { Container, Content } from "native-base";
+import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 
 const ResultsShowScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
-  const [cuisines, setCusines] = useState([]);
-  const [currency, setCurrency] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [photos, setPhotos] = useState([]);
+  // const [cuisines, setCusines] = useState([]);
+  // const [currency, setCurrency] = useState("");
   const getResult = async (id) => {
-    // const response = await restaurantApi.get(`/${id}`);
-    dispatch(resDetail([id])).then((res) => {
-      if (res.data) {
-        setResult(res.data);
-        setCusines(["Veg", "Non-Veg"]); //to be done
-        setCurrency("₹" + " " + res.data.totaldishprice / res.data.noofdishes);
-      }
-    });
+    try {
+      setLoading(true);
+      dispatch(resDetail([id])).then((res) => {
+        if (res.data) {
+          setResult(res.data);
+          res.data.photos && res.data.photos.length > 0
+            ? setPhotos(res.data.photos)
+            : setPhotos([
+                "http://tutofox.com/foodapp//banner/banner-1.jpg",
+                "http://tutofox.com/foodapp//banner/banner-2.jpg",
+                "http://tutofox.com/foodapp//banner/banner-3.png",
+              ]);
+          setLoading(false);
 
-    // setResult(response.data);
+          // setCusines(["Veg", "Non-Veg"]); //to be done
+          // setCurrency("₹" + " " + res.data.totaldishprice / res.data.noofdishes);
+        }
+        console.log(result);
+      });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
     getResult(id);
   }, []);
-  if (!result) {
-    return null;
-  }
+
   const id = route.params.id;
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <>
-      <View style={styles.container}>
-        <ScrollView>
+      {/* <View style={styles.container}> */}
+      {/* <ScrollView>
           <Image style={styles.image} source={{ uri: result.photos }} />
           <Text style={styles.title}>{result.name}</Text>
           <Text style={styles.name}>Average Cost For Two </Text>
@@ -54,10 +72,10 @@ const ResultsShowScreen = ({ route, navigation }) => {
           ></FlatList>
 
           <Text style={styles.name}>Timings</Text>
-          <Drawer.Item icon="star" label={"9am - 12am"} />
-          {/*tobedone*/}
+          <Drawer.Item icon="star" label={"9am - 12am"} /> */}
+      {/*tobedone*/}
 
-          {/*<Text style={styles.name}>Highlights -</Text>
+      {/*<Text style={styles.name}>Highlights -</Text>
           <FlatList
             style={styles.HiglightsFlatList}
             data={result.highlights}
@@ -77,21 +95,26 @@ const ResultsShowScreen = ({ route, navigation }) => {
               );
             }}
           />*/}
-          {/* <TouchableOpacity
+      {/* <TouchableOpacity
             style={{ backgroundColor: "#33c37d" }}
             onPress={() => navigation.navigate("FoodItems")}
           >
             <Text>MENU</Text>
           </TouchableOpacity> */}
-        </ScrollView>
-        <FAB
+      {/* </ScrollView> */}
+      {/* <FAB
           style={styles.fab}
           small
           icon="plus"
           label="Menu"
           onPress={() => navigation.navigate("FoodItems", { id })}
-        />
-      </View>
+        /> */}
+      {/* </View> */}
+      <Container>
+        <Content padder>
+          <MainScreenBanner photos={photos} />
+        </Content>
+      </Container>
     </>
   );
 };
