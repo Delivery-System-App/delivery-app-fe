@@ -15,6 +15,8 @@ import { menuDishes } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import { SafeAreaView } from "react-navigation";
 import { notify } from "../../utils/notify";
+import { set } from "react-native-reanimated";
+import Loader from "../../utils/loader";
 
 var { height, width } = Dimensions.get("window");
 
@@ -22,16 +24,24 @@ const ShowDishes = ({ route, navigation }) => {
   const menuId = route.params.menuId;
   const resId = route.params.id;
   const [dishes, setDishes] = useState([]);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const foodImage = require("./../../assets/foods.jpg");
 
   const getMenuDishes = async (id) => {
-    dispatch(menuDishes([id])).then((res) => {
-      if (res.data) {
-        setDishes(res.data.data);
-      }
-    });
+    try {
+      setLoading(true);
+      dispatch(menuDishes([id])).then((res) => {
+        if (res.data) {
+          setDishes(res.data.data);
+        }
+        setLoading(false);
+      });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
   useEffect(() => {
     getMenuDishes(menuId);
@@ -127,7 +137,9 @@ const ShowDishes = ({ route, navigation }) => {
       </TouchableOpacity>
     );
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
         <View
