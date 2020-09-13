@@ -13,15 +13,13 @@ const ResolveAuthScreen = ({ navigation }) => {
   useAbortableEffect(
     async (status) => {
       const access = await AsyncStorage.getItem("access_token");
-      console.log("im caellld", access);
       if (access) {
         const res = await dispatch(getUser());
         if (res.data) {
-          console.log(res);
           navigation.navigate("Home");
-        } else navigation.navigate("Signin");
+        } else navigation.navigate("Food Delivery App");
       } else {
-        navigation.navigate("Signin");
+        navigation.navigate("Food Delivery App");
       }
     },
     [dispatch]
