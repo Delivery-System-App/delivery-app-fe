@@ -82,10 +82,25 @@ const MyStack = () => {
             name="updateProfile"
             component={EditProfile}
           />
-
           <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
-          <Stack.Screen name="FoodItems" component={FoodItems} />
-          <Stack.Screen name="ShowDishes" component={ShowDishes} />
+          <Stack.Screen
+            name="FoodItems"
+            component={FoodItems}
+            options={{
+              headerShown: true,
+              title: "Menu",
+              headerTintColor: "#000",
+            }}
+          />
+          <Stack.Screen
+            name="ShowDishes"
+            component={ShowDishes}
+            options={({ route }) => ({
+              headerShown: true,
+              title: "Menu Items",
+              headerRight: () => <CartButton resid={route.params.id} />,
+            })}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     );
