@@ -30,7 +30,8 @@ const Login = ({ navigation }) => {
   const handleSubmit = () => {
     if (validateEmailAddress(email)) {
       setLoading(true);
-      const userMail = "EMAIL_AUTH" + splitterString + email + "customer";
+      const userMail =
+        "EMAIL_AUTH" + splitterString + email + splitterString + "customer";
       dispatch(login({ email: userMail, password })).then((resp) => {
         if (resp) {
           const { data: res } = resp;
