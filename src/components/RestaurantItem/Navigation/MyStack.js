@@ -136,7 +136,18 @@ const MyStack = () => {
             component={BottomTabNavigator}
           />
           <Stack.Screen name="ShowResult" component={ResultsShowScreen} />
-          <Stack.Screen name="FoodItems" component={FoodItems} />
+          <Stack.Screen
+            name="FoodItems"
+            component={FoodItems}
+            options={{
+              headerShown: true,
+              title: "Menu",
+              headerTintColor: "#000",
+              headerTitleStyle: {
+                fontWeight: "bold",
+              },
+            }}
+          />
           <Stack.Screen name="ShowDishes" component={ShowDishes} />
         </Stack.Navigator>
       </NavigationContainer>
