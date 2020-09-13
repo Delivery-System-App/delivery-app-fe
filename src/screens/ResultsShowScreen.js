@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Image, FlatList } from "react-native";
 import restaurantApi from "../api/restaurantApi";
-import { FAB, Badge, Drawer } from "react-native-paper";
+// import { FAB, Badge, Drawer } from "react-native-paper";
 import { ListItem } from "react-native-elements";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { resDetail } from "../redux/actions";
 import Loader from "../../utils/loader";
-import { Container, Content } from "native-base";
+import { Container, Content, Fab, Icon, Button } from "native-base";
 import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const ResultsShowScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [active, setActive] = useState(false);
   const [photos, setPhotos] = useState([]);
   // const [cuisines, setCusines] = useState([]);
   // const [currency, setCurrency] = useState("");
@@ -111,9 +113,39 @@ const ResultsShowScreen = ({ route, navigation }) => {
         /> */}
       {/* </View> */}
       <Container>
+        {/* <Content padder> */}
         <Content padder>
           <MainScreenBanner photos={photos} />
         </Content>
+        <View style={{ flex: 1 }}>
+          <Fab
+            active={active}
+            direction="up"
+            containerStyle={{}}
+            style={{ backgroundColor: "#5067FF" }}
+            position="bottomRight"
+            onPress={() => setActive(!active)}
+          >
+            <MaterialCommunityIcons name="menu" />
+
+            <TouchableOpacity disabled style={{ backgroundColor: "#34A34F" }}>
+              <Icon name="logo-whatsapp" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ backgroundColor: "white" }}
+              onPress={() => navigation.navigate("FoodItems", { id })}
+            >
+              <MaterialCommunityIcons name="food" size={25} color="red" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ backgroundColor: "#DD5144" }}
+              onPress={() => navigation.navigate("Cart", { resId: id })}
+            >
+              <Icon name="cart" />
+            </TouchableOpacity>
+          </Fab>
+        </View>
+        {/* </Content> */}
       </Container>
     </>
   );
