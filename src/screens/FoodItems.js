@@ -83,30 +83,23 @@ const FoodItems = ({ route, navigation }) => {
   return loading ? (
     <Loader />
   ) : (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          flex: 1,
-          marginBottom: 5,
-          width: width,
-          borderRadius: 20,
-        }}
-      >
-        <SafeAreaView
-          style={{
-            flex: 1,
-            borderRadius: 20,
-          }}
-        >
-          <FlatList
-            data={menu}
-            numColumns={1}
-            renderItem={({ item }) => _renderItemFood(item)}
-            keyExtractor={(item) => item.id}
-          />
-        </SafeAreaView>
-      </View>
-    </SafeAreaView>
+    // <SafeAreaView style={{ flex: 1 }}>
+    <View
+      style={{
+        flex: 1,
+        marginBottom: 5,
+        width: width,
+        borderRadius: 20,
+      }}
+    >
+      <FlatList
+        data={menu}
+        numColumns={1}
+        renderItem={({ item }) => _renderItemFood(item)}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+    // </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
