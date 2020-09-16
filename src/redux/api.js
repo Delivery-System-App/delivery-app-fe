@@ -47,4 +47,9 @@ export default {
     method: "GET",
     noAuth: false,
   },
+  addUserAddress: {
+    path: "/api/v1/auth/addUserAddress",
+    method: "POST",
+    noAuth: false,
+  },
 };

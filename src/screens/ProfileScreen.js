@@ -27,6 +27,12 @@ const ProfileScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("updateProfile")}
         ></Button>
       </View>
+      <View style={{ marginTop: 10 }}>
+        <Button
+          title="Add delivery address"
+          onPress={() => navigation.navigate("DeliveryAddress")}
+        ></Button>
+      </View>
     </View>
   );
 };

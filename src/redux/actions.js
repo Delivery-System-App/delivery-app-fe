@@ -33,3 +33,8 @@ export const bookDishes = (body) => {
 export const getBookingDetailOfUser = () => {
   return fireRequest("getBookingDetailOfUser");
 };
+
+export const addUserAddress = (body) => {
+  console.log(body);
+  return fireRequest("addUserAddress", [], body);
+};

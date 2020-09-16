@@ -16,6 +16,7 @@ const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const dispatch = useDispatch();
   const isfocused = useIsFocused();
+  const [deliverAddress, setDeliveryAddress] = useState(false);
   const [loading, setLoading] = useState(false);
 
   if (isfocused) {

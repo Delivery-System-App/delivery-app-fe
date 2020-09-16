@@ -16,6 +16,7 @@ import BottomTabNavigator from "./BottomTabNavigator";
 import ResultsShowScreen from "../../../screens/ResultsShowScreen";
 import EditProfile from "../../../screens/UpdateProfile";
 import CartButton from "./CartButton";
+import DeliveryAddress from "../Delivery/DeliveryAddress";
 const Stack = createStackNavigator();
 
 const MyStack = () => {
@@ -101,6 +102,15 @@ const MyStack = () => {
             }}
           />
           <Stack.Screen
+            name="DeliveryAddress"
+            component={DeliveryAddress}
+            options={{
+              headerShown: true,
+              title: "Delivery address",
+              headerTintColor: "#000",
+            }}
+          />
+          <Stack.Screen
             name="ShowDishes"
             component={ShowDishes}
             options={({ route }) => ({
@@ -156,6 +166,7 @@ const MyStack = () => {
             name="Home"
             component={BottomTabNavigator}
           />
+
           <Stack.Screen
             name="ShowResult"
             component={ResultsShowScreen}
@@ -171,6 +182,15 @@ const MyStack = () => {
             options={{
               headerShown: true,
               title: "Menu",
+              headerTintColor: "#000",
+            }}
+          />
+          <Stack.Screen
+            name="DeliveryAddress"
+            component={DeliveryAddress}
+            options={{
+              headerShown: true,
+              title: "Delivery address",
               headerTintColor: "#000",
             }}
           />
