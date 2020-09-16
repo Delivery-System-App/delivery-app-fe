@@ -41,20 +41,29 @@ const ResultsShowScreen = ({ route, navigation }) => {
       setLoading(true);
       dispatch(resDetail([id])).then((res) => {
         if (res.data) {
+          if (res.data.banner) {
+            let imageArr = [];
+            const Banners = res.data.banner;
+            if (Banners[0] !== null) {
+              for (let i = 0; i < Banners.length; i++) {
+                imageArr = imageArr.concat(Banners[i].banner);
+              }
+            }
+            setPhotos(imageArr);
+          }
           setResult(res.data);
-          res.data.photos && res.data.photos.length > 0
+          /*  res.data.photos && res.data.photos.length > 0
             ? setPhotos(res.data.photos)
             : setPhotos([
                 "http://tutofox.com/foodapp//banner/banner-1.jpg",
                 "http://tutofox.com/foodapp//banner/banner-2.jpg",
                 "http://tutofox.com/foodapp//banner/banner-3.png",
-              ]);
+              ]);*/
           setLoading(false);
 
           // setCusines(["Veg", "Non-Veg"]); //to be done
           // setCurrency("₹" + " " + res.data.totaldishprice / res.data.noofdishes);
         }
-        console.log(result);
       });
     } catch (err) {
       console.log(err);
