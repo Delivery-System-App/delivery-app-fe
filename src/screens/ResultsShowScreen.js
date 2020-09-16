@@ -146,6 +146,9 @@ const ResultsShowScreen = ({ route, navigation }) => {
           >
             {result.name}
           </Text>
+        </Content>
+
+        <View style={{ flex: 1 }}>
           <View
             style={{
               display: "flex",
@@ -163,9 +166,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
               <Text style={{ padding: 4 }}>{result.location}</Text>
             </Badge>
           </View>
-        </Content>
-
-        <View style={{ flex: 1 }}>
           <Fab
             active={active}
             direction="up"
