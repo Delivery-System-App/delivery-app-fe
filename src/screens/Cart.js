@@ -10,6 +10,7 @@ import { bookDishes } from "../redux/actions";
 import { notify } from "../../utils/notify";
 import { ActivityIndicator, Title } from "react-native-paper";
 import { Body, Container, Header } from "native-base";
+import ShowModal from "../components/RestaurantItem/ShowModal";
 
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);

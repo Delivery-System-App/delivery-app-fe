@@ -26,6 +26,7 @@ import {
 } from "native-base";
 import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import ShowModal from "../components/RestaurantItem/ShowModal";
 
 const ResultsShowScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -70,64 +71,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
     <Loader />
   ) : (
     <>
-      {/* <View style={styles.container}> */}
-      {/* <ScrollView>
-          <Image style={styles.image} source={{ uri: result.photos }} />
-          <Text style={styles.title}>{result.name}</Text>
-          <Text style={styles.name}>Average Cost For Two </Text>
-          <Image source={require("../common/multiuser.png")} />
-          <Drawer.Item icon="star" label={currency} />
-
-          <Text style={styles.name}>Cuisines</Text>
-          <FlatList
-            horizontal
-            showsVerticalScrollIndicator={false}
-            data={cuisines}
-            keyExtractor={(cuisines) => cuisines}
-            renderItem={({ item }) => {
-              return <Badge>{item}</Badge>;
-            }}
-          ></FlatList>
-
-          <Text style={styles.name}>Timings</Text>
-          <Drawer.Item icon="star" label={"9am - 12am"} /> */}
-      {/*tobedone*/}
-
-      {/*<Text style={styles.name}>Highlights -</Text>
-          <FlatList
-            style={styles.HiglightsFlatList}
-            data={result.highlights}
-            keyExtractor={(it) => it}
-            renderItem={({ item }) => {
-              return (
-                <ListItem
-                  style={styles.HighlightsListItem}
-                  leftAvatar={{
-                    source: {
-                      uri:
-                        "https://img.icons8.com/all/500/verified-account.png",
-                    },
-                  }}
-                  title={item}
-                />
-              );
-            }}
-          />*/}
-      {/* <TouchableOpacity
-            style={{ backgroundColor: "#33c37d" }}
-            onPress={() => navigation.navigate("FoodItems")}
-          >
-            <Text>MENU</Text>
-          </TouchableOpacity> */}
-      {/* </ScrollView> */}
-      {/* <FAB
-          style={styles.fab}
-          small
-          icon="plus"
-          label="Menu"
-          onPress={() => navigation.navigate("FoodItems", { id })}
-        /> */}
-      {/* </View> */}
       <Container style={{ backgroundColor: "#F7FAFC" }}>
         <Content padder>
           <MainScreenBanner photos={photos} />
@@ -147,7 +90,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
             {result.name}
           </Text>
         </Content>
-
         <View style={{ flex: 1 }}>
           <View
             style={{
@@ -165,6 +107,14 @@ const ResultsShowScreen = ({ route, navigation }) => {
             <Badge>
               <Text style={{ padding: 4 }}>{result.location}</Text>
             </Badge>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+              paddingHorizontal: 40,
+            }}
+          >
+            <ShowModal address={result.address} />
           </View>
           <Fab
             active={active}
