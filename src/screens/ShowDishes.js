@@ -107,9 +107,10 @@ const ShowDishes = ({ route, navigation }) => {
         />
         <View
           style={{
-            height: width / 2 - 20 - 90,
+            marginVertical: 30,
+            // width: width / 2 - 20 - 30,
+            // height: width / 2 - 150,
             backgroundColor: "transparent",
-            width: width / 2 - 20 - 10,
           }}
         />
         <Text style={{ fontWeight: "bold", fontSize: 22, textAlign: "center" }}>
@@ -140,36 +141,36 @@ const ShowDishes = ({ route, navigation }) => {
   return loading ? (
     <Loader />
   ) : (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+    // <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+      <View
+        style={{
+          flex: 1,
+          width: width,
+          borderRadius: 20,
+          paddingVertical: 2,
+        }}
+      >
+        {/* <Text style={styles.titleCatg}>Menu Dishes</Text> */}
+
+        <FlatList
+          data={dishes}
+          numColumns={2}
+          renderItem={({ item }) => _renderItemFood(item)}
+          keyExtractor={(item) => item.dishId}
+        />
+
         <View
           style={{
-            flex: 1,
-            width: width,
-            borderRadius: 20,
-            paddingVertical: 2,
+            // flex: 1,
+            marginTop: 10,
+            alignItems: "center",
+            justifyContent: "center",
           }}
-        >
-          {/* <Text style={styles.titleCatg}>Menu Dishes</Text> */}
-
-          <FlatList
-            data={dishes}
-            numColumns={2}
-            renderItem={({ item }) => _renderItemFood(item)}
-            keyExtractor={(item) => item.dishId}
-          />
-
-          <View
-            style={{
-              // flex: 1,
-              marginTop: 10,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          ></View>
-        </View>
+        ></View>
       </View>
-    </SafeAreaView>
+    </View>
+    // </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
