@@ -37,7 +37,6 @@ const OrdersScreen = ({ navigation }) => {
         if (res.status == 200) {
           if (res.data) {
             setOrders(res.data.data);
-            console.log(res.data.data);
           }
         }
         setLoading(false);
@@ -92,7 +91,6 @@ const OrdersScreen = ({ navigation }) => {
 
   if (filteredValue.length > 0) {
     bookingList = filteredValue.map((booking, index) => {
-      console.log(booking.deliveryStatus);
       let dishes = booking.dish.map((dish) => {
         return dish;
       });
@@ -141,17 +139,20 @@ const OrdersScreen = ({ navigation }) => {
             }}
           >
             <Text>Total Amount:{booking.totalAmount}</Text>
-            <TouchableOpacity
-              style={{
-                padding: 5,
-                marginLeft: 5,
-                backgroundColor: "lightgray",
-                borderRadius: 10,
-              }}
-              onPress={() => alertFucntion(booking.bookId)}
-            >
-              <Text>cancel</Text>
-            </TouchableOpacity>
+            {moment(booking.createdAt).fromNow().split(" ")[1] === "minutes" &&
+              Number(moment(booking.createdAt).fromNow()[0]) <= 15 && (
+                <TouchableOpacity
+                  style={{
+                    padding: 5,
+                    marginLeft: 5,
+                    backgroundColor: "lightgray",
+                    borderRadius: 10,
+                  }}
+                  onPress={() => alertFucntion(booking.bookId)}
+                >
+                  <Text style={{ color: "red" }}>cancel</Text>
+                </TouchableOpacity>
+              )}
           </CardItem>
         </Card>
       );
