@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
+import { Text, View, StyleSheet, Image, Dimensions, Alert } from "react-native";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -31,6 +31,22 @@ const ProfileScreen = ({ navigation }) => {
       return unsubscribe;
     });
   }, []);
+
+  const createTwoButtonAlert = () => {
+    Alert.alert(
+      "Signout",
+      `${User.name},Are you sure you want to signout of the application?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => signout(navigation) },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return loading ? (
     <Loader />
@@ -74,7 +90,7 @@ const ProfileScreen = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.button}
-            onPress={() => signout(navigation)}
+            onPress={() => createTwoButtonAlert()}
           >
             <Text>Sign Out</Text>
           </TouchableOpacity>

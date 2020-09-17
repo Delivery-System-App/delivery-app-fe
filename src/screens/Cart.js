@@ -14,21 +14,21 @@ import Icon from "react-native-vector-icons/Ionicons";
 import { AsyncStorage } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-import { bookDishes } from "../redux/actions";
+import { bookDishes, getUser } from "../redux/actions";
 import { notify } from "../../utils/notify";
 import { ActivityIndicator, Title } from "react-native-paper";
 import useAddress from "../hooks/useAddress";
 import { Picker } from "native-base";
-import { add } from "react-native-reanimated";
 
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const dispatch = useDispatch();
   const isfocused = useIsFocused();
-  const [deliverAddress, setDeliveryAddress] = useState(false);
-  const [searchApi, results] = useAddress("");
+  const [deliveryAddress, setDeliveryAddress] = useState(false);
+  const [results, setResults] = useState("");
   const [selectedAddress, setSelectedAddress] = useState();
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
 
   if (isfocused) {
     navigation.navigate("Home", { name: "Cart" });
@@ -51,6 +51,17 @@ const Cart = ({ navigation, route }) => {
       .catch((err) => {
         alert(err);
       });
+    try {
+      dispatch(getUser()).then((res) => {
+        if (res && res.status === 200) {
+          setResults(res.data.data.address);
+        }
+        setShow(true);
+      });
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
   };
   const onChangeQual = async (i, type) => {
     const dataCar = dataCart;
@@ -87,7 +98,16 @@ const Cart = ({ navigation, route }) => {
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => checkout() },
+        {
+          text: "OK",
+          onPress: () => {
+            if (deliveryAddress) {
+              checkout();
+            } else {
+              notify("No delivery address added yet!!");
+            }
+          },
+        },
       ],
       { cancelable: false }
     );
@@ -220,33 +240,39 @@ const Cart = ({ navigation, route }) => {
           })}
 
           <View style={{ height: 20 }} />
-          <View style={styles.container}>
-            <Text>Choose your deliver address</Text>
-            <Picker
-              note
-              mode="dropdown"
-              selectedValue={selectedAddress}
-              style={{ height: 50, width: 150 }}
-              onValueChange={(itemValue, itemIndex) => {
-                setSelectedAddress(itemValue);
-                setDeliveryAddress(true);
-              }}
-            >
-              {results.map((address) => {
-                return (
-                  <Picker.Item
-                    label={address.housename}
-                    value={address}
-                    key={address.id}
-                  />
-                );
-              })}
-            </Picker>
+          <View>
+            {show && results && (
+              <View style={styles.container}>
+                <Text>Choose your delivery address</Text>
+                <Picker
+                  note
+                  mode="dropdown"
+                  selectedValue={selectedAddress}
+                  style={{ height: 50, width: 150 }}
+                  onValueChange={(itemValue, itemIndex) => {
+                    setSelectedAddress(itemValue);
+                    setDeliveryAddress(true);
+                  }}
+                >
+                  {results &&
+                    results.length &&
+                    results.map((address) => {
+                      return (
+                        <Picker.Item
+                          label={address.housename}
+                          value={address}
+                          key={address.id}
+                        />
+                      );
+                    })}
+                </Picker>
+              </View>
+            )}
           </View>
 
           <TouchableOpacity
             onPress={() => {
-              deliverAddress
+              deliveryAddress
                 ? createTwoButtonAlert()
                 : notify("no delivery address choosen!!");
             }}

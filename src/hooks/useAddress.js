@@ -7,12 +7,7 @@ export default () => {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
-    searchApi();
-  }, []);
-
-  const searchApi = async () => {
     try {
       setLoading(true);
       dispatch(getUser()).then((res) => {
@@ -25,7 +20,7 @@ export default () => {
       console.log(err);
       setLoading(false);
     }
-  };
+  }, []);
 
-  return [searchApi, results];
+  return [results];
 };
