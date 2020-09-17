@@ -234,7 +234,11 @@ const Cart = ({ navigation, route }) => {
             >
               {results.map((address) => {
                 return (
-                  <Picker.Item label={address.housename} value={address} />
+                  <Picker.Item
+                    label={address.housename}
+                    value={address}
+                    key={address.id}
+                  />
                 );
               })}
             </Picker>
