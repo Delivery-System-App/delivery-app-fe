@@ -65,15 +65,15 @@ const OrdersScreen = ({ navigation }) => {
   };
   const alertFucntion = (bookId) =>
     Alert.alert(
-      "Alert Title",
-      "My Alert Msg",
+      "Cancel Order",
+      "You are about to cancel this order",
       [
         {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
+          text: "Back",
+          onPress: () => console.log("Back Pressed"),
           style: "cancel",
         },
-        { text: "OK", onPress: () => CancelBookings(bookId) },
+        { text: "Cancel", onPress: () => CancelBookings(bookId) },
       ],
       { cancelable: false }
     );
@@ -141,7 +141,15 @@ const OrdersScreen = ({ navigation }) => {
             }}
           >
             <Text>Total Amount:{booking.totalAmount}</Text>
-            <TouchableOpacity onPress={() => alertFucntion(booking.bookId)}>
+            <TouchableOpacity
+              style={{
+                padding: 5,
+                marginLeft: 5,
+                backgroundColor: "lightgray",
+                borderRadius: 10,
+              }}
+              onPress={() => alertFucntion(booking.bookId)}
+            >
               <Text>cancel</Text>
             </TouchableOpacity>
           </CardItem>
