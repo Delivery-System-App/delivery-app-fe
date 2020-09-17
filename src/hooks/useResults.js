@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import restaurantApi from "../api/restaurantApi";
 import { useDispatch } from "react-redux";
 import { filter } from "../redux/actions";
 import { notify } from "../../utils/notify";

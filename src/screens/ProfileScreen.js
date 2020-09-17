@@ -2,12 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-navigation";
 const foodImage = require("./../../assets/on.png");
 var { height, width } = Dimensions.get("window");

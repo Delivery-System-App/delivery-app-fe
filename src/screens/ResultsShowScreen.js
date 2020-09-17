@@ -1,29 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  FlatList,
-  ImageBackground,
-} from "react-native";
-import restaurantApi from "../api/restaurantApi";
-// import { FAB, Badge, Drawer } from "react-native-paper";
-import { ListItem } from "react-native-elements";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { View, Text, StyleSheet } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { resDetail } from "../redux/actions";
 import Loader from "../../utils/loader";
-import {
-  Container,
-  Content,
-  Fab,
-  Icon,
-  Button,
-  CardItem,
-  Badge,
-  Accordion,
-} from "native-base";
+import { Container, Content, Fab, Icon, Badge } from "native-base";
 import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ShowModal from "../components/RestaurantItem/ShowModal";
@@ -36,8 +17,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
   const [photos, setPhotos] = useState([
     "https://www.visituganda.com/uploads/noimage.png",
   ]);
-  // const [cuisines, setCusines] = useState([]);
-  // const [currency, setCurrency] = useState("");
   const getResult = async (id) => {
     try {
       setLoading(true);

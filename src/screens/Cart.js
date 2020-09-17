@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useIsFocused } from "@react-navigation/native";
-import { Text, View, Image, TouchableOpacity, Dimensions } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+  StyleSheet,
+  Alert,
+} from "react-native";
 var { width } = Dimensions.get("window");
 import Icon from "react-native-vector-icons/Ionicons";
 import { AsyncStorage } from "react-native";
@@ -9,14 +17,17 @@ import { useDispatch } from "react-redux";
 import { bookDishes } from "../redux/actions";
 import { notify } from "../../utils/notify";
 import { ActivityIndicator, Title } from "react-native-paper";
-import { Body, Container, Header } from "native-base";
-import ShowModal from "../components/RestaurantItem/ShowModal";
+import useAddress from "../hooks/useAddress";
+import { Picker } from "native-base";
+import { add } from "react-native-reanimated";
 
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const dispatch = useDispatch();
   const isfocused = useIsFocused();
   const [deliverAddress, setDeliveryAddress] = useState(false);
+  const [searchApi, results] = useAddress("");
+  const [selectedAddress, setSelectedAddress] = useState();
   const [loading, setLoading] = useState(false);
 
   if (isfocused) {
@@ -48,7 +59,7 @@ const Cart = ({ navigation, route }) => {
     if (type) {
       cantd = cantd + 1;
       dataCar[i].quantity = cantd;
-      console.log("qty" + dataCar[i].quantity);
+      // console.log("qty" + dataCar[i].quantity);
       setDataCart(dataCar);
       await AsyncStorage.setItem("cart", JSON.stringify(dataCart));
       getInitialData();
@@ -66,12 +77,29 @@ const Cart = ({ navigation, route }) => {
     }
   };
 
+  const createTwoButtonAlert = () => {
+    Alert.alert(
+      "Confirm Booking",
+      `Are you sure you want to book with this address?\n\n${selectedAddress.housename}\n${selectedAddress.address}\n${selectedAddress.pincode}`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => checkout() },
+      ],
+      { cancelable: false }
+    );
+  };
+
   const checkout = () => {
     if (Array.isArray(dataCart) && dataCart.length) {
       const booking = {
         restaurantId: dataCart[0].restaurantId,
         dishIds: [],
         qty: [],
+        deliveryAdd: selectedAddress,
       };
       dataCart.map((item) => {
         !booking.dishIds.includes(item.food.dishId)
@@ -81,7 +109,6 @@ const Cart = ({ navigation, route }) => {
       });
       setLoading(true);
       dispatch(bookDishes(booking)).then(async (res) => {
-        console.log(res);
         if (res.data) {
           await AsyncStorage.removeItem("cart");
           setDataCart([]);
@@ -93,6 +120,8 @@ const Cart = ({ navigation, route }) => {
           setLoading(false);
         }
       });
+    } else {
+      notify("No items in your cart!!");
     }
   };
 
@@ -191,9 +220,32 @@ const Cart = ({ navigation, route }) => {
           })}
 
           <View style={{ height: 20 }} />
+          <View style={styles.container}>
+            <Text>Choose your deliver address</Text>
+            <Picker
+              note
+              mode="dropdown"
+              selectedValue={selectedAddress}
+              style={{ height: 50, width: 150 }}
+              onValueChange={(itemValue, itemIndex) => {
+                setSelectedAddress(itemValue);
+                setDeliveryAddress(true);
+              }}
+            >
+              {results.map((address) => {
+                return (
+                  <Picker.Item label={address.housename} value={address} />
+                );
+              })}
+            </Picker>
+          </View>
 
           <TouchableOpacity
-            onPress={() => checkout()}
+            onPress={() => {
+              deliverAddress
+                ? createTwoButtonAlert()
+                : notify("no delivery address choosen!!");
+            }}
             style={{
               backgroundColor: "#33c37d",
               width: width - 40,
@@ -225,4 +277,10 @@ const Cart = ({ navigation, route }) => {
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    // flex: 1,
+    alignItems: "center",
+  },
+});
 export default Cart;
