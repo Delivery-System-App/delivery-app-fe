@@ -15,10 +15,12 @@ import {
   CardItem,
 } from "native-base";
 import { useDispatch } from "react-redux";
-import { getBookingDetailOfUser } from "../../redux/actions";
+import { Alert } from "react-native";
+import { getBookingDetailOfUser, cancelBooking } from "../../redux/actions";
 import { Card } from "react-native-paper";
 import Loader from "../../../utils/loader";
 import moment from "moment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const OrdersScreen = ({ navigation }) => {
   const [show, setShow] = useState("");
@@ -27,6 +29,7 @@ const OrdersScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   let bookingList = useState();
   const dispatch = useDispatch();
+
   const getOrders = async () => {
     try {
       setLoading(true);
@@ -34,6 +37,7 @@ const OrdersScreen = ({ navigation }) => {
         if (res.status == 200) {
           if (res.data) {
             setOrders(res.data.data);
+            console.log(res.data.data);
           }
         }
         setLoading(false);
@@ -52,7 +56,27 @@ const OrdersScreen = ({ navigation }) => {
     });
     return unsubscribe;
   }, []);
-
+  const CancelBookings = (bookId) => {
+    dispatch(cancelBooking([bookId], { deliveryStatus: "CANCELLED" })).then(
+      (res) => {
+        console.log(res);
+      }
+    );
+  };
+  const alertFucntion = (bookId) =>
+    Alert.alert(
+      "Alert Title",
+      "My Alert Msg",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => CancelBookings(bookId) },
+      ],
+      { cancelable: false }
+    );
   const applyFilter = (name, status) => {
     setFilteredValue(
       orders.filter((booking) => {
@@ -68,6 +92,7 @@ const OrdersScreen = ({ navigation }) => {
 
   if (filteredValue.length > 0) {
     bookingList = filteredValue.map((booking, index) => {
+      console.log(booking.deliveryStatus);
       let dishes = booking.dish.map((dish) => {
         return dish;
       });
@@ -116,6 +141,9 @@ const OrdersScreen = ({ navigation }) => {
             }}
           >
             <Text>Total Amount:{booking.totalAmount}</Text>
+            <TouchableOpacity onPress={() => alertFucntion(booking.bookId)}>
+              <Text>cancel</Text>
+            </TouchableOpacity>
           </CardItem>
         </Card>
       );
@@ -162,7 +190,7 @@ const OrdersScreen = ({ navigation }) => {
           <Text>CANCELLED</Text>
         </Button>
       </Segment>
-      <Content padder style={{ backgroundColor: "transparent" }}>
+      <Content padder style={{ backgroundColor: "#667EEA" }}>
         {filteredValue.length > 0 ? (
           bookingList
         ) : (

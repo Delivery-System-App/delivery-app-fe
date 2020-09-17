@@ -42,6 +42,11 @@ export default {
     method: "POST",
     noAuth: false,
   },
+  cancelBooking: {
+    path: "/api/v1/booking/updateBooking",
+    method: "POST",
+    noAuth: false,
+  },
   getBookingDetailOfUser: {
     path: "/api/v1/booking/GetBookingDetailOfUser",
     method: "GET",
