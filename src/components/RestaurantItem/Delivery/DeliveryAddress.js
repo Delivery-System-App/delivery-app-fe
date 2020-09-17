@@ -49,19 +49,15 @@ const DeliveryAddress = () => {
       setLoading(true);
       //need to do api call
       dispatch(
-        addUserAddress({
-          address: { address, housename, flatnumber, landmark, pincode },
-        })
+        addUserAddress({ address, housename, flatnumber, landmark, pincode })
       ).then((res) => {
-        console.log(res, "rws");
-        if (res && res.data) {
-          if (res.data.success) {
-            setEmail("");
-            setName("");
-            setConfirm("");
-            setPassword("");
-            notify("address added!!");
-          }
+        if (res && res.status === 201) {
+          setAddress("");
+          setFlatNumber("");
+          setHouseName("");
+          setLandmark("");
+          setPincode("");
+          notify("address added!!");
         }
         setLoading(false);
       });

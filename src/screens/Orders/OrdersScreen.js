@@ -34,7 +34,6 @@ const OrdersScreen = ({ navigation }) => {
         if (res.status == 200) {
           if (res.data) {
             setOrders(res.data.data);
-            console.log(res.data.data);
           }
         }
         setLoading(false);
@@ -163,7 +162,7 @@ const OrdersScreen = ({ navigation }) => {
           <Text>CANCELLED</Text>
         </Button>
       </Segment>
-      <Content padder style={{ backgroundColor: "#667EEA" }}>
+      <Content padder style={{ backgroundColor: "transparent" }}>
         {filteredValue.length > 0 ? (
           bookingList
         ) : (

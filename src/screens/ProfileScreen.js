@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
 import { Button } from "react-native-elements";
 import { Context as AuthContext } from "./../context/AuthContext";
@@ -6,11 +6,14 @@ import { useSelector } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 const foodImage = require("./../../assets/foods.jpg");
 var { height, width } = Dimensions.get("window");
+import Loader from "./../../utils/loader";
 
 const ProfileScreen = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
   const { signout } = useContext(AuthContext);
   const state = useSelector((reduxState) => reduxState);
   const User = state.getUser.data.data;
+
   return (
     <View style={styles.container}>
       <View>
@@ -20,19 +23,33 @@ const ProfileScreen = ({ navigation }) => {
         <Text style={styles.nametext}>{User.name}</Text>
         <Text style={styles.mailtext}>{User.email}</Text>
       </View>
-      <Button title="Sign Out" onPress={() => signout(navigation)} />
-      <View style={{ marginTop: 10 }}>
-        <Button
-          title="update profile"
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => navigation.navigate("updateProfile")}
-        ></Button>
-      </View>
-      <View style={{ marginTop: 10 }}>
-        <Button
-          title="Add delivery address"
+        >
+          <Text>Update Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
           onPress={() => navigation.navigate("DeliveryAddress")}
-        ></Button>
+        >
+          <Text>Address</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => signout(navigation)}
+        >
+          <Text>Sign Out</Text>
+        </TouchableOpacity>
       </View>
+
+      <Text>{User.address[1].address}</Text>
     </View>
   );
 };
@@ -41,6 +58,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  button: {
+    backgroundColor: "#DDDDDD",
+    padding: 10,
+    marginHorizontal: 2,
   },
   textview: {
     alignItems: "center",

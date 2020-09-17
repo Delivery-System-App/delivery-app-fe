@@ -101,7 +101,8 @@ export const APIRequest = async (
 
   // set authorization header in the request header
   const config = {
-    baseURL: "https://skosh-be.herokuapp.com",
+    // baseURL: "https://skosh-be.herokuapp.com",
+    baseURL: "https://delivery-app-be.herokuapp.com",
     //baseURL: process.env.REACT_APP_BASE_URL,
     headers: {},
   };
