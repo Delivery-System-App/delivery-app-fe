@@ -2,27 +2,34 @@ import React, { useContext, useEffect, useState } from "react";
 import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import { SafeAreaView } from "react-navigation";
 const foodImage = require("./../../assets/on.png");
 var { height, width } = Dimensions.get("window");
 import Constants from "expo-constants";
 import { getUser } from "../redux/actions";
 import Loader from "../../utils/loader";
+import { Body, Card, CardItem } from "native-base";
 
 const ProfileScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
   const state = useSelector((reduxState) => reduxState);
   const [loading, setLoading] = useState(false);
+  const [address, setAddress] = useState([]);
   const dispatch = useDispatch();
   const [User, setUser] = useState([]);
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
-      console.log("called");
       setLoading(true);
       dispatch(getUser()).then((res) => {
         if (res && res.status === 200) {
           setUser(res.data.data);
+          setAddress(res.data.data.address);
           setLoading(false);
         }
       });
@@ -77,8 +84,34 @@ const ProfileScreen = ({ navigation }) => {
             <Text>Sign Out</Text>
           </TouchableOpacity>
         </View>
+        {address ? (
+          <View
+            style={{
+              marginVertical: 2,
+              marginHorizontal: width - (width - 25),
+            }}
+          >
+            <Text style={{ textAlign: "center" }}>Your Saved Address</Text>
 
-        {/* <Text>{(User.address[1].address, console.log(User))}</Text> */}
+            {address.map((item) => {
+              return (
+                <Card style={{ width: width - 50 }} key={item.id}>
+                  <CardItem>
+                    <Body>
+                      <Text style={styles.addressText}>{item.flatnumber}</Text>
+                      <Text style={styles.addressText}>{item.housename}</Text>
+                      <Text style={styles.addressText}>{item.address}</Text>
+                      <Text style={styles.addressText}>
+                        near {item.landmark}
+                      </Text>
+                      <Text style={styles.addressText}>{item.pincode}</Text>
+                    </Body>
+                  </CardItem>
+                </Card>
+              );
+            })}
+          </View>
+        ) : null}
       </ScrollView>
     </SafeAreaView>
   );
@@ -86,9 +119,12 @@ const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: Constants.statusBarHeight,
+    marginTop: Constants.statusBarHeight,
     // alignItems: "center",
     // justifyContent: "center",
+  },
+  addressText: {
+    fontSize: 20,
   },
   scrollView: {
     marginHorizontal: 1,
