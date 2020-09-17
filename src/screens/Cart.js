@@ -17,8 +17,8 @@ import { useDispatch } from "react-redux";
 import { bookDishes, getUser } from "../redux/actions";
 import { notify } from "../../utils/notify";
 import { ActivityIndicator, Title } from "react-native-paper";
-import useAddress from "../hooks/useAddress";
 import { Picker } from "native-base";
+import { set } from "react-native-reanimated";
 
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
@@ -55,6 +55,13 @@ const Cart = ({ navigation, route }) => {
       dispatch(getUser()).then((res) => {
         if (res && res.status === 200) {
           setResults(res.data.data.address);
+          if (
+            res.data.data.address !== undefined &&
+            res.data.data.address.length > 0
+          ) {
+            setDeliveryAddress(true);
+            setSelectedAddress(res.data.data.address[0]);
+          }
         }
         setShow(true);
       });
@@ -245,7 +252,7 @@ const Cart = ({ navigation, route }) => {
               <View style={styles.container}>
                 <Text>Choose your delivery address</Text>
                 <Picker
-                  note
+                  // note
                   mode="dropdown"
                   selectedValue={selectedAddress}
                   style={{ height: 50, width: 150 }}
