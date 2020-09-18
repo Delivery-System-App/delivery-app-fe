@@ -1,5 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, Image, Dimensions, Alert } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  Alert,
+  Pressable,
+} from "react-native";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -9,7 +17,7 @@ var { height, width } = Dimensions.get("window");
 import Constants from "expo-constants";
 import { getUser } from "../redux/actions";
 import Loader from "../../utils/loader";
-import { Body, Card, CardItem } from "native-base";
+import { Body, Button, Card, CardItem, Icon } from "native-base";
 
 const ProfileScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
@@ -95,6 +103,7 @@ const ProfileScreen = ({ navigation }) => {
             <Text>Sign Out</Text>
           </TouchableOpacity>
         </View>
+
         {address ? (
           <View
             style={{
@@ -117,6 +126,23 @@ const ProfileScreen = ({ navigation }) => {
                       </Text>
                       <Text style={styles.addressText}>{item.pincode}</Text>
                     </Body>
+                  </CardItem>
+                  <CardItem
+                    footer
+                    bordered
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                    <Button transparent bordered>
+                      <Icon name="trash" />
+                    </Button>
+                    <Button transparent bordered>
+                      <Icon name="trash" />
+                    </Button>
                   </CardItem>
                 </Card>
               );
