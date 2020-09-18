@@ -50,7 +50,6 @@ const OrdersScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    console.log("i am clalleeddd!!!");
     getOrders();
     setShow("active");
     applyFilter("deliveryStatus", "Pending");

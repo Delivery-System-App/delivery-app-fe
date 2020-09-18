@@ -113,7 +113,14 @@ const ShowDishes = ({ route, navigation }) => {
             backgroundColor: "transparent",
           }}
         />
-        <Text style={{ fontWeight: "bold", fontSize: 22, textAlign: "center" }}>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: 15,
+            textAlign: "center",
+          }}
+          numberOfLines={1}
+        >
           {item.name}
         </Text>
         <Text style={{ fontSize: 20, color: "green" }}>Rs.{item.price}</Text>
