@@ -19,6 +19,7 @@ import { Alert } from "react-native";
 import { getBookingDetailOfUser, cancelBooking } from "../../redux/actions";
 import { Card } from "react-native-paper";
 import Loader from "../../../utils/loader";
+import { notify } from "./../../../utils/notify";
 import moment from "moment";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
@@ -27,6 +28,7 @@ const OrdersScreen = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
   const [filteredValue, setFilteredValue] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [render, setRender] = useState(Math.random());
   let bookingList = useState();
   const dispatch = useDispatch();
 
@@ -48,6 +50,13 @@ const OrdersScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    console.log("i am clalleeddd!!!");
+    getOrders();
+    setShow("active");
+    applyFilter("deliveryStatus", "Pending");
+  }, [render]);
+
+  useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       getOrders();
       setShow("active");
@@ -56,9 +65,11 @@ const OrdersScreen = ({ navigation }) => {
     return unsubscribe;
   }, []);
   const CancelBookings = (bookId) => {
-    dispatch(cancelBooking([bookId], { deliveryStatus: "CANCELLED" })).then(
+    dispatch(cancelBooking([bookId], { deliveryStatus: "cancelled" })).then(
       (res) => {
         console.log(res);
+        notify("order cancelled!!");
+        setRender(Math.random());
       }
     );
   };
@@ -140,7 +151,8 @@ const OrdersScreen = ({ navigation }) => {
           >
             <Text>Total Amount:{booking.totalAmount}</Text>
             {moment(booking.createdAt).fromNow().split(" ")[1] === "minutes" &&
-              Number(moment(booking.createdAt).fromNow()[0]) <= 15 && (
+              Number(moment(booking.createdAt).fromNow()[0]) <= 15 &&
+              show !== "cancelled" && (
                 <TouchableOpacity
                   style={{
                     padding: 5,
@@ -192,7 +204,7 @@ const OrdersScreen = ({ navigation }) => {
           last
           onPress={() => {
             setShow("cancelled");
-            applyFilter("cancelStatus", "Cancelled");
+            applyFilter("deliveryStatus", "cancelled");
           }}
           active={show === "cancelled" ? true : false}
         >
