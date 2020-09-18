@@ -142,7 +142,7 @@ const ShowDishes = ({ route, navigation }) => {
         </View>
 
         <Text style={{ fontSize: 18, color: "green" }}>
-          Rs.{item.price} {item.discount ? item.discount + "% off" : null}
+          Rs.{item.price} {(item.discount && item.discount !== 0) ? item.discount + "% off" : null}
         </Text>
         <TouchableOpacity
           onPress={() => onClickAddCart(item)}
