@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  Dimensions,
-  Image,
-} from "react-native";
-import { Toast } from "native-base";
+import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { AsyncStorage } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { menuDishes } from "../redux/actions";
 import { useDispatch } from "react-redux";
-import { SafeAreaView } from "react-navigation";
 import { notify } from "../../utils/notify";
-import { set } from "react-native-reanimated";
 import Loader from "../../utils/loader";
 
 var { height, width } = Dimensions.get("window");
@@ -34,6 +24,7 @@ const ShowDishes = ({ route, navigation }) => {
       setLoading(true);
       dispatch(menuDishes([id])).then((res) => {
         if (res.data) {
+          console.log(res.data.data);
           setDishes(res.data.data);
         }
         setLoading(false);
@@ -123,6 +114,33 @@ const ShowDishes = ({ route, navigation }) => {
         >
           {item.name}
         </Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+          }}
+        >
+          <Icon
+            name="ios-square"
+            size={30}
+            color={
+              item.category && item.category === "VEG"
+                ? "green"
+                : item.category && item.category === "NONVEG"
+                ? "red"
+                : null
+            }
+          />
+          <Text style={{ fontSize: 15, marginLeft: 5 }}>
+            {item.category && item.category === "VEG"
+              ? "VEG"
+              : item.category && item.category === "NONVEG"
+              ? "NON_VEG"
+              : "UNKNOWN"}
+          </Text>
+        </View>
+
         <Text style={{ fontSize: 20, color: "green" }}>Rs.{item.price}</Text>
         <TouchableOpacity
           onPress={() => onClickAddCart(item)}
