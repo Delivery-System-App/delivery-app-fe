@@ -83,8 +83,9 @@ const ResultsShowScreen = ({ route, navigation }) => {
           </Text>
 
           <Text style={{ textAlign: "center" }}>
-            {result.timings &&
-              `Timings: ${result.timings.formatted.open} - ${result.timings.formatted.close}`}
+            {result.timings
+              ? `Timings: ${result.timings.formatted.open} - ${result.timings.formatted.close}`
+              : "Timings not provided!!"}
           </Text>
         </Content>
         <View style={{ flex: 1 }}>
