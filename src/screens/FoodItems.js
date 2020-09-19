@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Dimensions, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Image,
+  ImageBackground,
+} from "react-native";
 import {
   FlatList,
   TouchableOpacity,
@@ -11,6 +18,7 @@ import { useDispatch } from "react-redux";
 import Loader from "../../utils/loader";
 import Icon from "react-native-vector-icons/EvilIcons";
 var { height, width } = Dimensions.get("window");
+const image = require("./../../images/profile.png");
 
 const FoodItems = ({ route, navigation }) => {
   const [menu, setMenu] = useState([]);
@@ -110,12 +118,23 @@ const FoodItems = ({ route, navigation }) => {
         borderRadius: 20,
       }}
     >
-      <FlatList
+      <ImageBackground
+        source={image}
+        style={{ flex: 1, resizeMode: "cover", justifyContent: "center" }}
+      >
+        <FlatList
+          data={menu}
+          numColumns={1}
+          renderItem={({ item }) => _renderItemFood(item)}
+          keyExtractor={(item) => item.id}
+        />
+      </ImageBackground>
+      {/* <FlatList
         data={menu}
         numColumns={1}
         renderItem={({ item }) => _renderItemFood(item)}
         keyExtractor={(item) => item.id}
-      />
+      /> */}
     </View>
     // </SafeAreaView>
   );
