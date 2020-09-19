@@ -18,8 +18,7 @@ import { bookDishes, getUser } from "../redux/actions";
 import { notify } from "../../utils/notify";
 import { ActivityIndicator, Title } from "react-native-paper";
 import { Picker } from "native-base";
-import { set } from "react-native-reanimated";
-
+const food = require("./../../images/icon.png");
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const dispatch = useDispatch();
@@ -182,7 +181,11 @@ const Cart = ({ navigation, route }) => {
                     height: width / 3,
                     borderRadius: width / 3,
                   }}
-                  source={{ uri: item.food.photos[0] }}
+                  source={
+                    item.food.photos !== ""
+                      ? { uri: item.food.photos[0] }
+                      : food
+                  }
                 />
                 <View
                   style={{
