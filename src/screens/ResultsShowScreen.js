@@ -22,6 +22,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
       setLoading(true);
       dispatch(resDetail([id])).then((res) => {
         if (res.data) {
+          console.log(res.data);
           if (res.data.banner) {
             let imageArr = [];
             const Banners = res.data.banner;
@@ -74,11 +75,16 @@ const ResultsShowScreen = ({ route, navigation }) => {
               color: "#6B46C1",
               borderRadius: 10,
               textShadowRadius: 8,
-              fontWeight: "bold",
-              backgroundColor: "white",
+              fontWeight: "normal",
+              // backgroundColor: "white",
             }}
           >
             {result.name}
+          </Text>
+
+          <Text style={{ textAlign: "center" }}>
+            {result.timings &&
+              `Timings: ${result.timings.formatted.open} - ${result.timings.formatted.close}`}
           </Text>
         </Content>
         <View style={{ flex: 1 }}>
