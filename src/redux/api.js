@@ -57,4 +57,9 @@ export default {
     method: "POST",
     noAuth: false,
   },
+  deleteUserAddress: {
+    path: "/api/v1/auth/deleteUserAddress",
+    method: "POST",
+    noAuth: false,
+  },
 };

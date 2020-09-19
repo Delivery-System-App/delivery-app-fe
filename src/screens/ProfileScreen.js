@@ -15,7 +15,8 @@ import { SafeAreaView } from "react-navigation";
 const foodImage = require("./../../assets/on.png");
 var { height, width } = Dimensions.get("window");
 import Constants from "expo-constants";
-import { getUser } from "../redux/actions";
+import { deleteUserAddress, getUser } from "../redux/actions";
+import { notify } from "./../../utils/notify";
 import Loader from "../../utils/loader";
 import { Body, Button, Card, CardItem, Icon } from "native-base";
 
@@ -24,6 +25,7 @@ const ProfileScreen = ({ navigation }) => {
   const state = useSelector((reduxState) => reduxState);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState([]);
+  const [render, setRerender] = useState(Math.random());
   const dispatch = useDispatch();
   const [User, setUser] = useState([]);
   useEffect(() => {
@@ -40,6 +42,17 @@ const ProfileScreen = ({ navigation }) => {
     });
   }, []);
 
+  useEffect(() => {
+    setLoading(true);
+    dispatch(getUser()).then((res) => {
+      if (res && res.status === 200) {
+        setUser(res.data.data);
+        setAddress(res.data.data.address);
+        setLoading(false);
+      }
+    });
+  }, [render]);
+
   const createTwoButtonAlert = () => {
     Alert.alert(
       "Signout",
@@ -51,9 +64,38 @@ const ProfileScreen = ({ navigation }) => {
           style: "cancel",
         },
         { text: "OK", onPress: () => signout(navigation) },
+      ]
+      // { cancelable: false }
+    );
+  };
+
+  const confirmDeleteAddress = (id) => {
+    console.log("id", id);
+    Alert.alert(
+      "Delete Address",
+      `${User.name},Are you sure you want to delete the delivery address?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "OK", onPress: () => deleteDeliveryAddress(id) },
       ],
       { cancelable: false }
     );
+  };
+
+  const deleteDeliveryAddress = (id) => {
+    console.log("ready to delete!!");
+    setLoading(true);
+    dispatch(deleteUserAddress([id])).then((res) => {
+      if (res && res.status === 201) {
+        setRerender(Math.random());
+        notify("address deleted");
+      }
+      setLoading(false);
+    });
   };
 
   return loading ? (
@@ -114,6 +156,10 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={{ textAlign: "center" }}>Your Saved Address</Text>
 
             {address.map((item) => {
+              {
+                console.log(item);
+              }
+
               return (
                 <Card style={{ width: width - 50 }} key={item.id}>
                   <CardItem>
@@ -137,10 +183,11 @@ const ProfileScreen = ({ navigation }) => {
                       justifyContent: "flex-end",
                     }}
                   >
-                    <Button transparent bordered>
-                      <Icon name="trash" />
-                    </Button>
-                    <Button transparent bordered>
+                    <Button
+                      transparent
+                      bordered
+                      onPress={() => confirmDeleteAddress(item.id)}
+                    >
                       <Icon name="trash" />
                     </Button>
                   </CardItem>

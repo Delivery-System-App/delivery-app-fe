@@ -48,3 +48,7 @@ export const getBookingDetailOfUser = () => {
 export const addUserAddress = (body) => {
   return fireRequest("addUserAddress", [], body);
 };
+
+export const deleteUserAddress = (id) => {
+  return fireRequest("deleteUserAddress", [id]);
+};
