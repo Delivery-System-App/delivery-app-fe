@@ -8,10 +8,8 @@ import {
 import { useEffect } from "react";
 import { menuList } from "../redux/actions";
 import { useDispatch } from "react-redux";
-import { SafeAreaView } from "react-navigation";
-import { set } from "react-native-reanimated";
 import Loader from "../../utils/loader";
-
+import Icon from "react-native-vector-icons/EvilIcons";
 var { height, width } = Dimensions.get("window");
 
 const FoodItems = ({ route, navigation }) => {
@@ -42,18 +40,38 @@ const FoodItems = ({ route, navigation }) => {
   const _renderItemFood = (item) => {
     const menuId = item.id;
     return (
-      <TouchableOpacity style={styles.divFood}>
-        <Text
+      <TouchableOpacity
+        style={styles.divFood}
+        onPress={() => navigation.navigate("ShowDishes", { id, menuId })}
+      >
+        <View
           style={{
-            marginTop: 10,
-            fontWeight: "bold",
-            fontSize: 25,
-            marginBottom: 10,
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
           }}
         >
-          {item.name}
-        </Text>
-        <TouchableOpacity
+          <Text
+            style={{
+              marginTop: 10,
+              fontSize: 20,
+              marginBottom: 10,
+              fontFamily: "sans-serif",
+              fontStyle: "normal",
+              color: "grey",
+            }}
+          >
+            {item.name}
+          </Text>
+          <Icon
+            style={{ marginHorizontal: 5 }}
+            name="arrow-right"
+            size={30}
+            color={"red"}
+          />
+        </View>
+
+        {/* <TouchableOpacity
           onPress={() => navigation.navigate("ShowDishes", { id, menuId })}
           style={{
             width: width / 2 - 40,
@@ -76,7 +94,7 @@ const FoodItems = ({ route, navigation }) => {
             View Menu
           </Text>
           <View style={{ width: 10 }} />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </TouchableOpacity>
     );
   };
@@ -113,7 +131,7 @@ const styles = StyleSheet.create({
   divFood: {
     width: width - 20,
     padding: 10,
-    borderRadius: 10,
+    borderRadius: 20,
     marginTop: 10,
     marginBottom: 5,
     marginLeft: 10,
