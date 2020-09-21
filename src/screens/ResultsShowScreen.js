@@ -17,7 +17,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
   const [review, setReview] = useState("");
-  const [star, setStars] = useState(null);
+  const [star, setStars] = useState(4);
   const [active, setActive] = useState(false);
   const [reviewLoading, setReviewLoading] = useState(false);
   const [photos, setPhotos] = useState([
@@ -64,10 +64,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
     getResult(id);
   }, []);
 
-  const ratingCompleted = (rating) => {
-    setStars(rating);
-  };
-
   const handleSubmitReview = (id) => {
     let body = {
       feedback: review,
@@ -75,12 +71,11 @@ const ResultsShowScreen = ({ route, navigation }) => {
     };
     setReviewLoading(true);
     dispatch(addReview(id, body)).then((res) => {
-      console.log(res);
       if (res.status === 201) {
         setReviewLoading(false);
         notify("feedback submitted");
         setReview("");
-        setStars(0);
+        setStars(4);
       } else {
         notify("review couldn't submit");
         setReviewLoading(false);
@@ -112,18 +107,17 @@ const ResultsShowScreen = ({ route, navigation }) => {
             {result.name}
           </Text>
 
-          <Text style={{ textAlign: "center" }}>
+          <Text style={{ textAlign: "center", marginBottom: 5 }}>
             {result.timings
               ? `Timings: ${result.timings.formatted.open} - ${result.timings.formatted.close}`
               : "Timings not provided!!"}
           </Text>
-        </Content>
-        <ScrollView style={{ flex: 1 }}>
           <View
             style={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-evenly",
+              marginVertical: 5,
             }}
           >
             <Badge success>
@@ -136,6 +130,95 @@ const ResultsShowScreen = ({ route, navigation }) => {
               <Text style={{ padding: 4 }}>{result.location}</Text>
             </Badge>
           </View>
+
+          <View
+            style={{
+              // marginTop: 10,
+              paddingHorizontal: 40,
+            }}
+          >
+            <View style={{ marginBottom: 20 }}>
+              <AirbnbRating
+                count={5}
+                reviews={["Terrible", "Bad", "OK", "Good", "Amazing"]}
+                defaultRating={4}
+                size={40}
+                onFinishRating={(rating) => setStars(rating)}
+              />
+            </View>
+
+            <TextInput
+              multiline
+              value={review}
+              onChangeText={setReview}
+              placeholder="write your feedback here.."
+              style={{
+                borderColor: "transparent",
+              }}
+            />
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#0d47a1",
+                padding: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 40,
+                marginTop: 10,
+                marginHorizontal: 40,
+              }}
+              onPress={() => handleSubmitReview(result.id)}
+            >
+              {reviewLoading ? (
+                <Loader />
+              ) : (
+                <Text
+                  style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}
+                >
+                  Submit Feedback
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+              paddingHorizontal: 80,
+              marginBottom: 10,
+            }}
+          >
+            <ShowModal address={result.address} />
+          </View>
+        </Content>
+        {/* <View style={{ flex: 1, backgroundColor: "blue" }}> */}
+        <Fab
+          active={active}
+          direction="up"
+          containerStyle={{}}
+          style={{ backgroundColor: "#5067FF" }}
+          position="bottomRight"
+          onPress={() => setActive(!active)}
+        >
+          <MaterialCommunityIcons name="menu" />
+
+          <TouchableOpacity disabled style={{ backgroundColor: "#34A34F" }}>
+            <Icon name="logo-whatsapp" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ backgroundColor: "white" }}
+            onPress={() => navigation.navigate("FoodItems", { id })}
+          >
+            <MaterialCommunityIcons name="food" size={25} color="red" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ backgroundColor: "#DD5144" }}
+            onPress={() => navigation.navigate("Cart", { resId: id })}
+          >
+            <Icon name="cart" />
+          </TouchableOpacity>
+        </Fab>
+        {/* </View> */}
+
+        {/* <ScrollView style={{ flex: 1 }}>
           <View style={{ marginVertical: 5 }}>
             <Rating
               type="custom"
@@ -217,7 +300,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
               <Icon name="cart" />
             </TouchableOpacity>
           </Fab>
-        </ScrollView>
+        </ScrollView> */}
       </Container>
     </>
   );
