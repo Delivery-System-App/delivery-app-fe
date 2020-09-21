@@ -52,3 +52,8 @@ export const addUserAddress = (body) => {
 export const deleteUserAddress = (id) => {
   return fireRequest("deleteUserAddress", [id]);
 };
+
+export const addReview = (id, body) => {
+  console.log(id, body);
+  return fireRequest("addReview", [id], body);
+};

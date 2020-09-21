@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
-import { resDetail } from "../redux/actions";
+import { addReview, resDetail } from "../redux/actions";
 import Loader from "../../utils/loader";
 import { Container, Content, Fab, Icon, Badge } from "native-base";
 import MainScreenBanner from "../components/RestaurantItem/MainScreenBanner";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import ShowModal from "../components/RestaurantItem/ShowModal";
+import { Rating, AirbnbRating } from "react-native-ratings";
+import { TextInput } from "react-native-paper";
+import { notify } from "./../../utils/notify";
 
 const ResultsShowScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [review, setReview] = useState("");
+  const [star, setStars] = useState(null);
   const [active, setActive] = useState(false);
+  const [reviewLoading, setReviewLoading] = useState(false);
   const [photos, setPhotos] = useState([
     "https://www.visituganda.com/uploads/noimage.png",
   ]);
@@ -22,7 +28,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
       setLoading(true);
       dispatch(resDetail([id])).then((res) => {
         if (res.data) {
-          console.log(res.data);
+          // console.log(res.data);
           if (res.data.banner) {
             let imageArr = [];
             const Banners = res.data.banner;
@@ -30,7 +36,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
               for (let i = 0; i < Banners.length; i++) {
                 imageArr = imageArr.concat(Banners[i].banner);
               }
-              console.log(imageArr, Banners[0].banner);
+              // console.log(imageArr, Banners[0].banner);
               setPhotos(imageArr);
             }
           }
@@ -57,6 +63,30 @@ const ResultsShowScreen = ({ route, navigation }) => {
   useEffect(() => {
     getResult(id);
   }, []);
+
+  const ratingCompleted = (rating) => {
+    setStars(rating);
+  };
+
+  const handleSubmitReview = (id) => {
+    let body = {
+      feedback: review,
+      star: star,
+    };
+    setReviewLoading(true);
+    dispatch(addReview(id, body)).then((res) => {
+      console.log(res);
+      if (res.status === 201) {
+        setReviewLoading(false);
+        notify("feedback submitted");
+        setReview("");
+        setStars(0);
+      } else {
+        notify("review couldn't submit");
+        setReviewLoading(false);
+      }
+    });
+  };
 
   const id = route.params.id;
   return loading ? (
@@ -88,7 +118,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
               : "Timings not provided!!"}
           </Text>
         </Content>
-        <View style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1 }}>
           <View
             style={{
               display: "flex",
@@ -106,10 +136,57 @@ const ResultsShowScreen = ({ route, navigation }) => {
               <Text style={{ padding: 4 }}>{result.location}</Text>
             </Badge>
           </View>
+          <View style={{ marginVertical: 5 }}>
+            <Rating
+              type="custom"
+              ratingCount={5}
+              onFinishRating={ratingCompleted}
+              style={{ paddingTop: 10 }}
+            />
+          </View>
           <View
             style={{
               marginTop: 20,
               paddingHorizontal: 40,
+            }}
+          >
+            <TextInput
+              multiline
+              value={review}
+              onChangeText={setReview}
+              placeholder="write your feedback here.."
+              style={{
+                borderColor: "transparent",
+              }}
+            />
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#0d47a1",
+                padding: 10,
+                alignItems: "center",
+                justifyContent: "center",
+                borderRadius: 40,
+                marginTop: 10,
+                marginHorizontal: 40,
+              }}
+              onPress={() => handleSubmitReview(result.id)}
+            >
+              {reviewLoading ? (
+                <Loader />
+              ) : (
+                <Text
+                  style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}
+                >
+                  Submit Feedback
+                </Text>
+              )}
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              marginTop: 20,
+              paddingHorizontal: 80,
+              marginBottom: 10,
             }}
           >
             <ShowModal address={result.address} />
@@ -140,7 +217,7 @@ const ResultsShowScreen = ({ route, navigation }) => {
               <Icon name="cart" />
             </TouchableOpacity>
           </Fab>
-        </View>
+        </ScrollView>
       </Container>
     </>
   );

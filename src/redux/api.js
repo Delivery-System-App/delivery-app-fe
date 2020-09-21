@@ -62,4 +62,9 @@ export default {
     method: "POST",
     noAuth: false,
   },
+  addReview: {
+    path: "/api/v1/restaurant/addreview",
+    method: "POST",
+    noAuth: false,
+  },
 };
