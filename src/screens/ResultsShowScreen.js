@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, ImageBackground } from "react-native";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { addReview, resDetail } from "../redux/actions";
@@ -11,6 +11,7 @@ import ShowModal from "../components/RestaurantItem/ShowModal";
 import { Rating, AirbnbRating } from "react-native-ratings";
 import { TextInput } from "react-native-paper";
 import { notify } from "./../../utils/notify";
+const image = require("./../../images/circle.png");
 
 const ResultsShowScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
@@ -28,7 +29,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
       setLoading(true);
       dispatch(resDetail([id])).then((res) => {
         if (res.data) {
-          // console.log(res.data);
           if (res.data.banner) {
             let imageArr = [];
             const Banners = res.data.banner;
@@ -88,108 +88,118 @@ const ResultsShowScreen = ({ route, navigation }) => {
     <Loader />
   ) : (
     <>
-      <Container style={{ backgroundColor: "#F7FAFC" }}>
+      <Container style={{ backgroundColor: "#eeeeee" }}>
         <Content padder>
           <MainScreenBanner photos={photos} />
-          <Text
+          <ImageBackground
+            source={image}
             style={{
-              marginVertical: 10,
               flex: 1,
-              fontSize: 25,
-              textAlign: "center",
-              color: "#6B46C1",
-              borderRadius: 10,
-              textShadowRadius: 8,
-              fontWeight: "normal",
-              // backgroundColor: "white",
+              resizeMode: "cover",
+              justifyContent: "center",
+              opacity: 0.9,
             }}
           >
-            {result.name}
-          </Text>
+            <Text
+              style={{
+                marginVertical: 10,
+                flex: 1,
+                fontSize: 25,
+                textAlign: "center",
+                color: "#6B46C1",
+                borderRadius: 10,
+                textShadowRadius: 8,
+                fontWeight: "normal",
+              }}
+            >
+              {result.name}
+            </Text>
 
-          <Text style={{ textAlign: "center", marginBottom: 5 }}>
-            {result.timings
-              ? `Timings: ${result.timings.formatted.open} - ${result.timings.formatted.close}`
-              : "Timings not provided!!"}
-          </Text>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-evenly",
-              marginVertical: 5,
-            }}
-          >
-            <Badge success>
-              <Text style={{ padding: 4 }}>{result.status}</Text>
-            </Badge>
-            <Badge info>
-              <Text style={{ padding: 4 }}>{result.contact}</Text>
-            </Badge>
-            <Badge>
-              <Text style={{ padding: 4 }}>{result.location}</Text>
-            </Badge>
-          </View>
-
-          <View
-            style={{
-              // marginTop: 10,
-              paddingHorizontal: 40,
-            }}
-          >
-            <View style={{ marginBottom: 20 }}>
-              <AirbnbRating
-                count={5}
-                reviews={["Terrible", "Bad", "OK", "Good", "Amazing"]}
-                defaultRating={4}
-                size={40}
-                onFinishRating={(rating) => setStars(rating)}
-              />
+            <Text style={{ textAlign: "center", marginBottom: 5 }}>
+              {result.timings
+                ? `Timings: ${result.timings.formatted.open} - ${result.timings.formatted.close}`
+                : "Timings not provided!!"}
+            </Text>
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                marginVertical: 5,
+              }}
+            >
+              <Badge success>
+                <Text style={{ padding: 4 }}>{result.status}</Text>
+              </Badge>
+              <Badge info>
+                <Text style={{ padding: 4 }}>{result.contact}</Text>
+              </Badge>
+              <Badge>
+                <Text style={{ padding: 4 }}>{result.location}</Text>
+              </Badge>
             </View>
 
-            <TextInput
-              multiline
-              value={review}
-              onChangeText={setReview}
-              placeholder="write your feedback here.."
+            <View
               style={{
-                borderColor: "transparent",
+                paddingHorizontal: 40,
               }}
-            />
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#0d47a1",
-                padding: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 40,
-                marginTop: 10,
-                marginHorizontal: 40,
-              }}
-              onPress={() => handleSubmitReview(result.id)}
             >
-              {reviewLoading ? (
-                <Loader />
-              ) : (
-                <Text
-                  style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}
-                >
-                  Submit Feedback
-                </Text>
-              )}
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              paddingHorizontal: 80,
-              marginBottom: 10,
-            }}
-          >
-            <ShowModal address={result.address} />
-          </View>
+              <View style={{ marginBottom: 20 }}>
+                <AirbnbRating
+                  selectedColor={"#ffab40"}
+                  reviewColor={"#ab47bc"}
+                  count={5}
+                  reviews={["Terrible", "Bad", "OK", "Good", "Amazing"]}
+                  ratingColor={"red"}
+                  defaultRating={4}
+                  size={40}
+                  onFinishRating={(rating) => setStars(rating)}
+                />
+              </View>
+
+              <TextInput
+                multiline
+                value={review}
+                onChangeText={setReview}
+                placeholder="write your feedback here.."
+                style={{
+                  borderColor: "transparent",
+                }}
+              />
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#0d47a1",
+                  padding: 10,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: 40,
+                  marginTop: 10,
+                  marginHorizontal: 40,
+                }}
+                onPress={() => handleSubmitReview(result.id)}
+              >
+                {reviewLoading ? (
+                  <Loader />
+                ) : (
+                  <Text
+                    style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}
+                  >
+                    Submit Feedback
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                marginTop: 20,
+                paddingHorizontal: 80,
+                marginBottom: 10,
+              }}
+            >
+              <ShowModal address={result.address} />
+            </View>
+          </ImageBackground>
         </Content>
-        {/* <View style={{ flex: 1, backgroundColor: "blue" }}> */}
         <Fab
           active={active}
           direction="up"
@@ -216,91 +226,6 @@ const ResultsShowScreen = ({ route, navigation }) => {
             <Icon name="cart" />
           </TouchableOpacity>
         </Fab>
-        {/* </View> */}
-
-        {/* <ScrollView style={{ flex: 1 }}>
-          <View style={{ marginVertical: 5 }}>
-            <Rating
-              type="custom"
-              ratingCount={5}
-              onFinishRating={ratingCompleted}
-              style={{ paddingTop: 10 }}
-            />
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              paddingHorizontal: 40,
-            }}
-          >
-            <TextInput
-              multiline
-              value={review}
-              onChangeText={setReview}
-              placeholder="write your feedback here.."
-              style={{
-                borderColor: "transparent",
-              }}
-            />
-            <TouchableOpacity
-              style={{
-                backgroundColor: "#0d47a1",
-                padding: 10,
-                alignItems: "center",
-                justifyContent: "center",
-                borderRadius: 40,
-                marginTop: 10,
-                marginHorizontal: 40,
-              }}
-              onPress={() => handleSubmitReview(result.id)}
-            >
-              {reviewLoading ? (
-                <Loader />
-              ) : (
-                <Text
-                  style={{ textAlign: "center", color: "#FFF", fontSize: 16 }}
-                >
-                  Submit Feedback
-                </Text>
-              )}
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              paddingHorizontal: 80,
-              marginBottom: 10,
-            }}
-          >
-            <ShowModal address={result.address} />
-          </View>
-          <Fab
-            active={active}
-            direction="up"
-            containerStyle={{}}
-            style={{ backgroundColor: "#5067FF" }}
-            position="bottomRight"
-            onPress={() => setActive(!active)}
-          >
-            <MaterialCommunityIcons name="menu" />
-
-            <TouchableOpacity disabled style={{ backgroundColor: "#34A34F" }}>
-              <Icon name="logo-whatsapp" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ backgroundColor: "white" }}
-              onPress={() => navigation.navigate("FoodItems", { id })}
-            >
-              <MaterialCommunityIcons name="food" size={25} color="red" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ backgroundColor: "#DD5144" }}
-              onPress={() => navigation.navigate("Cart", { resId: id })}
-            >
-              <Icon name="cart" />
-            </TouchableOpacity>
-          </Fab>
-        </ScrollView> */}
       </Container>
     </>
   );
