@@ -14,16 +14,21 @@ import FoodCategories from "../components/RestaurantItem/FoodCategories";
 import { useIsFocused } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Loader from "../../utils/loader";
+import ShowLocationPicker from "../components/RestaurantItem/Delivery/ShowLocationPicker";
 
 const ListHotels = ({ navigation }) => {
   const [term, setTerm] = useState("");
   const [searchApi, results, errorMessage, loading] = useResults("");
+  const [city, setCity] = useState("ernakulam");
   const isfocused = useIsFocused();
   // useEffect(() => {
   //   if (isfocused) {
   //     navigation.navigate("Home", { name: "Hotels" });
   //   }
   // });
+  const handleCityChange = (city) => {
+    setCity(city);
+  };
   if (!results) {
     return <Loader />;
   }
@@ -37,7 +42,7 @@ const ListHotels = ({ navigation }) => {
       <SearchBar
         term={term}
         onTermChange={setTerm}
-        onTermSubmit={() => searchApi(term)}
+        onTermSubmit={() => searchApi(term, city)}
       />
       {errorMessage ? <Text>{errorMessage}</Text> : null}
       {loading ? (
@@ -47,7 +52,46 @@ const ListHotels = ({ navigation }) => {
       ) : (
         <ScrollView style={{ marginTop: 10 }}>
           <MainScreenBanner />
+          <View
+            style={{
+              paddingHorizontal: 20,
+              // marginTop: 50,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Address Location
+            </Text>
+          </View>
+          <ShowLocationPicker city={city} handleCityChange={handleCityChange} />
           <FoodCategories />
+          <View
+            style={{
+              paddingHorizontal: 15,
+              marginTop: 10,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "bold",
+              }}
+            >
+              Food that
+            </Text>
+            <Text
+              style={{
+                fontSize: 25,
+                fontWeight: "bold",
+              }}
+            >
+              meets your needs
+            </Text>
+          </View>
           <ResultList
             navigation={navigation}
             results={filterResultsByPrice(1)}

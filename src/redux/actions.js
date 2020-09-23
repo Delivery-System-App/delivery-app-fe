@@ -21,8 +21,8 @@ export const resDetail = (id) => {
   return fireRequest("resDetail", [id]);
 };
 
-export const filter = (dish) => {
-  return fireRequest("filter", [], { dish: dish });
+export const filter = (dish, location) => {
+  return fireRequest("filter", [], { dish: dish, location: location });
 };
 
 export const menuList = (id) => {

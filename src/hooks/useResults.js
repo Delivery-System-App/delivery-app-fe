@@ -10,13 +10,13 @@ export default () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    searchApi("pasta");
+    searchApi("pasta", "ernakulam");
   }, []);
 
-  const searchApi = async (searchTerm) => {
+  const searchApi = async (searchTerm, city) => {
     try {
       setLoading(true);
-      dispatch(filter([searchTerm])).then((res) => {
+      dispatch(filter(searchTerm, city)).then((res) => {
         if (res !== undefined) {
           if (res.data) {
             setResults(res.data);
