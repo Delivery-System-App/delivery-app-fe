@@ -7,16 +7,13 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import {
-  FlatList,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native-gesture-handler";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { useEffect } from "react";
 import { menuList } from "../redux/actions";
 import { useDispatch } from "react-redux";
 import Loader from "../../utils/loader";
 import Icon from "react-native-vector-icons/EvilIcons";
+import Icon1 from "react-native-vector-icons/AntDesign";
 var { height, width } = Dimensions.get("window");
 const image = require("./../../images/profile.png");
 
@@ -78,38 +75,12 @@ const FoodItems = ({ route, navigation }) => {
             color={"red"}
           />
         </View>
-
-        {/* <TouchableOpacity
-          onPress={() => navigation.navigate("ShowDishes", { id, menuId })}
-          style={{
-            width: width / 2 - 40,
-            backgroundColor: "#33c37d",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 5,
-            padding: 4,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 18,
-              color: "white",
-              fontWeight: "bold",
-              textAlign: "center",
-            }}
-          >
-            View Menu
-          </Text>
-          <View style={{ width: 10 }} />
-        </TouchableOpacity> */}
       </TouchableOpacity>
     );
   };
   return loading ? (
     <Loader />
   ) : (
-    // <SafeAreaView style={{ flex: 1 }}>
     <View
       style={{
         flex: 1,
@@ -129,14 +100,28 @@ const FoodItems = ({ route, navigation }) => {
           keyExtractor={(item) => item.id}
         />
       </ImageBackground>
-      {/* <FlatList
-        data={menu}
-        numColumns={1}
-        renderItem={({ item }) => _renderItemFood(item)}
-        keyExtractor={(item) => item.id}
-      /> */}
+      <View
+        style={{
+          position: "absolute",
+          backgroundColor: "#000",
+          height: 50,
+          width: 50,
+          bottom: 20,
+          alignItems: "center",
+          justifyContent: "center",
+          alignSelf: "center",
+          borderRadius: 25,
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Hotels");
+          }}
+        >
+          <Icon1 name="home" size={24} color="#FFF" />
+        </TouchableOpacity>
+      </View>
     </View>
-    // </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({
