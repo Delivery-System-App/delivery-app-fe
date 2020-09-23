@@ -66,7 +66,6 @@ const OrdersScreen = ({ navigation }) => {
   const CancelBookings = (bookId) => {
     dispatch(cancelBooking([bookId], { deliveryStatus: "cancelled" })).then(
       (res) => {
-        console.log(res);
         notify("order cancelled!!");
         setRender(Math.random());
       }
@@ -101,6 +100,7 @@ const OrdersScreen = ({ navigation }) => {
 
   if (filteredValue.length > 0) {
     bookingList = filteredValue.map((booking, index) => {
+      const id = booking.restaurantId;
       let dishes = booking.dish.map((dish) => {
         return dish;
       });
@@ -117,15 +117,20 @@ const OrdersScreen = ({ navigation }) => {
               borderTopRightRadius: 8,
             }}
           >
-            <Text
-              style={{
-                fontSize: 15,
-                textShadowRadius: 10,
-                textShadowColor: "#667EEA",
-              }}
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ShowResult", { id })}
             >
-              {booking.restaurantName.toUpperCase()}
-            </Text>
+              <Text
+                style={{
+                  fontSize: 15,
+                  textShadowRadius: 10,
+                  textShadowColor: "#667EEA",
+                }}
+              >
+                {booking.restaurantName.toUpperCase()}
+              </Text>
+            </TouchableOpacity>
+
             <Text style={{ fontSize: 12 }}>
               {moment(booking.createdAt).format("MMM Do YY")}
             </Text>
