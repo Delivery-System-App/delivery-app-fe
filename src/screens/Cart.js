@@ -161,93 +161,103 @@ const Cart = ({ navigation, route }) => {
 
       <View style={{ flex: 1 }}>
         <ScrollView>
-          {dataCart.map((item, i) => {
-            return (
-              <View
-                key={i}
-                style={{
-                  width: width - 20,
-                  margin: 10,
-                  backgroundColor: "transparent",
-                  flexDirection: "row",
-                  borderBottomWidth: 2,
-                  borderColor: "#cccccc",
-                  paddingBottom: 10,
-                }}
-              >
-                <Image
-                  style={{
-                    width: width / 3,
-                    height: width / 3,
-                    borderRadius: width / 3,
-                  }}
-                  source={
-                    item.food.photos !== ""
-                      ? { uri: item.food.photos[0] }
-                      : food
-                  }
-                />
+          {dataCart.length > 0 ? (
+            dataCart.map((item, i) => {
+              return (
                 <View
+                  key={i}
                   style={{
-                    flex: 1,
-                    backgroundColor: "trangraysparent",
-                    padding: 10,
-                    justifyContent: "space-between",
+                    width: width - 20,
+                    margin: 10,
+                    backgroundColor: "transparent",
+                    flexDirection: "row",
+                    borderBottomWidth: 2,
+                    borderColor: "#cccccc",
+                    paddingBottom: 10,
                   }}
                 >
-                  <View>
-                    <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                      {item.food.name}
-                    </Text>
-                    <Text>Lorem Ipsum de food</Text>
-                  </View>
+                  <Image
+                    style={{
+                      width: width / 3,
+                      height: width / 3,
+                      borderRadius: width / 3,
+                    }}
+                    source={
+                      item.food.photos !== ""
+                        ? { uri: item.food.photos[0] }
+                        : food
+                    }
+                  />
                   <View
                     style={{
-                      flexDirection: "row",
+                      flex: 1,
+                      backgroundColor: "trangraysparent",
+                      padding: 10,
                       justifyContent: "space-between",
                     }}
                   >
-                    <Text
+                    <View>
+                      <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                        {item.food.name}
+                      </Text>
+                      <Text>Lorem Ipsum de food</Text>
+                    </View>
+                    <View
                       style={{
-                        fontWeight: "bold",
-                        color: "#33c37d",
-                        fontSize: 20,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
                       }}
                     >
-                      Rs.{item.price * item.quantity}
-                    </Text>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <TouchableOpacity onPress={() => onChangeQual(i, false)}>
-                        <Icon
-                          name="ios-remove-circle"
-                          size={35}
-                          color={"#33c37d"}
-                        />
-                      </TouchableOpacity>
                       <Text
                         style={{
-                          paddingHorizontal: 8,
                           fontWeight: "bold",
-                          fontSize: 18,
+                          color: "#33c37d",
+                          fontSize: 20,
                         }}
                       >
-                        {item.quantity}
+                        Rs.{item.price * item.quantity}
                       </Text>
-                      <TouchableOpacity onPress={() => onChangeQual(i, true)}>
-                        <Icon
-                          name="ios-add-circle"
-                          size={35}
-                          color={"#33c37d"}
-                        />
-                      </TouchableOpacity>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => onChangeQual(i, false)}
+                        >
+                          <Icon
+                            name="ios-remove-circle"
+                            size={35}
+                            color={"#33c37d"}
+                          />
+                        </TouchableOpacity>
+                        <Text
+                          style={{
+                            paddingHorizontal: 8,
+                            fontWeight: "bold",
+                            fontSize: 18,
+                          }}
+                        >
+                          {item.quantity}
+                        </Text>
+                        <TouchableOpacity onPress={() => onChangeQual(i, true)}>
+                          <Icon
+                            name="ios-add-circle"
+                            size={35}
+                            color={"#33c37d"}
+                          />
+                        </TouchableOpacity>
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-            );
-          })}
+              );
+            })
+          ) : (
+            <View>
+              <Text style={{ textAlign: "center", color: "red" }}>
+                No food items in your cart!!
+              </Text>
+            </View>
+          )}
 
           <View style={{ height: 20 }} />
           <View>
