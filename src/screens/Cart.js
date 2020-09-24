@@ -19,6 +19,8 @@ import { notify } from "../../utils/notify";
 import { ActivityIndicator, Title } from "react-native-paper";
 import { Picker } from "native-base";
 const food = require("./../../images/icon.png");
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment";
 const Cart = ({ navigation, route }) => {
   const [dataCart, setDataCart] = useState([]);
   const dispatch = useDispatch();
@@ -28,6 +30,23 @@ const Cart = ({ navigation, route }) => {
   const [selectedAddress, setSelectedAddress] = useState();
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
+  const [deliveryTime, setDeliveryTime] = useState("");
+  const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+
+  const showTimePicker = () => {
+    setTimePickerVisibility(true);
+  };
+
+  const hideTimePicker = () => {
+    setTimePickerVisibility(false);
+  };
+
+  const handleConfirmTime = (time) => {
+    const deliveryDateTime = moment(time).format("LLLL");
+    setDeliveryTime(deliveryDateTime);
+    console.log("A time has been picked: ", deliveryTime);
+    hideTimePicker();
+  };
 
   if (isfocused) {
     navigation.navigate("Home", { name: "Cart" });
@@ -126,7 +145,9 @@ const Cart = ({ navigation, route }) => {
         dishIds: [],
         qty: [],
         deliveryAdd: selectedAddress,
+        deliveryOn: deliveryTime,
       };
+      console.log(booking, "booking");
       dataCart.map((item) => {
         !booking.dishIds.includes(item.food.dishId)
           ? booking.dishIds.push(item.food.dishId) &&
@@ -260,10 +281,65 @@ const Cart = ({ navigation, route }) => {
           )}
 
           <View style={{ height: 20 }} />
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginVertical: 5,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => showTimePicker()}
+              style={{
+                backgroundColor: "#9575cd",
+                width: width - 140,
+                alignItems: "center",
+                padding: 10,
+                borderRadius: 5,
+                margin: 20,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  color: "white",
+                }}
+              >
+                Set Time
+              </Text>
+            </TouchableOpacity>
+            <View>
+              <View>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontWeight: "bold",
+                    fontSize: 15,
+                    marginBottom: 2,
+                  }}
+                >
+                  Delivery Date And Time:
+                </Text>
+                <Text style={{ marginBottom: 5 }}>{deliveryTime}</Text>
+              </View>
+            </View>
+
+            <DateTimePickerModal
+              isVisible={isTimePickerVisible}
+              mode="datetime"
+              onConfirm={handleConfirmTime}
+              onCancel={hideTimePicker}
+            />
+          </View>
+          {/* </View> */}
+
           <View>
             {show && results && (
               <View style={styles.container}>
-                <Text>Choose your delivery address</Text>
+                <Text style={{ fontWeight: "bold" }}>
+                  Choose your delivery address
+                </Text>
                 <Picker
                   // note
                   mode="dropdown"
