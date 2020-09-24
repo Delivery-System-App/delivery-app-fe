@@ -115,7 +115,7 @@ const FoodItems = ({ route, navigation }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("Hotels");
+            navigation.navigate("Home");
           }}
         >
           <Icon1 name="home" size={24} color="#FFF" />
