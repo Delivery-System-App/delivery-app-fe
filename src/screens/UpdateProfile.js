@@ -17,13 +17,22 @@ const foodImage = require("./../../assets/foods.jpg");
 import { updateProfile, getUser } from "../redux/actions";
 
 const ProfileScreen = ({ navigation }) => {
-  const state = useSelector((reduxState) => reduxState);
-  const User = state.getUser.data.data;
+  //const state = useSelector((reduxState) => reduxState);
+  //const User = state.getUser.data.data;
   const dispatch = useDispatch();
-  const [name, setName] = useState(User.name);
-  const [number, setNumber] = useState(User.number);
+  const [name, setName] = useState("");
+  const [number, setNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  useEffect(() => {
+    dispatch(getUser()).then((res) => {
+      if (res.data) {
+        setName(res.data.data.name);
+        setNumber(res.data.data.number);
+      }
+    });
+  }, []);
+
   const initError = {
     name: "",
     email: "",
@@ -76,7 +85,6 @@ const ProfileScreen = ({ navigation }) => {
           if (res) {
             if (res.data.success) {
               notify("Profile updated");
-              // navigation.navigate("");
             }
           }
         }
