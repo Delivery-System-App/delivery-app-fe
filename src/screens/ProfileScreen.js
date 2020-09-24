@@ -22,7 +22,6 @@ import { Body, Button, Card, CardItem, Icon } from "native-base";
 
 const ProfileScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
-  const state = useSelector((reduxState) => reduxState);
   const [loading, setLoading] = useState(false);
   const [address, setAddress] = useState([]);
   const [render, setRerender] = useState(Math.random());
