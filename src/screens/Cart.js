@@ -8,6 +8,7 @@ import {
   Dimensions,
   StyleSheet,
   Alert,
+  ImageBackground,
 } from "react-native";
 var { width } = Dimensions.get("window");
 import Icon from "react-native-vector-icons/Ionicons";
@@ -173,14 +174,35 @@ const Cart = ({ navigation, route }) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <View style={{ height: 40 }} />
-      <Text style={{ fontSize: 32, fontWeight: "bold", color: "#33c37d" }}>
-        Cart food
-      </Text>
+    <View
+      style={{
+        flex: 1,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* <View style={{ height: 40 }} /> */}
+      <ImageBackground
+        style={{ width: "100%", height: "50%" }}
+        resizeMode="stretch"
+        source={require("./../../images/mycurve.png")}
+      >
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: "#fff",
+            textAlign: "center",
+            margin: 60,
+          }}
+        >
+          Cart food
+        </Text>
+      </ImageBackground>
+
       <View style={{ height: 10 }} />
 
-      <View style={{ flex: 1 }}>
+      <View style={{ flex: 1, marginTop: "-45%" }}>
         <ScrollView>
           {dataCart.length > 0 ? (
             dataCart.map((item, i) => {
