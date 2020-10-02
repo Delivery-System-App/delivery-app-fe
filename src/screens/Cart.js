@@ -12,7 +12,7 @@ import {
 } from "react-native";
 var { width } = Dimensions.get("window");
 import Icon from "react-native-vector-icons/Ionicons";
-import { AsyncStorage } from "react-native";
+import { AsyncStorage, Switch } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch } from "react-redux";
 import { bookDishes, getUser } from "../redux/actions";
@@ -33,6 +33,7 @@ const Cart = ({ navigation, route }) => {
   const [show, setShow] = useState(false);
   const [deliveryTime, setDeliveryTime] = useState("");
   const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+  const [driveThrough, setdriveThrough] = useState(false);
 
   const showTimePicker = () => {
     setTimePickerVisibility(true);
@@ -147,6 +148,7 @@ const Cart = ({ navigation, route }) => {
         qty: [],
         deliveryAdd: selectedAddress,
         deliveryOn: deliveryTime,
+        driveThrough: driveThrough,
       };
       console.log(booking, "booking");
       dataCart.map((item) => {
@@ -301,8 +303,37 @@ const Cart = ({ navigation, route }) => {
               </Text>
             </View>
           )}
-
-          <View style={{ height: 20 }} />
+          <View style={{ width: "100%", alignItems: "center" }}>
+            <View
+              style={{
+                alignItems: "center",
+                width: width / 2,
+                display: "flex",
+                backgroundColor: "lightgray",
+                padding: 3,
+                borderRadius: 15,
+              }}
+            >
+              <Text
+                style={{
+                  textAlign: "center",
+                  fontWeight: "bold",
+                  marginBottom: 2,
+                }}
+              >
+                Drive Through
+              </Text>
+              <Switch
+                trackColor={{ false: "#767577", true: "#81b0ff" }}
+                style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
+                thumbColor={driveThrough ? "#f5dd4b" : "#f4f3f4"}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={() => setdriveThrough(!driveThrough)}
+                value={driveThrough}
+              />
+            </View>
+          </View>
+          <View />
           <View
             style={{
               justifyContent: "center",
