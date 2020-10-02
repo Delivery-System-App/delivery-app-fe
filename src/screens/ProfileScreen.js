@@ -7,6 +7,7 @@ import {
   Dimensions,
   Alert,
   Pressable,
+  ImageBackground,
 } from "react-native";
 import { Context as AuthContext } from "./../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -69,7 +70,7 @@ const ProfileScreen = ({ navigation }) => {
   };
 
   const confirmDeleteAddress = (id) => {
-    console.log("id", id);
+    // console.log("id", id);
     Alert.alert(
       "Delete Address",
       `${User.name},Are you sure you want to delete the delivery address?`,
@@ -100,19 +101,33 @@ const ProfileScreen = ({ navigation }) => {
   return loading ? (
     <Loader />
   ) : (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+    <View style={styles.container}>
+      <ImageBackground
+        style={{ width: "100%", height: "50%" }}
+        resizeMode="stretch"
+        source={require("./../../images/mycurve.png")}
+      >
+        <Text
+          style={{
+            fontSize: 32,
+            fontWeight: "bold",
+            color: "#fff",
+            textAlign: "center",
+            marginTop: 40,
+          }}
+        >
+          Welcome
+        </Text>
         <View
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "center",
-            marginTop: 20,
+            marginTop: 4,
           }}
         >
           <Image style={styles.image} source={foodImage} />
         </View>
-
         <View style={styles.textview}>
           <Text style={styles.nametext}>{User.name}</Text>
           <Text style={styles.mailtext}>{User.email}</Text>
@@ -144,7 +159,9 @@ const ProfileScreen = ({ navigation }) => {
             <Text>Sign Out</Text>
           </TouchableOpacity>
         </View>
+      </ImageBackground>
 
+      <ScrollView style={styles.scrollView}>
         {address ? (
           <View
             style={{
@@ -155,10 +172,6 @@ const ProfileScreen = ({ navigation }) => {
             <Text style={{ textAlign: "center" }}>Your Saved Address</Text>
 
             {address.map((item) => {
-              {
-                console.log(item);
-              }
-
               return (
                 <Card style={{ width: width - 50 }} key={item.id}>
                   <CardItem>
@@ -196,13 +209,14 @@ const ProfileScreen = ({ navigation }) => {
           </View>
         ) : null}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Constants.statusBarHeight,
+    // backgroundColor: "red",
+    // marginTop: Constants.statusBarHeight,
     // alignItems: "center",
     // justifyContent: "center",
   },
@@ -211,6 +225,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginHorizontal: 1,
+    marginTop: "10%",
   },
   button: {
     // backgroundColor: "#DDDDDD",
