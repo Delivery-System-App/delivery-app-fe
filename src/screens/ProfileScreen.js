@@ -128,6 +128,8 @@ const ProfileScreen = ({ navigation }) => {
         >
           <Image style={styles.image} source={foodImage} />
         </View>
+      </ImageBackground>
+      <View style={{ marginTop: -(height / 2 - 280) }}>
         <View style={styles.textview}>
           <Text style={styles.nametext}>{User.name}</Text>
           <Text style={styles.mailtext}>{User.email}</Text>
@@ -137,7 +139,8 @@ const ProfileScreen = ({ navigation }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
-            marginVertical: 15,
+            marginVertical: 10,
+            padding: 10,
           }}
         >
           <TouchableOpacity
@@ -159,8 +162,7 @@ const ProfileScreen = ({ navigation }) => {
             <Text>Sign Out</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
-
+      </View>
       <ScrollView style={styles.scrollView}>
         {address ? (
           <View
@@ -169,8 +171,6 @@ const ProfileScreen = ({ navigation }) => {
               marginHorizontal: width - (width - 25),
             }}
           >
-            <Text style={{ textAlign: "center" }}>Your Saved Address</Text>
-
             {address.map((item) => {
               return (
                 <Card style={{ width: width - 50 }} key={item.id}>
@@ -225,7 +225,8 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     marginHorizontal: 1,
-    marginTop: "10%",
+    marginTop: 1,
+    // marginTop: 60,
   },
   button: {
     // backgroundColor: "#DDDDDD",
