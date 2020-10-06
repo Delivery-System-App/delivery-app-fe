@@ -204,7 +204,7 @@ const Cart = ({ navigation, route }) => {
 
       <View style={{ height: 10 }} />
 
-      <View style={{ flex: 1, marginTop: "-48%" }}>
+      <View style={{ flex: 1, marginTop: "-40%" }}>
         <ScrollView>
           {dataCart.length > 0 ? (
             dataCart.map((item, i) => {
@@ -298,7 +298,13 @@ const Cart = ({ navigation, route }) => {
             })
           ) : (
             <View>
-              <Text style={{ textAlign: "center", color: "red" }}>
+              <Text
+                style={{
+                  textAlign: "center",
+                  color: "red",
+                  marginVertical: 10,
+                }}
+              >
                 No food items in your cart!!
               </Text>
             </View>
