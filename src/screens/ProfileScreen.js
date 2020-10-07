@@ -139,7 +139,7 @@ const ProfileScreen = ({ navigation }) => {
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-evenly",
-            marginVertical: 10,
+            marginVertical: 0,
             padding: 10,
           }}
         >
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   addressText: {
-    fontSize: 20,
+    fontSize: 14,
   },
   scrollView: {
     marginHorizontal: 1,
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
   },
   button: {
     // backgroundColor: "#DDDDDD",
-    padding: 10,
+    padding: 8,
     borderRadius: 5,
     backgroundColor: "#ed64a6",
   },
@@ -246,13 +246,13 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
   },
   nametext: {
-    fontSize: 30,
+    fontSize: 20,
     color: "darkblue",
     alignItems: "center",
     fontWeight: "100",
   },
   mailtext: {
-    fontSize: 20,
+    fontSize: 15,
     color: "black",
     alignItems: "center",
     fontWeight: "100",

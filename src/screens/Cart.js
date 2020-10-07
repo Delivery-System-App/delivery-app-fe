@@ -198,7 +198,7 @@ const Cart = ({ navigation, route }) => {
             margin: 60,
           }}
         >
-          Cart food
+          Cart
         </Text>
       </ImageBackground>
 
@@ -302,6 +302,8 @@ const Cart = ({ navigation, route }) => {
                 style={{
                   textAlign: "center",
                   color: "red",
+                  fontSize: 20,
+                  marginTop: 30,
                   marginVertical: 10,
                 }}
               >
@@ -309,152 +311,155 @@ const Cart = ({ navigation, route }) => {
               </Text>
             </View>
           )}
-          <View style={{ width: "100%", alignItems: "center" }}>
-            <View
-              style={{
-                alignItems: "center",
-                width: width / 2,
-                display: "flex",
-                backgroundColor: "lightgray",
-                padding: 3,
-                borderRadius: 15,
-              }}
-            >
-              <Text
-                style={{
-                  textAlign: "center",
-                  fontWeight: "bold",
-                  marginBottom: 2,
-                }}
-              >
-                Drive Through
-              </Text>
-              <Switch
-                trackColor={{ false: "#767577", true: "#81b0ff" }}
-                style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
-                thumbColor={driveThrough ? "#f5dd4b" : "#f4f3f4"}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={() => setdriveThrough(!driveThrough)}
-                value={driveThrough}
-              />
-            </View>
-          </View>
-          <View />
-          <View
-            style={{
-              justifyContent: "center",
-              alignItems: "center",
-              marginVertical: 5,
-            }}
-          >
-            <TouchableOpacity
-              onPress={() => showTimePicker()}
-              style={{
-                backgroundColor: "#9575cd",
-                width: width - 140,
-                alignItems: "center",
-                padding: 10,
-                borderRadius: 5,
-                margin: 20,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  color: "white",
-                }}
-              >
-                Set Time
-              </Text>
-            </TouchableOpacity>
+          {dataCart.length > 0 && (
             <View>
-              <View>
-                <Text
+              <View style={{ width: "100%", alignItems: "center" }}>
+                <View
                   style={{
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    fontSize: 15,
-                    marginBottom: 2,
+                    alignItems: "center",
+                    width: width / 2,
+                    display: "flex",
+                    backgroundColor: "lightgray",
+                    padding: 3,
+                    borderRadius: 15,
                   }}
                 >
-                  Delivery Date And Time:
-                </Text>
-                <Text style={{ marginBottom: 5 }}>{deliveryTime}</Text>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontWeight: "bold",
+                      marginBottom: 2,
+                    }}
+                  >
+                    Drive Through
+                  </Text>
+                  <Switch
+                    trackColor={{ false: "#767577", true: "#81b0ff" }}
+                    style={{ transform: [{ scaleX: 1.3 }, { scaleY: 1.3 }] }}
+                    thumbColor={driveThrough ? "#f5dd4b" : "#f4f3f4"}
+                    ios_backgroundColor="#3e3e3e"
+                    onValueChange={() => setdriveThrough(!driveThrough)}
+                    value={driveThrough}
+                  />
+                </View>
               </View>
-            </View>
-
-            <DateTimePickerModal
-              isVisible={isTimePickerVisible}
-              mode="datetime"
-              onConfirm={handleConfirmTime}
-              onCancel={hideTimePicker}
-            />
-          </View>
-          {/* </View> */}
-
-          <View>
-            {show && results && (
-              <View style={styles.container}>
-                <Text style={{ fontWeight: "bold" }}>
-                  Choose your delivery address
-                </Text>
-                <Picker
-                  // note
-                  mode="dropdown"
-                  selectedValue={selectedAddress}
-                  style={{ height: 50, width: 150 }}
-                  onValueChange={(itemValue, itemIndex) => {
-                    setSelectedAddress(itemValue);
-                    setDeliveryAddress(true);
-                  }}
-                >
-                  {results &&
-                    results.length &&
-                    results.map((address) => {
-                      return (
-                        <Picker.Item
-                          label={address.housename}
-                          value={address}
-                          key={address.id}
-                        />
-                      );
-                    })}
-                </Picker>
-              </View>
-            )}
-          </View>
-
-          <TouchableOpacity
-            onPress={() => {
-              deliveryAddress
-                ? createTwoButtonAlert()
-                : notify("no delivery address choosen!!");
-            }}
-            style={{
-              backgroundColor: "#33c37d",
-              width: width - 40,
-              alignItems: "center",
-              padding: 10,
-              borderRadius: 5,
-              margin: 20,
-            }}
-          >
-            {loading ? (
-              <ActivityIndicator size="small" color="#00ff00" />
-            ) : (
-              <Text
+              <View />
+              <View
                 style={{
-                  fontSize: 24,
-                  fontWeight: "bold",
-                  color: "white",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginVertical: 5,
                 }}
               >
-                CHECKOUT
-              </Text>
-            )}
-          </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => showTimePicker()}
+                  style={{
+                    backgroundColor: "#9575cd",
+                    width: width - 140,
+                    alignItems: "center",
+                    padding: 10,
+                    borderRadius: 5,
+                    margin: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontWeight: "bold",
+                      color: "white",
+                    }}
+                  >
+                    Set Time
+                  </Text>
+                </TouchableOpacity>
+                <View>
+                  <View>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontWeight: "bold",
+                        fontSize: 15,
+                        marginBottom: 2,
+                      }}
+                    >
+                      Delivery Date And Time:
+                    </Text>
+                    <Text style={{ marginBottom: 5 }}>{deliveryTime}</Text>
+                  </View>
+                </View>
 
+                <DateTimePickerModal
+                  isVisible={isTimePickerVisible}
+                  mode="datetime"
+                  onConfirm={handleConfirmTime}
+                  onCancel={hideTimePicker}
+                />
+              </View>
+              {/* </View> */}
+
+              <View>
+                {show && results && (
+                  <View style={styles.container}>
+                    <Text style={{ fontWeight: "bold" }}>
+                      Choose your delivery address
+                    </Text>
+                    <Picker
+                      // note
+                      mode="dropdown"
+                      selectedValue={selectedAddress}
+                      style={{ height: 50, width: 150 }}
+                      onValueChange={(itemValue, itemIndex) => {
+                        setSelectedAddress(itemValue);
+                        setDeliveryAddress(true);
+                      }}
+                    >
+                      {results &&
+                        results.length &&
+                        results.map((address) => {
+                          return (
+                            <Picker.Item
+                              label={address.housename}
+                              value={address}
+                              key={address.id}
+                            />
+                          );
+                        })}
+                    </Picker>
+                  </View>
+                )}
+              </View>
+
+              <TouchableOpacity
+                onPress={() => {
+                  deliveryAddress
+                    ? createTwoButtonAlert()
+                    : notify("no delivery address choosen!!");
+                }}
+                style={{
+                  backgroundColor: "#33c37d",
+                  width: width - 40,
+                  alignItems: "center",
+                  padding: 10,
+                  borderRadius: 5,
+                  margin: 20,
+                }}
+              >
+                {loading ? (
+                  <ActivityIndicator size="small" color="#00ff00" />
+                ) : (
+                  <Text
+                    style={{
+                      fontSize: 24,
+                      fontWeight: "bold",
+                      color: "white",
+                    }}
+                  >
+                    CHECKOUT
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+          )}
           <View style={{ height: 20 }} />
         </ScrollView>
       </View>
